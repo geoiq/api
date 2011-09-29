@@ -3,14 +3,14 @@
     <meta content='text/html;charset=UTF-8' http-equiv='Content-Type'>
     <title>GeoIQ &mdash; Analysis API</title>
     <style type='text/css'>
-      @import '/css/default.css';
-      @import '/css/syntax.css';
+      @import '/api/css/default.css';
+      @import '/api/css/syntax.css';
     </style>
     <style media='print' type='text/css'>
-      @import '/css/print.css';
+      @import '/api/css/print.css';
     </style>
     <meta content='GeoIQ API' name='subject'>
-    <link href='/images/favicon.png' rel='shortcut icon'>
+    <link href='/api/images/favicon.png' rel='shortcut icon'>
   </head>
   <body>
     <div id='wrap'>
@@ -22,561 +22,96 @@
         <ol class='toc'>
           <li>Start Here
             <ol class="toc">
-              <li><a href='/index.html'>Welcome</a></li>
-              <li><a href='/tutorial.html'>Quick Start</a></li>
-              <li><a href='https://github.com/fortiusone/api/wiki'>Community Wiki</a></li>
+              <li><a href='/api/index.html'>Welcome</a></li>
+              <li><a href='/api/tutorial.html'>Quick Start</a></li>
+              <li><a href='http://getsatisfaction.com/geocommons'>Get Help</a></li>
+              <li><a href='http://developer.geoiq.com/blog/'>Blog</a></li>
             </ol>
           </li>
           <li>REST API
             <ol class="toc">
-              <li><a href='/methods.html'>Methods</a></li>
-              <li><a href="/analysis.html">Analysis</a></li>
-              <li><a href="/chart.html">Chart</a></li>
-              <li><a href="/configurations.html">Configurations</a></li>
-              <li><a href="/filter.html">Filter</a></li>
-              <li><a href="/groups.html">Groups</a></li>
-              <li><a href="/features/index.html">Data Features</a>
-                <ol class="toc">
-                  <li><a href="/features/features_create.html">Create</a></li>
-                  <li><a href="/features/features_retrieve.html">Read</a></li>
-                  <li><a href="/features/features_delete.html">Delete</a></li>
-                </ol></li>
-            </ol>
-          </li>
-          <li>JavaScript API
+              <li><a href='/api/methods.html'>Methods</a></li>
+              </ol>
+            </li>
+            <li>Datasets
+              <ol class="toc">
+                <li><a href="/api/datasets/create.html">datasets.create</a></li>
+                <li><a href="/api/datasets/retrieve.html">datasets.retrieve</a></li>
+                <li><a href="/api/datasets/delete.html">datasets.delete</a></li>
+                <li><a href="/api/datasets/update.html">datasets.update</a></li>
+                <li><a href="/api/datasets/update.html">datasets.update_feed</a></li>
+              </ol>
+            </li>
+            <li>Features
+              <ol class="toc">
+              <li><a href="/api/features/retrieve.html">GET /dataset/:id/features</a></li>
+              <li><a href="/api/features/create.html">POST /dataset/:id/features</a></li>
+              <li><a href="/api/features/delete.html">DELETE /dataset/:id/features</a></li>
+              <li><a href="/api/features/aggregate.html">features.aggregate</a></li>
+              </ol>
+            </li>
+            <li>Maps
+              <ol class="toc">
+              <li><a href="/api/maps/download.html">maps.download</a></li>
+              <li><a href="/api/maps/create.html">maps.create</a></li>
+              <li><a href="/api/maps/update.html">maps.update</a></li>
+              <li><a href="/api/maps/delete.html">maps.delete</a></li>
+              <li><a href="/api/maps/addLayer.html">maps.addLayer</a></li>
+              <li><a href="/api/maps/deleteLayer.html">maps.deleteLayer</a></li>
+              </ol>
+            </li>
+            <li>Search
+              <ol class="toc">
+              <li><a href="/api/search.html">search</a></li>
+              </ol>
+            </li>
+            <li>Users
+              <ol class="toc">
+              <li><a href="/api/users.html">users.createUser</a></li>
+              <li><a href="/api/users.html">users.updateUser</a></li>
+              <li><a href="/api/users.html">users.deleteUser</a></li>
+              <li><a href="/api/users.html">users.getInfo</a></li>
+              </ol>
+            </li>
+            <li>Groups
+              <ol class="toc">
+              <li><a href="/api/groups.html">groups.createGroup</a></li>
+              <li><a href="/api/groups.html">groups.addUser</a></li>
+              <li><a href="/api/groups.html">groups.deleteGroup</a></li>
+              <li><a href="/api/groups.html">groups.getUsers</a></li>
+              <li><a href="/api/permissions.html">permissions.set</a></li>
+              </ol>
+            </li>
+            <li>Analysis
+              <ol class="toc">
+              <li><a href="/api/analysis.html">Analysis</a></li>
+              </ol>
+            </li>
+          <li><a href="/api/javascript.html">JavaScript API</a>
             <ol class="toc">
-              <li><a href="/javascript.html">Javascript</a>
-              <li><a href="/javascript/methods.html">Javascript Methods</a>
+              <li><a href="/api/javascript/methods.html">Javascript Methods</a></li>
+              <li><a href="/api/javascript/methods.html">Charts</a></li>
+            </ol>
+          </li>          
+          <li>SDK &amp; Tools
+            <ol class="toc">
+              <li><a href="/api/javascript.html">Javascript</a></li>
+              <li><a href="/api/javascript/methods.html">Javascript Methods</a></li>
             </ol>
           </li>          
           <li>Examples
             <ol class="toc">
-              <li><a href='/examples/dashboard.html'>Dashboard Example</a></li>
-              <li><a href='/examples/map.html'>Map Example</a></li>
-              <li><a href='/examples/map_drawing.html'>Map Drawing Example</a></li>
-              <li><a href='/examples/editing_features.html'>Editing Features Example</a></li>
-              <li><a href='/examples/map_search'>Map Search Example</a></li>
-              <li><a href='http://getsatisfaction.com/geocommons'>Troubleshooting</a></li>
+              <li><a href='/api/examples/dashboard.html'>Dashboard Example</a></li>
+              <li><a href='/api/examples/map.html'>Map Example</a></li>
+              <li><a href='/api/examples/map_drawing.html'>Map Drawing Example</a></li>
+              <li><a href='/api/examples/editing_features.html'>Editing Features Example</a></li>
+              <li><a href='/api/examples/map_search'>Map Search Example</a></li>
             </ol>
           </li>
         </ol>
       </div>
       <div id='content'>
         <h1 id='analysis api'>Analysis API</h1>
-        <p>GeoIQ provides a full suite of spatial and statistical analysis tools to process data. Analysis operations are performed as asynchronous jobs, so when a request is made for analysis the return will point to the placeholder for where there resulting dataset will be stored. Your applications should use the <span class="caps">REST</span> <span class="caps">API</span> to check overlay state for when it&#8217;s done.</p>
-<p><strong>Endpoint:</strong> http://geocommons.com/analysis.:format</p>
-<p><strong>Description:</strong> GeoCommons is making a variety of analysis modules available including aggregation.  Through the analysis <span class="caps">API</span> you can run operations on a dataset to create a new resulting dataset.</p>
-<p><strong><span class="caps">HTTP</span> Methods Available:</strong> <span class="caps">POST</span></p>
-<p><strong><span class="caps">URL</span> Summary:</strong></p>
-<table>
-	<tr>
-		<td><strong>Task</strong></td>
-		<td><strong><span class="caps">URL</span></strong></td>
-		<td><strong>Formats</strong></td>
-		<td><strong><span class="caps">HTTP</span> <span class="caps">METHOD</span></strong></td>
-	</tr>
-	<tr>
-		<td>Analyze</td>
-		<td>http://geocommons.com/analysis.:format</td>
-		<td>json</td>
-		<td><span class="caps">POST</span></td>
-	</tr>
-</table>
-<h2>Buffer</h2>
-<p><strong>Required Parameters:</strong></p>
-<table>
-	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
-	</tr>
-	<tr>
-		<td>calculation</td>
-		<td>the algorithm for the analysis</td>
-		<td>calculation=buffer</td>
-	</tr>
-	<tr>
-		<td>ds1</td>
-		<td>ID of dataset to compute buffer for</td>
-		<td>ds1=160474</td>
-	</tr>
-	<tr>
-		<td>distance</td>
-		<td>Numeric value of distance to buffer</td>
-		<td>distance=25</td>
-	</tr>
-</table>
-<p><strong>Optional Parameters:</strong></p>
-<table>
-	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
-	</tr>
-	<tr>
-		<td>units</td>
-		<td>Distance units. Any of (km,miles,m,ft,degrees)</td>
-		<td>units=km</td>
-	</tr>
-</table>
-<p><strong>Returns</strong></p>
-<table>
-	<tr>
-		<td>Type</td>
-		<td>Description</td>
-		<td>Example</td>
-	</tr>
-	<tr>
-		<td>Dataset</td>
-		<td>returns the full resulting dataset</td>
-		<td>https://gist.github.com/860926</td>
-	</tr>
-</table>
-<p><strong>Curl Examples:</strong></p>
-<p><em>Create a dataset of areas within 25 miles of an electric vehicle charging station (<a href="http://geocommons.com/overlays/160474">160474</a>):</em><br />
-<pre>curl -i -X <span class="caps">POST</span> -u &#8220;username:password&#8221; -d &#8220;distance=25&#8221; -d &#8220;units=miles&#8221; -d &#8220;ds1=160474&#8221; -d &#8220;calculation=buffer&#8221; http://geocommons.com/analysis.json</pre></p>
-<h2>Intersection</h2>
-<p>Determine all the locations where one data set overlaps another data set on the map.</p>
-<p><strong>Required Parameters:</strong></p>
-<table>
-	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
-	</tr>
-	<tr>
-		<td>calculation</td>
-		<td>the algorithm for the analysis</td>
-		<td>calculation=intersect</td>
-	</tr>
-	<tr>
-		<td>ds1</td>
-		<td>First datasets to intersect with</td>
-		<td>ds1=160475</td>
-	</tr>
-	<tr>
-		<td>ds2</td>
-		<td>Second datasets to intersect with</td>
-		<td>ds2=160379</td>
-	</tr>
-</table>
-<p><strong>Optional Parameters:</strong></p>
-<table>
-	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
-	</tr>
-	<tr>
-		<td>merge</td>
-		<td>how to merge attributes: combine, prefer_1 or prefer_2; defaults to prefer_1</td>
-		<td>merge=prefer_1</td>
-	</tr>
-</table>
-<p><strong>Returns</strong></p>
-<table>
-	<tr>
-		<td>Type</td>
-		<td>Description</td>
-		<td>Example</td>
-	</tr>
-	<tr>
-		<td>Dataset</td>
-		<td>returns the full resulting dataset</td>
-		<td>https://gist.github.com/860926</td>
-	</tr>
-</table>
-<p><strong>Curl Examples:</strong></p>
-<p><em>Create a dataset of areas within 25 miles of an electric vehicle charging station (<a href="http://geocommons.com/overlays/160475">160475</a>) <span class="caps">AND</span> 50 miles of a theme park (<a href="http://geocommons.com/overlays/160379">160379</a>):</em><br />
-<pre>curl -i -X <span class="caps">POST</span> -u &#8220;username:password&#8221; -d &#8220;ds1=160475&#8221; -d &#8220;ds2=160379&#8221; -d &#8220;calculation=intersect&#8221; http://geocommons.com/analysis.json</pre></p>
-<h2>Spatial Aggregation</h2>
-<p>You can aggregate an existing dataset to a set of boundaries to create a new dataset. This will create a new dataset that will be returned as an object in the response body.</p>
-<p><strong>Required Parameters:</strong></p>
-<table>
-	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
-	</tr>
-	<tr>
-		<td>calculation</td>
-		<td>the algorithm for the analysis</td>
-		<td>calculation=aggregation</td>
-	</tr>
-	<tr>
-		<td>ds1</td>
-		<td>ID of the dataset to aggregate</td>
-		<td>ds1=160474</td>
-	</tr>
-	<tr>
-		<td>ds2</td>
-		<td>ID of the boundary dataset</td>
-		<td>ds2=160361</td>
-	</tr>
-</table>
-<p><strong>Optional Parameters:</strong></p>
-<table>
-	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
-	</tr>
-	<tr>
-		<td>aggregates</td>
-		<td>array of aggregate columns to add to the result</td>
-		<td>aggregates[][name]=population&amp;aggregates[][calc]=sum</td>
-	</tr>
-	<tr>
-		<td>keep_empty</td>
-		<td>carry over polygons that do not intersect with the dataset being aggregated (default: false)</td>
-		<td>keep_empty=0</td>
-	</tr>
-</table>
-<p>A <em>count of <dataset></em> column is automatically added that has the number of features that were within that boundary.</p>
-<p><strong>Curl Example</strong></p>
-<p><em>Create a map of electric vehicle charging stations (<a href="http://geocommons.com/overlays/160474">160474</a>) by state (<a href="http://geocommons.com/overlays/160361">160361</a>), with number public stations as a new attribute:</em></p>
-<pre>curl -i -X POST -u "username:password" -d "calculation=aggregation" -d "ds1=160474" -d "ds2=160361" -d "aggregates[][name]=public" -d "aggregates[][calc]=sum" -d "keep_empty=1" http://geocommons.com/analysis.json</pre>
-<h2>Cross Dataset Correlation</h2>
-<p>You can cross correlate two datasets to a boundary dataset to create a new dataset.</p>
-<p><strong>Required Parameters:</strong></p>
-<table>
-	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
-	</tr>
-	<tr>
-		<td>calculation</td>
-		<td>the algorithm for the analysis</td>
-		<td>calculation=correlation</td>
-	</tr>
-	<tr>
-		<td>ds1</td>
-		<td>ID of dependent dataset to correlate</td>
-		<td>ds1=160474</td>
-	</tr>
-	<tr>
-		<td>atr_1</td>
-		<td>Attribute name in dependent dataset</td>
-		<td>atr_1=public</td>
-	</tr>
-	<tr>
-		<td>ds2</td>
-		<td>ID of independent dataset to correlate to</td>
-		<td>ds2=160476</td>
-	</tr>
-	<tr>
-		<td>atr_2</td>
-		<td>Attribute name in dependent dataset</td>
-		<td>atr_2=<span class="caps">PERCENT</span></td>
-	</tr>
-	<tr>
-		<td>ds3</td>
-		<td>Boundary dataset to aggregate to</td>
-		<td>ds3=160361</td>
-	</tr>
-</table>
-<p><strong>Optional Parameters:</strong></p>
-<table>
-	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
-	</tr>
-	<tr>
-		<td>calculation_1</td>
-		<td>aggregate calculation for dependent dataset: one of &#8220;sum&#8221;, &#8220;average&#8221;, &#8220;max&#8221;, or &#8220;min&#8221;; defaults to count</td>
-		<td>sum</td>
-	</tr>
-	<tr>
-		<td>calculation_2</td>
-		<td>aggregate calculation for independent dataset: one of &#8220;sum&#8221;, &#8220;average&#8221;, &#8220;max&#8221;, or &#8220;min&#8221;; defaults to count</td>
-		<td>sum</td>
-	</tr>
-</table>
-<p><strong>Curl Example</strong></p>
-<p><em>Determine how number of electric vehicle charging stations (<a href="http://geocommons.com/overlays/160474">160474</a>) is correlated with cloud-free days (<a href="http://geocommons.com/overlays/160476">160476</a>), aggregating by state (<a href="http://geocommons.com/overlays/160361">160361</a>):</em><br />
-<pre>curl -u username:password -X <span class="caps">POST</span> -d &#8220;calculation=correlation&#8221; -d &#8220;ds1=160474&#8221; -d &#8220;atr_1=public&#8221; -d &#8220;calculation_1=sum&#8221; -d &#8220;ds2=160476&#8221; -d &#8220;atr_2=<span class="caps">PERCENT</span>&#8221; -d &#8220;calculation_2=average&#8221; -d &#8220;ds3=160361&#8221; http://geocommons.com/analysis.json<br />
-</pre></p>
-<h2>Sum</h2>
-<p>You can create a new dataset with two attributes added.</p>
-<p><strong>Required Parameters:</strong></p>
-<table>
-	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
-	</tr>
-	<tr>
-		<td>calculation</td>
-		<td>the algorithm for the analysis</td>
-		<td>calculation=sum</td>
-	</tr>
-	<tr>
-		<td>ds1</td>
-		<td>ID of dataset</td>
-		<td>ds1=160502</td>
-	</tr>
-	<tr>
-		<td>atr_1</td>
-		<td>First attribute to add</td>
-		<td>atr1=Under5</td>
-	</tr>
-	<tr>
-		<td>atr_2</td>
-		<td>Second attribute to add</td>
-		<td>atr2=Y5to13</td>
-	</tr>
-</table>
-<p><strong>Optional Parameters:</strong></p>
-<p><em>none</em></p>
-<p><strong>Curl Example</strong></p>
-<p><em>Get a dataset with number of people in each state who are under 13 by adding two age groups in (<a href="http://geocommons.com/overlays/160502">160502</a>):</em><br />
-<pre>curl -u username:password -X <span class="caps">POST</span> -d &#8220;calculation=sum&#8221; -d &#8220;ds1=160502&#8221; -d &#8220;atr_1=Under5&#8221; -d &#8220;atr_2=Y5to13&#8221;  http://geocommons.com/analysis.json<br />
-</pre></p>
-<h2>Difference</h2>
-<p>You can create a new dataset with the difference between two attributes.</p>
-<p><strong>Required Parameters:</strong></p>
-<table>
-	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
-	</tr>
-	<tr>
-		<td>calculation</td>
-		<td>the algorithm for the analysis</td>
-		<td>calculation=difference</td>
-	</tr>
-	<tr>
-		<td>ds1</td>
-		<td>ID of dataset</td>
-		<td>ds1=160506</td>
-	</tr>
-	<tr>
-		<td>atr_1</td>
-		<td>Attribute to subtract from</td>
-		<td>atr1=Total</td>
-	</tr>
-	<tr>
-		<td>atr_2</td>
-		<td>Attribute to subtract</td>
-		<td>atr2=sum of Under5 and Y5to13</td>
-	</tr>
-</table>
-<p><strong>Optional Parameters:</strong></p>
-<p><em>none</em></p>
-<p><strong>Curl Example</strong></p>
-<p><em>Get a dataset with number of people in each state who are 13 or older by subtracting the number under 13 from the total population in (<a href="http://geocommons.com/overlays/160506">160506</a>):</em><br />
-<pre>curl -u &#8220;username:password&#8221; -X <span class="caps">POST</span> -d &#8220;calculation=difference&#8221; -d &#8220;ds1=160506&#8221; -d &#8220;atr_1=Total&#8221; -d &#8220;atr_2=sum of Under5 and Y5to13&#8221;   http://geocommons.com/analysis.json<br />
-</pre></p>
-<h2>Group By</h2>
-<p>Combine features of a dataset based on a common value. Each resulting feature will have the geometry of one of the items in the group.</p>
-<p><strong>Required Parameters:</strong></p>
-<table>
-	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
-	</tr>
-	<tr>
-		<td>calculation</td>
-		<td>the algorithm for the analysis</td>
-		<td>calculation=group_by</td>
-	</tr>
-	<tr>
-		<td>ds1</td>
-		<td>ID of dataset</td>
-		<td>ds1=160474</td>
-	</tr>
-	<tr>
-		<td>atr_1</td>
-		<td>Attribute to group on</td>
-		<td>atr_1=state</td>
-	</tr>
-</table>
-<p><strong>Optional Parameters:</strong></p>
-<table>
-	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
-	</tr>
-	<tr>
-		<td>aggregates</td>
-		<td>list of aggregate calculations</td>
-		<td>aggregates[][name]=public&amp;aggregates[][calc]=sum</td>
-	</tr>
-</table>
-<p><em>none</em></p>
-<p>A <em>count of <dataset></em> column is automatically added that has the number of features that were in the group.</p>
-<p><strong>Curl Example</strong></p>
-<p><em>Create a map of electric vehicle charging stations (<a href="http://geocommons.com/overlays/160474">160474</a>) by state using the state column to group on, with number public stations as a new attribute:</em><br />
-<pre>curl -u &#8220;username:password&#8221; -X <span class="caps">POST</span> -d &#8220;calculation=group_by&#8221; -d &#8220;ds1=160474&#8221; -d &#8220;atr_1=state&#8221; -d &#8220;aggregates[][name]=public&#8221; -d &#8220;aggregates[][calc]=sum&#8221; http://geocommons.com/analysis.json<br />
-</pre></p>
-<h2>Simplify</h2>
-<p>Simplify a dataset to make the features less complex</p>
-<p><strong>Required Parameters:</strong></p>
-<table>
-	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
-	</tr>
-	<tr>
-		<td>calculation</td>
-		<td>the algorithm for the analysis</td>
-		<td>calculation=simplify</td>
-	</tr>
-	<tr>
-		<td>ds1</td>
-		<td>ID of dataset to compute buffer for</td>
-		<td>ds1=160474</td>
-	</tr>
-	<tr>
-		<td>tolerance</td>
-		<td>Numeric value of distance to simplify to</td>
-		<td>tolerance=25</td>
-	</tr>
-</table>
-<p><strong>Optional Parameters:</strong></p>
-<table>
-	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
-	</tr>
-	<tr>
-		<td>unit</td>
-		<td>Tolerance units. Any of (km,miles,m,ft,degrees); defaults to km</td>
-		<td>units=km</td>
-	</tr>
-	<tr>
-		<td>method</td>
-		<td>method to use: Either &#8220;douglas peucker&#8221; or &#8220;preserve topology&#8221;; defaults to &#8220;douglas peucker&#8221;</td>
-		<td>method=preserve topology</td>
-	</tr>
-</table>
-<p><strong>Returns</strong></p>
-<table>
-	<tr>
-		<td>Type</td>
-		<td>Description</td>
-		<td>Example</td>
-	</tr>
-	<tr>
-		<td>Dataset</td>
-		<td>returns the full resulting dataset</td>
-		<td>https://gist.github.com/860926</td>
-	</tr>
-</table>
-<p><strong>Curl Examples:</strong></p>
-<p><em>Simplify a dataset of US states (<a href="http://geocommons.com/overlays/160361">160361</a>) to reduce its size:</em><br />
-<pre>curl -i -X <span class="caps">POST</span> -u &#8220;username:password&#8221; -d &#8220;tolerance=20&#8221; -d &#8220;unit=miles&#8221; -d &#8220;ds1=160361&#8221; -d &#8220;method=preserve topology&#8221; -d &#8220;calculation=simplify&#8221; http://geocommons.com/analysis.json</pre></p>
-<h2>Expression</h2>
-<p>Use your own equation to calculate a result for the attributes in a dataset</p>
-<p><strong>Required Parameters:</strong></p>
-<table>
-	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
-	</tr>
-	<tr>
-		<td>calculation</td>
-		<td>the algorithm for the analysis</td>
-		<td>calculation=expression</td>
-	</tr>
-	<tr>
-		<td>ds1</td>
-		<td>ID of dataset</td>
-		<td>ds1=160502</td>
-	</tr>
-	<tr>
-		<td>expression</td>
-		<td>Expression to compute</td>
-		<td>expression=$[Total]-$[Under5]-$[Y5to13]</td>
-	</tr>
-</table>
-<p><strong>Optional Parameters:</strong></p>
-<p><em>none</em></p>
-<p><strong>Curl Example</strong></p>
-<p>&#8220;$[Total]-($[Under5]+$[Y5to13])&#8221;</p>
-<p><em>Get a dataset with number of people in each state who are 13 or older by subtracting the number under 5 and 5-13 from the total population in (<a href="http://geocommons.com/overlays/160502">160502</a>):</em><br />
-<pre>curl <del>u &#8220;username:password&#8221; -X <span class="caps">POST</span> -d &#8220;calculation=expression&#8221; -d &#8220;ds1=160502&#8221; -d &quot;expression=$[Total]</del>$[Under5]-$[Y5to13]&quot;  http://geocommons.com/analysis.json<br />
-</pre></p>
-<h2>Clip</h2>
-<p>Clip an input dataset based on a clipping dataset</p>
-<p><strong>Required Parameters:</strong></p>
-<table>
-	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
-	</tr>
-	<tr>
-		<td>calculation</td>
-		<td>the algorithm for the analysis</td>
-		<td>calculation=clip</td>
-	</tr>
-	<tr>
-		<td>ds1</td>
-		<td>ID of the dataset to clip</td>
-		<td>ds1=160474</td>
-	</tr>
-	<tr>
-		<td>ds2</td>
-		<td>ID of the clipping dataset</td>
-		<td>ds2=160379</td>
-	</tr>
-</table>
-<p><strong>Optional Parameters:</strong></p>
-<p><em>none</em></p>
-<p><strong>Curl Example</strong></p>
-<p><em>Create a dataset of only those electric vehicle charging stations (<a href="http://geocommons.com/overlays/160474">160474</a>) that are within 50 miles of a theme park (<a href="http://geocommons.com/overlays/160379">160379</a>):</em></p>
-<pre>curl -i -X POST -u "username:password" -d "calculation=clip" -d "ds1=160474" -d "ds2=160379" http://geocommons.com/analysis.json</pre>
-<h2>Dissolve</h2>
-<p>Merge polygons together that have a common attribute</p>
-<p><strong>Required Parameters:</strong></p>
-<table>
-	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
-	</tr>
-	<tr>
-		<td>calculation</td>
-		<td>the algorithm for the analysis</td>
-		<td>calculation=dissolve</td>
-	</tr>
-	<tr>
-		<td>ds1</td>
-		<td>ID of the dataset to aggregate</td>
-		<td>ds1=160474</td>
-	</tr>
-	<tr>
-		<td>atr_1</td>
-		<td>Attribute to dissolve on</td>
-		<td>atr_1=Subregion</td>
-	</tr>
-</table>
-<p><strong>Optional Parameters:</strong></p>
-<table>
-	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
-	</tr>
-	<tr>
-		<td>aggregates</td>
-		<td>array of aggregate columns to add to the result</td>
-		<td>aggregates[][name]=population&amp;aggregates[][calc]=sum</td>
-	</tr>
-</table>
-<p>A <em>count of <dataset></em> column is automatically added that has the number of features that were within each boundary.</p>
-<p><strong>Curl Example</strong></p>
-<p><em>Create a dataset of US regions by dissolving on the Subregion attribute of states dataset (<a href="http://geocommons.com/overlays/160361">160361</a>):</em></p>
-<pre>curl -i -X POST -u "username:password" -d "calculation=dissolve" -d "ds2=160361" http://geocommons.com/analysis.json</pre>
         <p>GeoIQ provides a full suite of spatial and statistical analysis tools to process data. Analysis operations are performed as asynchronous jobs, so when a request is made for analysis the return will point to the placeholder for where there resulting dataset will be stored. Your applications should use the <span class="caps">REST</span> <span class="caps">API</span> to check overlay state for when it&#8217;s done.</p>
 <p><strong>Endpoint:</strong> http://geocommons.com/analysis.:format</p>
 <p><strong>Description:</strong> GeoCommons is making a variety of analysis modules available including aggregation.  Through the analysis <span class="caps">API</span> you can run operations on a dataset to create a new resulting dataset.</p>

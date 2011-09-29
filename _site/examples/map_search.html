@@ -3,14 +3,14 @@
     <meta content='text/html;charset=UTF-8' http-equiv='Content-Type'>
     <title>GeoIQ &mdash; Map Search Example</title>
     <style type='text/css'>
-      @import '/css/default.css';
-      @import '/css/syntax.css';
+      @import '/api/css/default.css';
+      @import '/api/css/syntax.css';
     </style>
     <style media='print' type='text/css'>
-      @import '/css/print.css';
+      @import '/api/css/print.css';
     </style>
     <meta content='GeoIQ API' name='subject'>
-    <link href='/images/favicon.png' rel='shortcut icon'>
+    <link href='/api/images/favicon.png' rel='shortcut icon'>
   </head>
   <body>
     <div id='wrap'>
@@ -22,122 +22,96 @@
         <ol class='toc'>
           <li>Start Here
             <ol class="toc">
-              <li><a href='/index.html'>Welcome</a></li>
-              <li><a href='/tutorial.html'>Quick Start</a></li>
-              <li><a href='https://github.com/fortiusone/api/wiki'>Community Wiki</a></li>
+              <li><a href='/api/index.html'>Welcome</a></li>
+              <li><a href='/api/tutorial.html'>Quick Start</a></li>
+              <li><a href='http://getsatisfaction.com/geocommons'>Get Help</a></li>
+              <li><a href='http://developer.geoiq.com/blog/'>Blog</a></li>
             </ol>
           </li>
           <li>REST API
             <ol class="toc">
-              <li><a href='/methods.html'>Methods</a></li>
-              <li><a href="/analysis.html">Analysis</a></li>
-              <li><a href="/chart.html">Chart</a></li>
-              <li><a href="/configurations.html">Configurations</a></li>
-              <li><a href="/filter.html">Filter</a></li>
-              <li><a href="/groups.html">Groups</a></li>
-              <li><a href="/features/index.html">Data Features</a>
-                <ol class="toc">
-                  <li><a href="/features/features_create.html">Create</a></li>
-                  <li><a href="/features/features_retrieve.html">Read</a></li>
-                  <li><a href="/features/features_delete.html">Delete</a></li>
-                </ol></li>
-            </ol>
-          </li>
-          <li>JavaScript API
+              <li><a href='/api/methods.html'>Methods</a></li>
+              </ol>
+            </li>
+            <li>Datasets
+              <ol class="toc">
+                <li><a href="/api/datasets/create.html">datasets.create</a></li>
+                <li><a href="/api/datasets/retrieve.html">datasets.retrieve</a></li>
+                <li><a href="/api/datasets/delete.html">datasets.delete</a></li>
+                <li><a href="/api/datasets/update.html">datasets.update</a></li>
+                <li><a href="/api/datasets/update.html">datasets.update_feed</a></li>
+              </ol>
+            </li>
+            <li>Features
+              <ol class="toc">
+              <li><a href="/api/features/retrieve.html">GET /dataset/:id/features</a></li>
+              <li><a href="/api/features/create.html">POST /dataset/:id/features</a></li>
+              <li><a href="/api/features/delete.html">DELETE /dataset/:id/features</a></li>
+              <li><a href="/api/features/aggregate.html">features.aggregate</a></li>
+              </ol>
+            </li>
+            <li>Maps
+              <ol class="toc">
+              <li><a href="/api/maps/download.html">maps.download</a></li>
+              <li><a href="/api/maps/create.html">maps.create</a></li>
+              <li><a href="/api/maps/update.html">maps.update</a></li>
+              <li><a href="/api/maps/delete.html">maps.delete</a></li>
+              <li><a href="/api/maps/addLayer.html">maps.addLayer</a></li>
+              <li><a href="/api/maps/deleteLayer.html">maps.deleteLayer</a></li>
+              </ol>
+            </li>
+            <li>Search
+              <ol class="toc">
+              <li><a href="/api/search.html">search</a></li>
+              </ol>
+            </li>
+            <li>Users
+              <ol class="toc">
+              <li><a href="/api/users.html">users.createUser</a></li>
+              <li><a href="/api/users.html">users.updateUser</a></li>
+              <li><a href="/api/users.html">users.deleteUser</a></li>
+              <li><a href="/api/users.html">users.getInfo</a></li>
+              </ol>
+            </li>
+            <li>Groups
+              <ol class="toc">
+              <li><a href="/api/groups.html">groups.createGroup</a></li>
+              <li><a href="/api/groups.html">groups.addUser</a></li>
+              <li><a href="/api/groups.html">groups.deleteGroup</a></li>
+              <li><a href="/api/groups.html">groups.getUsers</a></li>
+              <li><a href="/api/permissions.html">permissions.set</a></li>
+              </ol>
+            </li>
+            <li>Analysis
+              <ol class="toc">
+              <li><a href="/api/analysis.html">Analysis</a></li>
+              </ol>
+            </li>
+          <li><a href="/api/javascript.html">JavaScript API</a>
             <ol class="toc">
-              <li><a href="/javascript.html">Javascript</a>
-              <li><a href="/javascript/methods.html">Javascript Methods</a>
+              <li><a href="/api/javascript/methods.html">Javascript Methods</a></li>
+              <li><a href="/api/javascript/methods.html">Charts</a></li>
+            </ol>
+          </li>          
+          <li>SDK &amp; Tools
+            <ol class="toc">
+              <li><a href="/api/javascript.html">Javascript</a></li>
+              <li><a href="/api/javascript/methods.html">Javascript Methods</a></li>
             </ol>
           </li>          
           <li>Examples
             <ol class="toc">
-              <li><a href='/examples/dashboard.html'>Dashboard Example</a></li>
-              <li><a href='/examples/map.html'>Map Example</a></li>
-              <li><a href='/examples/map_drawing.html'>Map Drawing Example</a></li>
-              <li><a href='/examples/editing_features.html'>Editing Features Example</a></li>
-              <li><a href='/examples/map_search'>Map Search Example</a></li>
-              <li><a href='http://getsatisfaction.com/geocommons'>Troubleshooting</a></li>
+              <li><a href='/api/examples/dashboard.html'>Dashboard Example</a></li>
+              <li><a href='/api/examples/map.html'>Map Example</a></li>
+              <li><a href='/api/examples/map_drawing.html'>Map Drawing Example</a></li>
+              <li><a href='/api/examples/editing_features.html'>Editing Features Example</a></li>
+              <li><a href='/api/examples/map_search'>Map Search Example</a></li>
             </ol>
           </li>
         </ol>
       </div>
       <div id='content'>
         <h1 id='map search example'>Map Search Example</h1>
-        // Demo for showing how to do on-click buffer radius select and filtering of data
-//
-// To start, open this map: http://tr.geoiq.com/maps/17
-// Then run the file below in your Javascript console
-// Then click on the map.
-// Author: Andrew Turner &#8211; andrew@geoiq.com
-// Date: 8/3/2011
-var sex_offender_layer = 2,
-radius_buffer_layer = 1,
-schools_layer = 0;
-// Let&#8217;s create some sample data
-add_offenders()
-// Generates a polygon approximate circle of latitude and longitude points given a
-//  center, radius distance and number of vertices
-//
-// @radius in miles
-// @steps number of vertices in the circle
-// @centerX longitude origin on the circle, decimal degrees
-// @centerY longitude origin on the circle, decimal degrees
-//
-// @returns an array of [longitude,latitude] array points
-function circle(radius, steps, centerX, centerY){
-radiusDegrees = radius * 0.014483;
-var points = []
-for (var i = 0; i &lt;= steps; i++) {
-points.push([centerX + radiusDegrees * Math.cos(2 * Math.PI * i / steps-Math.PI),
-centerY + radiusDegrees * Math.sin(2 * Math.PI * i / steps-Math.PI)])
-}
-return [points];
-}
-// From a polygon, determine the minimum bounding extents in coordinates
-//
-// @returns an array of extents in [West, South, East, North]
-function get_extent(polygon) {
-var extent = [Math.min(), Math.min(), Math.max(), Math.max()]
-for (var i = 0; i &lt; polygon.length; ++i) {
-if(polygon[i]<sup class="footnote" id="fnr0"><a href="#fn0">0</a></sup> &lt; extent<sup class="footnote" id="fnr0"><a href="#fn0">0</a></sup>) extent<sup class="footnote" id="fnr0"><a href="#fn0">0</a></sup> = polygon[i]<sup class="footnote" id="fnr0"><a href="#fn0">0</a></sup>;
-if(polygon[i]<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> &lt; extent<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>) extent<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> = polygon[i]<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>;
-if(polygon[i]<sup class="footnote" id="fnr0"><a href="#fn0">0</a></sup> &gt; extent<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup>) extent<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup> = polygon[i]<sup class="footnote" id="fnr0"><a href="#fn0">0</a></sup>;
-if(polygon[i]<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> &gt; extent<sup class="footnote" id="fnr3"><a href="#fn3">3</a></sup>) extent<sup class="footnote" id="fnr3"><a href="#fn3">3</a></sup> = polygon[i]<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>;
-}
-return extent;
-}
-// Given a layer and bounding extent, only show the features that located in that area
-//
-// @layer_id index id or guid of the layer to filter
-// @extent minimum bounding rectangle as decimal degrees [West, South, East, North]
-//
-// @returns Array of visible features
-function search_within(layer_id,extent) {
-F1.Maker.current_map.clearFilters(layer_id);
-var filter = &quot;$[longitude] &gt;= &quot; + extent<sup class="footnote" id="fnr0"><a href="#fn0">0</a></sup> + &quot; <span class="caps">AND</span> $[latitude] &gt;= &quot; + extent<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> + &quot; <span class="caps">AND</span> $[longitude] &lt;= &quot; + extent<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup> + &quot; <span class="caps">AND</span> $[latitude] &lt;= &quot; + extent<sup class="footnote" id="fnr3"><a href="#fn3">3</a></sup>;
-F1.Maker.current_map.addFilter(layer_id, {expression: filter});
-return F1.Maker.current_map.getVisibleFeatures(layer_id);
-}
-// onMapClicked event handler that draws a radius circle and shows only the features within that bounding rectangle
-//
-// @returns None
-F1.Maker.current_map.setCallback(&#8220;onMapClicked&#8221;, function(location) {
-var buffer = circle(5, 20, location<sup class="footnote" id="fnr0"><a href="#fn0">0</a></sup>, location<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>);
-F1.Maker.current_map.addFeatures(radius_buffer_layer, [{geometry: {type: &#8220;Polygon&#8221;,
-coordinates: buffer } }], true);
-
-// May return an empty array as the addFeatures call in asyncrhonous and may not have filtered yet. (race condition)
-console.log(search_within(sex_offender_layer, get_extent(buffer<sup class="footnote" id="fnr0"><a href="#fn0">0</a></sup>)))
-} );
-// Array of test offenders
-function add_offenders() {
-F1.Maker.current_map.addFeatures(sex_offender_layer, [{&quot;geometry&quot;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-78.75665288977578,37.54807959910797]}">coordinates</a>,<a href="-78.75665288977578">longitude</a>,&#8220;guid&#8221;:&#8220;iw409843ip&#8221;,<a href="37.54807959910797},{">latitude</a>&#8220;geometry&#8221;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-78.58087164568609,37.49579873895581]}">coordinates</a>,<a href="-78.58087164568609">longitude</a>,&#8220;guid&#8221;:&#8220;fq409843wi&#8221;,<a href="37.49579873895581},{">latitude</a>&#8220;geometry&#8221;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-78.09747322443943,37.49579873895581]}">coordinates</a>,<a href="-78.09747322443943">longitude</a>,&#8220;guid&#8221;:&#8220;iz409843vx&#8221;,<a href="37.49579873895581},{">latitude</a>&#8220;geometry&#8221;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-77.74591073626004,37.5829131496498]}">coordinates</a>,<a href="-77.74591073626004">longitude</a>,&#8220;guid&#8221;:&#8220;qc409843gt&#8221;,<a href="37.5829131496498},{">latitude</a>&#8220;geometry&#8221;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-77.10870372643491,37.63513292797717]}">coordinates</a>,<a href="-77.10870372643491">longitude</a>,&#8220;guid&#8221;:&#8220;oq409843ig&#8221;,<a href="37.63513292797717},{">latitude</a>&#8220;geometry&#8221;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-77.10870372643491,37.98232675632772]}">coordinates</a>,<a href="-77.10870372643491">longitude</a>,&#8220;guid&#8221;:&#8220;od409843uk&#8221;,<a href="37.98232675632772},{">latitude</a>&#8220;geometry&#8221;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-77.54815683665915,37.9996435714273]}">coordinates</a>,<a href="-77.54815683665915">longitude</a>,&#8220;guid&#8221;:&#8220;gz409843zs&#8221;,<a href="37.9996435714273},{">latitude</a>&#8220;geometry&#8221;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-77.57012949217034,38.41401932741947]}">coordinates</a>,<a href="-77.57012949217034">longitude</a>,&#8220;guid&#8221;:&#8220;wd409843rq&#8221;,<a href="38.41401932741947},{">latitude</a>&#8220;geometry&#8221;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-77.33392344542482,39.752829517255705]}">coordinates</a>,<a href="-77.33392344542482">longitude</a>,&#8220;guid&#8221;:&#8220;qr409843kc&#8221;,<a href="39.752829517255705},{">latitude</a>&#8220;geometry&#8221;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-76.67474378008846,38.808912247896885]}">coordinates</a>,<a href="-76.67474378008846">longitude</a>,&#8220;guid&#8221;:&#8220;bp409843ag&#8221;,<a href="38.808912247896885},{">latitude</a>&#8220;geometry&#8221;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-77.26800547889117,38.800350742990894]}">coordinates</a>,<a href="-77.26800547889117">longitude</a>,&#8220;guid&#8221;:&#8220;bs409843ff&#8221;,<a href="38.800350742990894},{">latitude</a>&#8220;geometry&#8221;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-76.90545666295618,38.88591948798176]}">coordinates</a>,<a href="-76.90545666295618">longitude</a>,&#8220;guid&#8221;:&#8220;uc409843bz&#8221;,<a href="38.88591948798176},{">latitude</a>&#8220;geometry&#8221;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-77.15814220133512,38.91157004115676]}">coordinates</a>,<a href="-77.15814220133512">longitude</a>,&#8220;guid&#8221;:&#8220;mp409843jm&#8221;,<a href="38.91157004115676},{">latitude</a>&#8220;geometry&#8221;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-77.26800547889117,38.91157004115676]}">coordinates</a>,<a href="-77.26800547889117">longitude</a>,&#8220;guid&#8221;:&#8220;jr409843vl&#8221;,<a href="38.91157004115676},{">latitude</a>&#8220;geometry&#8221;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-76.9301759004063,38.67609335241791]}">coordinates</a>,<a href="-76.9301759004063">longitude</a>,&#8220;guid&#8221;:&#8220;ed409843lh&#8221;,<a href="38.67609335241791},{">latitude</a>&#8220;geometry&#8221;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-77.1389161277628,38.800350742990894]}">coordinates</a>,<a href="-77.1389161277628">longitude</a>,&#8220;guid&#8221;:&#8220;eb409843gr&#8221;,<a href="38.800350742990894},{">latitude</a>&#8220;geometry&#8221;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-77.20483409429646,38.77894248016971]}">coordinates</a>,<a href="-77.20483409429646">longitude</a>,&#8220;guid&#8221;:&#8220;ii409843te&#8221;,<a href="38.77894248016971},{">latitude</a>&#8220;geometry&#8221;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-77.14990245551843,38.9072955924142]}">coordinates</a>,<a href="-77.14990245551843">longitude</a>,&#8220;guid&#8221;:&#8220;lu409843mo&#8221;,<a href="38.9072955924142},{">latitude</a>&#8220;geometry&#8221;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-77.08947765286258,38.89447070186546]}">coordinates</a>,<a href="-77.08947765286258">longitude</a>,&#8220;guid&#8221;:&#8220;hu409843li&#8221;,<a href="38.89447070186546},{">latitude</a>&#8220;geometry&#8221;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-77.08398448898478,38.86881397207101]}">coordinates</a>,<a href="-77.08398448898478">longitude</a>,&#8220;guid&#8221;:&#8220;xr409843vr&#8221;,<a href="38.86881397207101},{">latitude</a>&#8220;geometry&#8221;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-77.15539561939623,38.86881397207101]}">coordinates</a>,<a href="-77.15539561939623">longitude</a>,&#8220;guid&#8221;:&#8220;yi409843uy&#8221;,<a href="38.86881397207101},{">latitude</a>&#8220;geometry&#8221;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-77.19934093041864,38.86881397207101]}">coordinates</a>,<a href="-77.19934093041864">longitude</a>,&#8220;guid&#8221;:&#8220;at409843yf&#8221;,<a href="38.86881397207101},{">latitude</a>&#8220;geometry&#8221;:{&quot;type&quot;:&#8220;Point&#8221;,<a href="[-77.25427256919667,38.85598213327518]}">coordinates</a>,<a href="-77.25427256919667">longitude</a>,&#8220;guid&#8221;:&#8220;yw409843ki&#8221;,<a href="38.85598213327518}],true">latitude</a>)
-}
-// Function to build a list of offenders
-F1.Maker.current_map.setCallback(&#8220;onMapClicked&#8221;, function(loc) {
-F1.Maker.current_map.addFeatures(sex_offender_layer, [{longitude: loc<sup class="footnote" id="fnr0"><a href="#fn0">0</a></sup>, latitude: loc<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>, geometry: {type: &#8220;Point&#8221;, coordinates: [loc<sup class="footnote" id="fnr0"><a href="#fn0">0</a></sup>,loc<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>]}}])
-console.log(F1.Maker.current_map.getFeatures(sex_offender_layer));
-});
         // Demo for showing how to do on-click buffer radius select and filtering of data
 //
 // To start, open this map: http://tr.geoiq.com/maps/17

@@ -24,29 +24,79 @@
             <ol class="toc">
               <li><a href='/api/index.html'>Welcome</a></li>
               <li><a href='/api/tutorial.html'>Quick Start</a></li>
-              <li><a href='https://github.com/fortiusone/api/wiki'>Community Wiki</a></li>
+              <li><a href='http://getsatisfaction.com/geocommons'>Get Help</a></li>
+              <li><a href='http://developer.geoiq.com/blog/'>Blog</a></li>
             </ol>
           </li>
           <li>REST API
             <ol class="toc">
               <li><a href='/api/methods.html'>Methods</a></li>
+              </ol>
+            </li>
+            <li>Datasets
+              <ol class="toc">
+                <li><a href="/api/datasets/create.html">datasets.create</a></li>
+                <li><a href="/api/datasets/retrieve.html">datasets.retrieve</a></li>
+                <li><a href="/api/datasets/delete.html">datasets.delete</a></li>
+                <li><a href="/api/datasets/update.html">datasets.update</a></li>
+                <li><a href="/api/datasets/update.html">datasets.update_feed</a></li>
+              </ol>
+            </li>
+            <li>Features
+              <ol class="toc">
+              <li><a href="/api/features/retrieve.html">GET /dataset/:id/features</a></li>
+              <li><a href="/api/features/create.html">POST /dataset/:id/features</a></li>
+              <li><a href="/api/features/delete.html">DELETE /dataset/:id/features</a></li>
+              <li><a href="/api/features/aggregate.html">features.aggregate</a></li>
+              </ol>
+            </li>
+            <li>Maps
+              <ol class="toc">
+              <li><a href="/api/maps/download.html">maps.download</a></li>
+              <li><a href="/api/maps/create.html">maps.create</a></li>
+              <li><a href="/api/maps/update.html">maps.update</a></li>
+              <li><a href="/api/maps/delete.html">maps.delete</a></li>
+              <li><a href="/api/maps/addLayer.html">maps.addLayer</a></li>
+              <li><a href="/api/maps/deleteLayer.html">maps.deleteLayer</a></li>
+              </ol>
+            </li>
+            <li>Search
+              <ol class="toc">
+              <li><a href="/api/search.html">search</a></li>
+              </ol>
+            </li>
+            <li>Users
+              <ol class="toc">
+              <li><a href="/api/users.html">users.createUser</a></li>
+              <li><a href="/api/users.html">users.updateUser</a></li>
+              <li><a href="/api/users.html">users.deleteUser</a></li>
+              <li><a href="/api/users.html">users.getInfo</a></li>
+              </ol>
+            </li>
+            <li>Groups
+              <ol class="toc">
+              <li><a href="/api/groups.html">groups.createGroup</a></li>
+              <li><a href="/api/groups.html">groups.addUser</a></li>
+              <li><a href="/api/groups.html">groups.deleteGroup</a></li>
+              <li><a href="/api/groups.html">groups.getUsers</a></li>
+              <li><a href="/api/permissions.html">permissions.set</a></li>
+              </ol>
+            </li>
+            <li>Analysis
+              <ol class="toc">
               <li><a href="/api/analysis.html">Analysis</a></li>
-              <li><a href="/api/chart.html">Chart</a></li>
-              <li><a href="/api/configurations.html">Configurations</a></li>
-              <li><a href="/api/filter.html">Filter</a></li>
-              <li><a href="/api/groups.html">Groups</a></li>
-              <li><a href="/api/features/index.html">Data Features</a>
-                <ol class="toc">
-                  <li><a href="/api/features/features_create.html">Create</a></li>
-                  <li><a href="/api/features/features_retrieve.html">Read</a></li>
-                  <li><a href="/api/features/features_delete.html">Delete</a></li>
-                </ol></li>
-            </ol>
-          </li>
-          <li>JavaScript API
+              </ol>
+            </li>
+          <li><a href="/api/javascript.html">JavaScript API</a>
             <ol class="toc">
-              <li><a href="/api/javascript.html">Javascript</a>
-              <li><a href="/api/javascript/methods.html">Javascript Methods</a>
+              <li><a href="/api/javascript/methods.html">Javascript Methods</a></li>
+              <li><a href="/api/javascript/methods.html">Charts</a></li>
+            </ol>
+          </li>          
+          <li>SDK &amp; Tools
+            <ol class="toc">
+              <li><a href="/api/javascript.html">Javascript</a></li>
+              <li><a href="/api/javascript/methods.html">Javascript Methods</a></li>
             </ol>
           </li>          
           <li>Examples
@@ -56,14 +106,12 @@
               <li><a href='/api/examples/map_drawing.html'>Map Drawing Example</a></li>
               <li><a href='/api/examples/editing_features.html'>Editing Features Example</a></li>
               <li><a href='/api/examples/map_search'>Map Search Example</a></li>
-              <li><a href='http://getsatisfaction.com/geocommons'>Troubleshooting</a></li>
             </ol>
           </li>
         </ol>
       </div>
       <div id='content'>
         <h1 id='{{ page.title | downcase | replace(' ', '_') }}'>{{ page.title }}</h1>
-        {{ content | toc }}
         {{ content }}
       </div>
       <div id='footer'>Copyright &copy; 2008-2011 GeoIQ</div>

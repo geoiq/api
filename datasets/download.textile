@@ -1,4 +1,7 @@
-h2. *Download Dataset*
+---
+layout: default
+title: Download Dataset
+---
 
 Downloads a dataset in various formats.
 

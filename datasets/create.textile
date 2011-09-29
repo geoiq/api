@@ -1,4 +1,7 @@
-h2. *Create Dataset*
+---
+layout: default
+title: Create Dataset
+---
 
 Creates a new dataset. 
 

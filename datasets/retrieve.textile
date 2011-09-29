@@ -1,4 +1,7 @@
-h2. *Retrieve Dataset*
+---
+layout: default
+title: Retrieve Dataset
+---
 
 Retrieves a dataset in JSON format.
 

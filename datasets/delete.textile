@@ -1,4 +1,7 @@
-h2. *Delete Dataset*
+---
+layout: default
+title: Delete Dataset
+---
 
 You can currently Delete datasets by sending a DELETE HTTP request to the dataset endpoint. Deleted datasets are not recoverable.
 

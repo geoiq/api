@@ -1,4 +1,7 @@
-h2. *Update Dataset Feed*
+---
+layout: default
+title: Update Feed
+---
 
 It is possible to ping GeoIQ when new updates are available.
 

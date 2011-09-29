@@ -3,6 +3,11 @@ layout: default
 title: Delete Features API
 ---
 
+*End point*
+
+<pre>DELETE /datasets/:id/features.json</pre>
+
+*Authentication:* required
 
 At this time, the delete features endpoint requires a "resource identifier" that is not actually used. So you can put whatever value you want for this. The important aspect are the array of @ids@ that will be deleted. Currently these are a simple index into the feature array, starting at 0.
 

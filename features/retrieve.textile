@@ -3,6 +3,14 @@ layout: default
 title: Filtered Features API
 ---
 
+Developers can request all or a limited subset of features by filtering on an attribute value, range, geographic boundaries, or an aggregate rollup.
+
+*End point*
+
+<pre>GET /datasets/:id/features.json</pre>
+
+*Authentication:* required
+
 *Required Parameters:* (none)
 
 *Optional Parameters*:
@@ -17,8 +25,8 @@ title: Filtered Features API
 |lon|longitude of a point being searched from requires use of radius and lat parameters additionally|lon=-77.9998|
 |lat|latitude of a point being search from requires use of the radius and lon parameters additionally|lat=39.8282|
 |radius|defines distanced to be search from of a polygon,line,points or lat/lon pair (default is km)|radius=100|
-|intersect|specify if polygons are _contained_ or _full_. By default is set to _contained_ which means only polygons completely inside the buffer will be returned, _full_ means any part inside or touching|intersect=contained| 
-|with_distance|set to "true" to get a distance calculation of the centroid of the feature to the boundary polygon sent back with the features.|with_distance=1|
+|intersect|specify if polygons are _contained_ or _full_. By default is set to _contained_ which means only polygons completely inside the buffer will be returned, _full_ means any part inside or touching | intersect=contained |
+| with_distance | set to "true" to get a distance calculation of the centroid of the feature to the boundary polygon sent back with the features.|with_distance=1|
 |filter|filter parameters for specific attributes within the dataset| filter[dec_col][][max]=.22 |
 |group_by|array of columns to "group by" in aggregating features|group_by[]=state|
 |aggregates|array of aggregation values. Includes by name and calc. Name is the attribute name and calc can be any of: max,min,sum,average|aggregates[][name]=timestamp&aggregates[][calc]=max|
@@ -63,27 +71,4 @@ Datasets can be filtered when requested from the server. This is done by calling
 <pre>http://geocommons.com/datasets/98696/features.json?filter[int_col][][max]=5&filter[name][][equals]=point%201</code></pre>
 <pre>http://geocommons.com/datasets/98696/features.json?filter[int_col][][max]=5&filter[int_col][][min]=3</code></pre>
 
-h2. Aggregate Statistics
 
-Using the Feature API it's possible to calculate roll-up statistics of features. Using the @group_by@ and @aggregates@ you can specify to summarize max,min,sum, or average values. If a @group_by@ is specified but no aggregates, then just a count is returned of the number of features in that group.
-
-h3. group_by
-
-The @group_by@ option groups features based on the value of the attribute specified. This ends up with summarized data, by default with a count and optionally with additional @aggregates@ as specified below.
-
-<pre><code>curl http://geocommons.com/datasets/98696/features.json?group_by[]=sortable</code></pre>
-
-h3. aggregates
-
-The @aggregates@ option is an array of objects that contain both a @name@ and a @calc@. So for example: @aggregates[][name]=cost&aggregates[][calc]=average@. A request can have multiple aggregates.
-
-The calc parameter can be any of:
-
-* max - maximum value of all attribute features
-* min - minimum value of all attribute features
-* sum - summation of all values
-* average - average of all values
-
-*Example*
-
-<pre><code>curl http://geocommons.com/datasets/98696/features.json?aggregates[][name]=int_col&aggregates[][calc]=sum&group_by[]=sortable</code></pre>

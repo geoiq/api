@@ -3,14 +3,14 @@
     <meta content='text/html;charset=UTF-8' http-equiv='Content-Type'>
     <title>GeoIQ &mdash; JavaScript Methods</title>
     <style type='text/css'>
-      @import '/css/default.css';
-      @import '/css/syntax.css';
+      @import '/api/css/default.css';
+      @import '/api/css/syntax.css';
     </style>
     <style media='print' type='text/css'>
-      @import '/css/print.css';
+      @import '/api/css/print.css';
     </style>
     <meta content='GeoIQ API' name='subject'>
-    <link href='/images/favicon.png' rel='shortcut icon'>
+    <link href='/api/images/favicon.png' rel='shortcut icon'>
   </head>
   <body>
     <div id='wrap'>
@@ -22,339 +22,96 @@
         <ol class='toc'>
           <li>Start Here
             <ol class="toc">
-              <li><a href='/index.html'>Welcome</a></li>
-              <li><a href='/tutorial.html'>Quick Start</a></li>
-              <li><a href='https://github.com/fortiusone/api/wiki'>Community Wiki</a></li>
+              <li><a href='/api/index.html'>Welcome</a></li>
+              <li><a href='/api/tutorial.html'>Quick Start</a></li>
+              <li><a href='http://getsatisfaction.com/geocommons'>Get Help</a></li>
+              <li><a href='http://developer.geoiq.com/blog/'>Blog</a></li>
             </ol>
           </li>
           <li>REST API
             <ol class="toc">
-              <li><a href='/methods.html'>Methods</a></li>
-              <li><a href="/analysis.html">Analysis</a></li>
-              <li><a href="/chart.html">Chart</a></li>
-              <li><a href="/configurations.html">Configurations</a></li>
-              <li><a href="/filter.html">Filter</a></li>
-              <li><a href="/groups.html">Groups</a></li>
-              <li><a href="/features/index.html">Data Features</a>
-                <ol class="toc">
-                  <li><a href="/features/features_create.html">Create</a></li>
-                  <li><a href="/features/features_retrieve.html">Read</a></li>
-                  <li><a href="/features/features_delete.html">Delete</a></li>
-                </ol></li>
-            </ol>
-          </li>
-          <li>JavaScript API
+              <li><a href='/api/methods.html'>Methods</a></li>
+              </ol>
+            </li>
+            <li>Datasets
+              <ol class="toc">
+                <li><a href="/api/datasets/create.html">datasets.create</a></li>
+                <li><a href="/api/datasets/retrieve.html">datasets.retrieve</a></li>
+                <li><a href="/api/datasets/delete.html">datasets.delete</a></li>
+                <li><a href="/api/datasets/update.html">datasets.update</a></li>
+                <li><a href="/api/datasets/update.html">datasets.update_feed</a></li>
+              </ol>
+            </li>
+            <li>Features
+              <ol class="toc">
+              <li><a href="/api/features/retrieve.html">GET /dataset/:id/features</a></li>
+              <li><a href="/api/features/create.html">POST /dataset/:id/features</a></li>
+              <li><a href="/api/features/delete.html">DELETE /dataset/:id/features</a></li>
+              <li><a href="/api/features/aggregate.html">features.aggregate</a></li>
+              </ol>
+            </li>
+            <li>Maps
+              <ol class="toc">
+              <li><a href="/api/maps/download.html">maps.download</a></li>
+              <li><a href="/api/maps/create.html">maps.create</a></li>
+              <li><a href="/api/maps/update.html">maps.update</a></li>
+              <li><a href="/api/maps/delete.html">maps.delete</a></li>
+              <li><a href="/api/maps/addLayer.html">maps.addLayer</a></li>
+              <li><a href="/api/maps/deleteLayer.html">maps.deleteLayer</a></li>
+              </ol>
+            </li>
+            <li>Search
+              <ol class="toc">
+              <li><a href="/api/search.html">search</a></li>
+              </ol>
+            </li>
+            <li>Users
+              <ol class="toc">
+              <li><a href="/api/users.html">users.createUser</a></li>
+              <li><a href="/api/users.html">users.updateUser</a></li>
+              <li><a href="/api/users.html">users.deleteUser</a></li>
+              <li><a href="/api/users.html">users.getInfo</a></li>
+              </ol>
+            </li>
+            <li>Groups
+              <ol class="toc">
+              <li><a href="/api/groups.html">groups.createGroup</a></li>
+              <li><a href="/api/groups.html">groups.addUser</a></li>
+              <li><a href="/api/groups.html">groups.deleteGroup</a></li>
+              <li><a href="/api/groups.html">groups.getUsers</a></li>
+              <li><a href="/api/permissions.html">permissions.set</a></li>
+              </ol>
+            </li>
+            <li>Analysis
+              <ol class="toc">
+              <li><a href="/api/analysis.html">Analysis</a></li>
+              </ol>
+            </li>
+          <li><a href="/api/javascript.html">JavaScript API</a>
             <ol class="toc">
-              <li><a href="/javascript.html">Javascript</a>
-              <li><a href="/javascript/methods.html">Javascript Methods</a>
+              <li><a href="/api/javascript/methods.html">Javascript Methods</a></li>
+              <li><a href="/api/javascript/methods.html">Charts</a></li>
+            </ol>
+          </li>          
+          <li>SDK &amp; Tools
+            <ol class="toc">
+              <li><a href="/api/javascript.html">Javascript</a></li>
+              <li><a href="/api/javascript/methods.html">Javascript Methods</a></li>
             </ol>
           </li>          
           <li>Examples
             <ol class="toc">
-              <li><a href='/examples/dashboard.html'>Dashboard Example</a></li>
-              <li><a href='/examples/map.html'>Map Example</a></li>
-              <li><a href='/examples/map_drawing.html'>Map Drawing Example</a></li>
-              <li><a href='/examples/editing_features.html'>Editing Features Example</a></li>
-              <li><a href='/examples/map_search'>Map Search Example</a></li>
-              <li><a href='http://getsatisfaction.com/geocommons'>Troubleshooting</a></li>
+              <li><a href='/api/examples/dashboard.html'>Dashboard Example</a></li>
+              <li><a href='/api/examples/map.html'>Map Example</a></li>
+              <li><a href='/api/examples/map_drawing.html'>Map Drawing Example</a></li>
+              <li><a href='/api/examples/editing_features.html'>Editing Features Example</a></li>
+              <li><a href='/api/examples/map_search'>Map Search Example</a></li>
             </ol>
           </li>
         </ol>
       </div>
       <div id='content'>
         <h1 id='javascript methods'>JavaScript Methods</h1>
-        <h2>Map Interaction</h2>
-<p>Geographic Maps can be panned, zoomed, and modified.</p>
-<table>
-	<tr>
-		<td>Method </td>
-		<td>Description </td>
-	</tr>
-	<tr>
-		<td> F1.Maker.Map </td>
-		<td> Create a new map on the page </td>
-	</tr>
-	<tr>
-		<td> setExtent </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> getCenterZoom </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> getCenter </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> setCenter </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> setCenterZoom </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> getZoom </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> setZoom </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> getMapProviderList </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> getMapProvider </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> setMapProvider </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> saveMap </td>
-		<td> </td>
-	</tr>
-</table>
-<h2>Map Layers</h2>
-<p>Layers are styled datasets on a map. They can be simple styles such as color, size, or transparency. For more advanced visualizations thematic styling can vary the styling by an attribute value or category.</p>
-<table>
-	<tr>
-		<td>Method </td>
-		<td>Description </td>
-	</tr>
-	<tr>
-		<td> getLayers </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> removeLayer </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> addLayer </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> showLayer </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> getLayer </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> setLayerStyle </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> setLayerTitle </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> setLayerSubTitle </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> addLayerCategoryFilter </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> addLayerInfoWindowFilter </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> setStyle </td>
-		<td> </td>
-	</tr>
-</table>
-<h1>Layer Filters</h1>
-<p>Map layers can be filtered to show a limited subset of data based on an attribute, or visible area. It is also possible to highlight specific dataset features based on a simple or complex comparison with the attributes.</p>
-<table>
-	<tr>
-		<td>Method </td>
-		<td>Description </td>
-	</tr>
-	<tr>
-		<td> addFilter </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> removeFilter </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> getFilters </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> clearFilters </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> addHighlight </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> removeHighlight </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> clearHighlights </td>
-		<td> </td>
-	</tr>
-</table>
-<h1>Data Features <span class="caps">API</span></h1>
-<p>Each dataset layer has a collection of features, or individual geographic points, lines or polygons. It is possible to access all of the features or some features. Drawing new features must be added to an existing layer.</p>
-<table>
-	<tr>
-		<td>Method </td>
-		<td>Description </td>
-	</tr>
-	<tr>
-		<td> addFeatures </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> getFeatures </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> getVisibleFeatures </td>
-		<td> </td>
-	</tr>
-</table>
-<h1>Temporal Controls</h1>
-<p>Map layers can be animated by a time attribute.</p>
-<table>
-	<tr>
-		<td>Method </td>
-		<td>Description </td>
-	</tr>
-	<tr>
-		<td> setLayerTemporalAttribute </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> setTemporalResolution </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> getTemporalResolution </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> getTimeSlots </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> setTimeSpan </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> getTimeSpan </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> getGlobalTimeSpan </td>
-		<td> </td>
-	</tr>
-	<tr>
-		<td> setTimeFilter </td>
-		<td> </td>
-	</tr>
-</table>
-<h1>Events</h1>
-<p>Maps and layers can reference callback methods when an event occurs.</p>
-<table>
-	<tr>
-		<td>Method </td>
-		<td>Description </td>
-	</tr>
-	<tr>
-		<td> onMapLoaded </td>
-		<td> Called when the map has finished loading all layer data </td>
-	</tr>
-	<tr>
-		<td> onMapClicked </td>
-		<td> Called when the map has been clicked on </td>
-	</tr>
-	<tr>
-		<td> onMapPanStart </td>
-		<td> Called when a user starts moving map </td>
-	</tr>
-	<tr>
-		<td> onMapPanStop </td>
-		<td> Called when a user stops moving the map </td>
-	</tr>
-	<tr>
-		<td> onMapZoomed </td>
-		<td> Called after a user has zoomed in or out of the map </td>
-	</tr>
-	<tr>
-		<td> onFeatureSelected </td>
-		<td> Called after a feature has been selected by the map user. </td>
-	</tr>
-	<tr>
-		<td> onBaseMapChanged </td>
-		<td> Called when the basemap changes </td>
-	</tr>
-	<tr>
-		<td> onLayerAdded </td>
-		<td> Called once after a layer has been added to the map </td>
-	</tr>
-	<tr>
-		<td> onLayerLoading </td>
-		<td> Called while the layer is loading, used for progress </td>
-	</tr>
-	<tr>
-		<td> onLayerLoaded </td>
-		<td> Called once a layer has been completely loaded </td>
-	</tr>
-	<tr>
-		<td> onLayerStyleChange </td>
-		<td> Called every time a style is changed  </td>
-	</tr>
-	<tr>
-		<td> onLayerParsing </td>
-		<td> Called while a layer is being parsed </td>
-	</tr>
-	<tr>
-		<td> onLayerParsed </td>
-		<td> Called after a layer has been parsed </td>
-	</tr>
-	<tr>
-		<td> onLayerRendering </td>
-		<td> Called while an overlay is rendering, post init and pre-loaded </td>
-	</tr>
-	<tr>
-		<td> onLayerRendered </td>
-		<td> Called once a layer has been completely rendered on the map </td>
-	</tr>
-	<tr>
-		<td> onLayerError </td>
-		<td> Called on an error loading layers </td>
-	</tr>
-	<tr>
-		<td> onLayerRemoved </td>
-		<td> Called when a layer is removed from the map  </td>
-	</tr>
-	<tr>
-		<td> onMapClassificationChange </td>
-		<td> Called every time a map&#8217;s classification is changed  </td>
-	</tr>
-	<tr>
-		<td> onTemporalReady </td>
-		<td> Called when the temporal features are ready to be animated </td>
-	</tr>
-	<tr>
-		<td> onTemporalChange </td>
-		<td> Called after the time slider is changed in any way </td>
-	</tr>
-</table>
         <h2>Map Interaction</h2>
 <p>Geographic Maps can be panned, zoomed, and modified.</p>
 <table>

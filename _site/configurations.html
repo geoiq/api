@@ -3,14 +3,14 @@
     <meta content='text/html;charset=UTF-8' http-equiv='Content-Type'>
     <title>GeoIQ &mdash; Configurations API</title>
     <style type='text/css'>
-      @import '/css/default.css';
-      @import '/css/syntax.css';
+      @import '/api/css/default.css';
+      @import '/api/css/syntax.css';
     </style>
     <style media='print' type='text/css'>
-      @import '/css/print.css';
+      @import '/api/css/print.css';
     </style>
     <meta content='GeoIQ API' name='subject'>
-    <link href='/images/favicon.png' rel='shortcut icon'>
+    <link href='/api/images/favicon.png' rel='shortcut icon'>
   </head>
   <body>
     <div id='wrap'>
@@ -22,172 +22,96 @@
         <ol class='toc'>
           <li>Start Here
             <ol class="toc">
-              <li><a href='/index.html'>Welcome</a></li>
-              <li><a href='/tutorial.html'>Quick Start</a></li>
-              <li><a href='https://github.com/fortiusone/api/wiki'>Community Wiki</a></li>
+              <li><a href='/api/index.html'>Welcome</a></li>
+              <li><a href='/api/tutorial.html'>Quick Start</a></li>
+              <li><a href='http://getsatisfaction.com/geocommons'>Get Help</a></li>
+              <li><a href='http://developer.geoiq.com/blog/'>Blog</a></li>
             </ol>
           </li>
           <li>REST API
             <ol class="toc">
-              <li><a href='/methods.html'>Methods</a></li>
-              <li><a href="/analysis.html">Analysis</a></li>
-              <li><a href="/chart.html">Chart</a></li>
-              <li><a href="/configurations.html">Configurations</a></li>
-              <li><a href="/filter.html">Filter</a></li>
-              <li><a href="/groups.html">Groups</a></li>
-              <li><a href="/features/index.html">Data Features</a>
-                <ol class="toc">
-                  <li><a href="/features/features_create.html">Create</a></li>
-                  <li><a href="/features/features_retrieve.html">Read</a></li>
-                  <li><a href="/features/features_delete.html">Delete</a></li>
-                </ol></li>
-            </ol>
-          </li>
-          <li>JavaScript API
+              <li><a href='/api/methods.html'>Methods</a></li>
+              </ol>
+            </li>
+            <li>Datasets
+              <ol class="toc">
+                <li><a href="/api/datasets/create.html">datasets.create</a></li>
+                <li><a href="/api/datasets/retrieve.html">datasets.retrieve</a></li>
+                <li><a href="/api/datasets/delete.html">datasets.delete</a></li>
+                <li><a href="/api/datasets/update.html">datasets.update</a></li>
+                <li><a href="/api/datasets/update.html">datasets.update_feed</a></li>
+              </ol>
+            </li>
+            <li>Features
+              <ol class="toc">
+              <li><a href="/api/features/retrieve.html">GET /dataset/:id/features</a></li>
+              <li><a href="/api/features/create.html">POST /dataset/:id/features</a></li>
+              <li><a href="/api/features/delete.html">DELETE /dataset/:id/features</a></li>
+              <li><a href="/api/features/aggregate.html">features.aggregate</a></li>
+              </ol>
+            </li>
+            <li>Maps
+              <ol class="toc">
+              <li><a href="/api/maps/download.html">maps.download</a></li>
+              <li><a href="/api/maps/create.html">maps.create</a></li>
+              <li><a href="/api/maps/update.html">maps.update</a></li>
+              <li><a href="/api/maps/delete.html">maps.delete</a></li>
+              <li><a href="/api/maps/addLayer.html">maps.addLayer</a></li>
+              <li><a href="/api/maps/deleteLayer.html">maps.deleteLayer</a></li>
+              </ol>
+            </li>
+            <li>Search
+              <ol class="toc">
+              <li><a href="/api/search.html">search</a></li>
+              </ol>
+            </li>
+            <li>Users
+              <ol class="toc">
+              <li><a href="/api/users.html">users.createUser</a></li>
+              <li><a href="/api/users.html">users.updateUser</a></li>
+              <li><a href="/api/users.html">users.deleteUser</a></li>
+              <li><a href="/api/users.html">users.getInfo</a></li>
+              </ol>
+            </li>
+            <li>Groups
+              <ol class="toc">
+              <li><a href="/api/groups.html">groups.createGroup</a></li>
+              <li><a href="/api/groups.html">groups.addUser</a></li>
+              <li><a href="/api/groups.html">groups.deleteGroup</a></li>
+              <li><a href="/api/groups.html">groups.getUsers</a></li>
+              <li><a href="/api/permissions.html">permissions.set</a></li>
+              </ol>
+            </li>
+            <li>Analysis
+              <ol class="toc">
+              <li><a href="/api/analysis.html">Analysis</a></li>
+              </ol>
+            </li>
+          <li><a href="/api/javascript.html">JavaScript API</a>
             <ol class="toc">
-              <li><a href="/javascript.html">Javascript</a>
-              <li><a href="/javascript/methods.html">Javascript Methods</a>
+              <li><a href="/api/javascript/methods.html">Javascript Methods</a></li>
+              <li><a href="/api/javascript/methods.html">Charts</a></li>
+            </ol>
+          </li>          
+          <li>SDK &amp; Tools
+            <ol class="toc">
+              <li><a href="/api/javascript.html">Javascript</a></li>
+              <li><a href="/api/javascript/methods.html">Javascript Methods</a></li>
             </ol>
           </li>          
           <li>Examples
             <ol class="toc">
-              <li><a href='/examples/dashboard.html'>Dashboard Example</a></li>
-              <li><a href='/examples/map.html'>Map Example</a></li>
-              <li><a href='/examples/map_drawing.html'>Map Drawing Example</a></li>
-              <li><a href='/examples/editing_features.html'>Editing Features Example</a></li>
-              <li><a href='/examples/map_search'>Map Search Example</a></li>
-              <li><a href='http://getsatisfaction.com/geocommons'>Troubleshooting</a></li>
+              <li><a href='/api/examples/dashboard.html'>Dashboard Example</a></li>
+              <li><a href='/api/examples/map.html'>Map Example</a></li>
+              <li><a href='/api/examples/map_drawing.html'>Map Drawing Example</a></li>
+              <li><a href='/api/examples/editing_features.html'>Editing Features Example</a></li>
+              <li><a href='/api/examples/map_search'>Map Search Example</a></li>
             </ol>
           </li>
         </ol>
       </div>
       <div id='content'>
         <h1 id='configurations api'>Configurations API</h1>
-        <h1>Configurations <span class="caps">API</span></h1>
-<p>GeoIQ servers have full customization and configuration of settings such as if logged in users are required, streaming is enabled, <span class="caps">SSL</span>, and more. This information can be obtained by requesting from the configurations <span class="caps">API</span>.</p>
-<p><strong>Endpoint:</strong> http://geocommons.com/configurations.:format</p>
-<p><strong>Description:</strong> GeoIQ Configuration</p>
-<p><strong><span class="caps">HTTP</span> Methods Available:</strong> <span class="caps">GET</span></p>
-<p><strong><span class="caps">URL</span> Summary:</strong></p>
-<table>
-	<tr>
-		<td><strong>Task</strong></td>
-		<td><strong><span class="caps">URL</span></strong></td>
-		<td><strong>Formats</strong></td>
-		<td><strong><span class="caps">HTTP</span> <span class="caps">METHOD</span></strong></td>
-	</tr>
-	<tr>
-		<td>Analyze</td>
-		<td>http://geocommons.com/configurations.:format</td>
-		<td>json</td>
-		<td><span class="caps">POST</span></td>
-	</tr>
-</table>
-<p><strong>Response</strong></p>
-<p>A public user will receive a limited information:</p>
-{
-&#8220;platform&#8221;: &#8220;cloud&#8221;,
-&#8220;use_client_certificates&#8221;: &quot;&quot;,
-&#8220;instance_id&#8221;: &#8220;customer.geoiq.com&#8221;,
-&#8220;revision&#8221;: &#8220;ab1ce050b52313d70ba082d07e2c8570f83f116b\n&#8221;,
-&#8220;version&#8221;: &#8220;ab1ce050b52313d70ba082d07e2c8570f83f116b\n&#8221;,
-&#8220;basemap_list&#8221;: &quot;&quot;,
-&#8220;socket_server&#8221;: null,
-&#8220;enable_sockets&#8221;: null,
-&#8220;feature_render_limit&#8221;: &#8220;25000&#8221;,
-&#8220;enable_streaming&#8221;: null,
-&#8220;streaming_data_store_id&#8221;: null,
-&#8220;require_ssl_for_login&#8221;: &quot;&quot;
-}
-<p>An admin user will receive the entire configuration:</p>
-{
-&#8220;dynamic_geometry_limit&#8221;: &#8220;10000&#8221;,
-&#8220;enable_streaming&#8221;: null,
-&#8220;default_file_size_limit&#8221;: &#8220;104857600&#8221;,
-&#8220;climgen_enabled&#8221;: &#8220;false&#8221;,
-&#8220;geocoder_enabled&#8221;: &#8220;true&#8221;,
-&#8220;async_geolocate_gecode_limit&#8221;: &#8220;100&#8221;,
-&#8220;kml_file_size_limit_description&#8221;: &#8220;Twenty (20) megabytes&#8221;,
-&#8220;preview_images_enabled&#8221;: &quot;&quot;,
-&#8220;basemap_list&#8221;: &quot;&quot;,
-&#8220;addthis_profile_id&#8221;: null,
-&#8220;kml_file_size_limit&#8221;: &#8220;20485760&#8221;,
-&#8220;classifications&#8221;: &quot;&quot;,
-&#8220;licenses&#8221;: &#8220;12&#8221;,
-&#8220;user_limit&#8221;: &quot;&quot;,
-&#8220;addthis_twitter_user&#8221;: null,
-&#8220;private_data_licensed&#8221;: &#8220;true&#8221;,
-&#8220;periodically_compute_dynamic_statistics&#8221;: &#8220;f&#8221;,
-&#8220;user_defined_groups_enabled&#8221;: &#8220;false&#8221;,
-&#8220;streaming_data_store_id&#8221;: null,
-&#8220;password_expiration&#8221;: &#8220;90&#8221;,
-&#8220;async_file_processing&#8221;: &quot;&quot;,
-&#8220;upsell_whitelist&#8221;: &quot;&quot;,
-&#8220;georss_file_size_limit_description&#8221;: &#8220;Five (5) Megabytes&#8221;,
-&#8220;concurrent_analysis_limit&#8221;: &#8220;2&#8221;,
-&#8220;revision&#8221;: &#8220;ab1ce050b52313d70ba082d07e2c8570f83f116b\n&#8221;,
-&#8220;updated_at&#8221;: &#8220;Wed Sep 29 18:25:47 <span class="caps">UTC</span> 2010&#8221;,
-&#8220;allow_signup&#8221;: &#8220;true&#8221;,
-&#8220;async_licensed&#8221;: &#8220;false&#8221;,
-&#8220;async_geolocate_gejoin_limit&#8221;: &#8220;10&#8221;,
-&#8220;async_analysis_enabled&#8221;: &quot;&quot;,
-&#8220;identity&#8221;: &#8220;Customer name&#8221;,
-&#8220;private_data_limiting_enabled&#8221;: &#8220;false&#8221;,
-&#8220;enable_data_classification&#8221;: &quot;&quot;,
-&#8220;user_defined_group_limiting_enabled&#8221;: &#8220;false&#8221;,
-&#8220;geocoder_row_limit_description&#8221;: &quot;5,
-000 Rows&quot;,
-&#8220;enable_sockets&#8221;: null,
-&#8220;require_login&#8221;: &quot;&quot;,
-&#8220;enable_classification_notice&#8221;: &quot;&quot;,
-&#8220;periodic_analysis_limit&#8221;: &#8220;10&#8221;,
-&#8220;paranoid_deletion_enabled&#8221;: &#8220;false&#8221;,
-&#8220;analysis_enabled&#8221;: &#8220;true&#8221;,
-&#8220;upsell_enabled&#8221;: &#8220;f&#8221;,
-&#8220;feature_limit&#8221;: &#8220;10000&#8221;,
-&#8220;socket_server&#8221;: null,
-&#8220;require_ssl_for_login&#8221;: &quot;&quot;,
-&#8220;analytics_key&#8221;: &quot;&quot;,
-&#8220;google_maps_api_key&#8221;: &quot;&quot;,
-&#8220;login_blurb&#8221;: &quot;&quot;,
-&#8220;private_data_enabled&#8221;: &#8220;true&#8221;,
-&#8220;aggregation_boundary_1&#8221;: &quot;&quot;,
-&#8220;async_upload_limit&#8221;: &#8220;5000&#8221;,
-&#8220;version&#8221;: &#8220;ab1ce050b52313d70ba082d07e2c8570f83f116b\n&#8221;,
-&#8220;preview_basemap&#8221;: &quot;&quot;,
-&#8220;pro_enabled&#8221;: &#8220;f&#8221;,
-&#8220;aggregation_boundary_2&#8221;: &quot;&quot;,
-&#8220;async_geolocate_included_geometry_limit&#8221;: &#8220;100000&#8221;,
-&#8220;login_timeout&#8221;: &quot;&quot;,
-&#8220;platform&#8221;: &#8220;cloud&#8221;,
-&#8220;public_like_groups&#8221;: &#8220;false&#8221;,
-&#8220;aggregation_boundary_3&#8221;: &quot;&quot;,
-&#8220;classification_notice&#8221;: &#8220;<span class="caps">THIS</span> <span class="caps">DATA</span> IS <span class="caps">CLASSIFIED</span> <span class="caps">AND</span> <span class="caps">MAY</span> <span class="caps">ONLY</span> BE <span class="caps">USED</span> <span class="caps">FOR</span> <span class="caps">OFFICIAL</span> <span class="caps">USE</span>.&#8221;,
-&#8220;async_histogram_generation_enabled&#8221;: &quot;&quot;,
-&#8220;geocoder_row_limit&#8221;: &#8220;5000&#8221;,
-&#8220;analysis_licensed&#8221;: &#8220;true&#8221;,
-&#8220;use_client_certificates&#8221;: &quot;&quot;,
-&#8220;enable_email_notifications&#8221;: &quot;&quot;,
-&#8220;geojoin_overlay_owner&#8221;: &#8220;data&#8221;,
-&#8220;analysis_limiting_enabled&#8221;: &#8220;false&#8221;,
-&#8220;georss_file_size_limit&#8221;: &#8220;5242880&#8221;,
-&#8220;support_email&#8221;: &quot;&quot;,
-&#8220;map_filtering_enabled&#8221;: &#8220;false&#8221;,
-&#8220;created_at&#8221;: &#8220;Wed Sep 29 18:25:47 <span class="caps">UTC</span> 2010&#8221;,
-&#8220;histograms_enabled&#8221;: &quot;&quot;,
-&#8220;strong_passwords&#8221;: &quot;&quot;,
-&#8220;license_mode&#8221;: &#8220;none&#8221;,
-&#8220;default_file_size_limit_description&#8221;: &#8220;One Hundred (100) Megabytes&#8221;,
-&#8220;database_row_limit&#8221;: &#8220;50000&#8221;,
-&#8220;periodic_analysis_period&#8221;: &#8220;86400&#8221;,
-&#8220;instance_id&#8221;: &#8220;customer.geoiq.com&#8221;,
-&#8220;feature_render_limit&#8221;: &#8220;25000&#8221;,
-&#8220;geojoin_default_query&#8221;: &#8220;tag:priority1&#8221;,
-&#8220;id&#8221;: &#8220;1&#8221;,
-&#8220;max_bytes_per_map&#8221;: &#8220;20971520&#8221;
-}
-
-<p><strong>Example</strong></p>
         <h1>Configurations <span class="caps">API</span></h1>
 <p>GeoIQ servers have full customization and configuration of settings such as if logged in users are required, streaming is enabled, <span class="caps">SSL</span>, and more. This information can be obtained by requesting from the configurations <span class="caps">API</span>.</p>
 <p><strong>Endpoint:</strong> http://geocommons.com/configurations.:format</p>

@@ -5,6 +5,14 @@ title: Create Features API
 
 Adds one or more features to the dataset.
 
+*End point*
+
+<pre>POST /datasets/:id/features.json</pre>
+
+*Authentication:*
+
+Authentication is required
+
 *Required Parameters:* (none)
 
 *Optional Parameters*:

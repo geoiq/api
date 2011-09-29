@@ -1,4 +1,8 @@
-h2. *Update Dataset*
+---
+layout: default
+title: Update Dataset
+---
+
 
 Allows you to update the contents of the metadata for a dataset and define attributes types
 
