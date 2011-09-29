@@ -1,0 +1,272 @@
+<html>
+  <head>
+    <meta content='text/html;charset=UTF-8' http-equiv='Content-Type'>
+    <title>GeoIQ &mdash; Permissions API</title>
+    <style type='text/css'>
+      @import '/css/default.css';
+      @import '/css/syntax.css';
+    </style>
+    <style media='print' type='text/css'>
+      @import '/css/print.css';
+    </style>
+    <meta content='GeoIQ API' name='subject'>
+    <link href='/images/favicon.png' rel='shortcut icon'>
+  </head>
+  <body>
+    <div id='wrap'>
+      <div id='header'>
+        <a href='http://fortiusone.github.com/api' title="GeoIQ API"></a>
+        <div class='tagline'>GeoIQ API</div>
+      </div>
+      <div id='pages'>
+        <ol class='toc'>
+          <li>Start Here
+            <ol class="toc">
+              <li><a href='/index.html'>Welcome</a></li>
+              <li><a href='/tutorial.html'>Quick Start</a></li>
+              <li><a href='https://github.com/fortiusone/api/wiki'>Community Wiki</a></li>
+            </ol>
+          </li>
+          <li>REST API
+            <ol class="toc">
+              <li><a href='/methods.html'>Methods</a></li>
+              <li><a href="/analysis.html">Analysis</a></li>
+              <li><a href="/chart.html">Chart</a></li>
+              <li><a href="/configurations.html">Configurations</a></li>
+              <li><a href="/filter.html">Filter</a></li>
+              <li><a href="/groups.html">Groups</a></li>
+              <li><a href="/features/index.html">Data Features</a>
+                <ol class="toc">
+                  <li><a href="/features/features_create.html">Create</a></li>
+                  <li><a href="/features/features_retrieve.html">Read</a></li>
+                  <li><a href="/features/features_delete.html">Delete</a></li>
+                </ol></li>
+            </ol>
+          </li>
+          <li>JavaScript API
+            <ol class="toc">
+              <li><a href="/javascript.html">Javascript</a>
+              <li><a href="/javascript/methods.html">Javascript Methods</a>
+            </ol>
+          </li>          
+          <li>Examples
+            <ol class="toc">
+              <li><a href='/examples/dashboard.html'>Dashboard Example</a></li>
+              <li><a href='/examples/map.html'>Map Example</a></li>
+              <li><a href='/examples/map_drawing.html'>Map Drawing Example</a></li>
+              <li><a href='/examples/editing_features.html'>Editing Features Example</a></li>
+              <li><a href='/examples/map_search'>Map Search Example</a></li>
+              <li><a href='http://getsatisfaction.com/geocommons'>Troubleshooting</a></li>
+            </ol>
+          </li>
+        </ol>
+      </div>
+      <div id='content'>
+        <h1 id='permissions api'>Permissions API</h1>
+        <p>PLATFORM_NAME has a robust permissions system that allows users to grant the ability for groups to perform specific actions on datasets and maps that they own.</p>
+<h2>Set permissions</h2>
+<p>You can set permissions for a dataset or map by updating the permissions attribute.</p>
+<p><em><strong><span class="caps">API</span> <span class="caps">URL</span></strong></em></p>
+<pre>PLATFORM_API_URL/:object/:id.json</pre>
+<ul>
+	<li><code>object</code> can be &#8220;datasets&#8221;, &#8220;overlays&#8221;, or &#8220;maps&#8221;</li>
+	<li><code>id</code> is the unique id of the <code>object</code></li>
+</ul>
+<p><em><strong><span class="caps">HTTP</span> method</strong></em> <br />
+  <span class="caps">PUT</span></p>
+<p><em><strong>authentication requried?</strong></em> <br />
+  Yes</p>
+<p><em><strong><span class="caps">URL</span> formats</strong></em><br />
+  json</p>
+<p><em><strong>Parameters</strong></em></p>
+<ul>
+	<li>group_id &#8211; (required) id of a group for which the permissions should be set. Can also be &#8220;everyone&#8221;</li>
+	<li>permissions &#8211; (required) a set of individual permission options:
+	<ul>
+		<li>view &#8211; the group or user is allowed to search and view the metadata for this object (default: false)</li>
+		<li>download &#8211; the group or user is allowed to download the data for this object (default: false)</li>
+		<li>edit &#8211; the group or user is allowed to edit the data for this object (default: false)</li>
+	</ul></li>
+</ul>
+<p><em><strong>Examples</strong></em></p>
+<ul>
+	<li>Status: See Response Codes Below</li>
+	<li>Content Body:</li>
+</ul>
+<pre><code class="JSON">
+{
+  permissions: [{
+    group_id: 12
+    permissions: { 
+      view: true,
+      download: true,
+      edit: false
+    }
+  }]
+}
+</code></pre>
+<h3>Examples</h3>
+<p>Updating a Dataset with permissions defined in a <span class="caps">JSON</span> content body:</p>
+<pre><code class="JSON">
+{
+  permissions: [ 
+  { group_id: 12
+    permissions: { 
+      view: true,
+      download: true,
+      edit: false
+    }
+  },
+  { group_id: "everyone"
+    permissions: {
+      view: true,
+      download: true,
+      edit: false
+    }
+  }]
+}
+</code></pre>
+
+
+<pre><code class="bash">
+curl -u "admin:password" -X PUT -i --data "@new_permissions.json"  --header Content-Type:application/json PLATFORM_API_URL/datasets/140.json
+</code>
+</pre>
+<p>or via key/value pairs:</p>
+<pre><code class="bash">
+curl -u "admin:password" -X PUT -i -d "permissions[][group_id]=12" -d "permissions[][permissions][view]=true" -d "permissions[][permissions][download]=true" -d "permissions[][group_id]=everyone" -d "permissions[][permissions][view]=true" -d "permissions[][permissions][download]=true"  PLATFORM_API_URL/datasets/140.json
+</code></pre>
+<p>Note: permissions will default to false if not specified.</p>
+<h2>Combined Calls</h2>
+<p>Permissions can also be included as parameters on other calls made via the Data <span class="caps">API</span></p>
+<p><span class="caps">POST</span> <code>PLATFORM_API_URL/datasets.json</code></p>
+<h3>Examples</h3>
+<pre><code class="JSON">
+{
+ title: "New Overlay",
+ permissions: [
+{
+  group_id: "12",
+  permissions: {
+    view: true,
+    download: true,
+    edit: false
+  }
+}
+]}
+</code></pre>
+<h2>Response Codes</h2>
+<h3>200 OK</h3>
+<p>If the user request to set permissions has worked, then PLATFORM_NAME will respond with <code>200 OK</code>. This is OK since it isn&#8217;t apparent if new permissions were created, deleted, or just modified.</p>
+<h3>400 Bad Request</h3>
+<p>If the <span class="caps">API</span> request was not formed correctly (e.g. bad <span class="caps">JSON</span> syntax), PLATFORM_NAME will respond with <code>400 Bad Request</code>.</p>
+<h3>401 Unauthorized</h3>
+<p>If the user is not logged in at all, PLATFORM_NAME will respond with <code>401 Unauthorized</code>. If the user is logged in, and they are not able to change permissions, use <code>403 Forbidden</code> below.</p>
+<h3>404 Not Found</h3>
+<p>If a user attempts to change permissions on a PLATFORM_NAME dataset or map that does not exist, then PLATFORM_NAME will respond with <code>404 Not Found</code>.</p>
+        <p>PLATFORM_NAME has a robust permissions system that allows users to grant the ability for groups to perform specific actions on datasets and maps that they own.</p>
+<h2>Set permissions</h2>
+<p>You can set permissions for a dataset or map by updating the permissions attribute.</p>
+<p><em><strong><span class="caps">API</span> <span class="caps">URL</span></strong></em></p>
+<pre>PLATFORM_API_URL/:object/:id.json</pre>
+<ul>
+	<li><code>object</code> can be &#8220;datasets&#8221;, &#8220;overlays&#8221;, or &#8220;maps&#8221;</li>
+	<li><code>id</code> is the unique id of the <code>object</code></li>
+</ul>
+<p><em><strong><span class="caps">HTTP</span> method</strong></em> <br />
+  <span class="caps">PUT</span></p>
+<p><em><strong>authentication requried?</strong></em> <br />
+  Yes</p>
+<p><em><strong><span class="caps">URL</span> formats</strong></em><br />
+  json</p>
+<p><em><strong>Parameters</strong></em></p>
+<ul>
+	<li>group_id &#8211; (required) id of a group for which the permissions should be set. Can also be &#8220;everyone&#8221;</li>
+	<li>permissions &#8211; (required) a set of individual permission options:
+	<ul>
+		<li>view &#8211; the group or user is allowed to search and view the metadata for this object (default: false)</li>
+		<li>download &#8211; the group or user is allowed to download the data for this object (default: false)</li>
+		<li>edit &#8211; the group or user is allowed to edit the data for this object (default: false)</li>
+	</ul></li>
+</ul>
+<p><em><strong>Examples</strong></em></p>
+<ul>
+	<li>Status: See Response Codes Below</li>
+	<li>Content Body:</li>
+</ul>
+<pre><code class="JSON">
+{
+  permissions: [{
+    group_id: 12
+    permissions: { 
+      view: true,
+      download: true,
+      edit: false
+    }
+  }]
+}
+</code></pre>
+<h3>Examples</h3>
+<p>Updating a Dataset with permissions defined in a <span class="caps">JSON</span> content body:</p>
+<pre><code class="JSON">
+{
+  permissions: [ 
+  { group_id: 12
+    permissions: { 
+      view: true,
+      download: true,
+      edit: false
+    }
+  },
+  { group_id: "everyone"
+    permissions: {
+      view: true,
+      download: true,
+      edit: false
+    }
+  }]
+}
+</code></pre>
+
+
+<pre><code class="bash">
+curl -u "admin:password" -X PUT -i --data "@new_permissions.json"  --header Content-Type:application/json PLATFORM_API_URL/datasets/140.json
+</code>
+</pre>
+<p>or via key/value pairs:</p>
+<pre><code class="bash">
+curl -u "admin:password" -X PUT -i -d "permissions[][group_id]=12" -d "permissions[][permissions][view]=true" -d "permissions[][permissions][download]=true" -d "permissions[][group_id]=everyone" -d "permissions[][permissions][view]=true" -d "permissions[][permissions][download]=true"  PLATFORM_API_URL/datasets/140.json
+</code></pre>
+<p>Note: permissions will default to false if not specified.</p>
+<h2>Combined Calls</h2>
+<p>Permissions can also be included as parameters on other calls made via the Data <span class="caps">API</span></p>
+<p><span class="caps">POST</span> <code>PLATFORM_API_URL/datasets.json</code></p>
+<h3>Examples</h3>
+<pre><code class="JSON">
+{
+ title: "New Overlay",
+ permissions: [
+{
+  group_id: "12",
+  permissions: {
+    view: true,
+    download: true,
+    edit: false
+  }
+}
+]}
+</code></pre>
+<h2>Response Codes</h2>
+<h3>200 OK</h3>
+<p>If the user request to set permissions has worked, then PLATFORM_NAME will respond with <code>200 OK</code>. This is OK since it isn&#8217;t apparent if new permissions were created, deleted, or just modified.</p>
+<h3>400 Bad Request</h3>
+<p>If the <span class="caps">API</span> request was not formed correctly (e.g. bad <span class="caps">JSON</span> syntax), PLATFORM_NAME will respond with <code>400 Bad Request</code>.</p>
+<h3>401 Unauthorized</h3>
+<p>If the user is not logged in at all, PLATFORM_NAME will respond with <code>401 Unauthorized</code>. If the user is logged in, and they are not able to change permissions, use <code>403 Forbidden</code> below.</p>
+<h3>404 Not Found</h3>
+<p>If a user attempts to change permissions on a PLATFORM_NAME dataset or map that does not exist, then PLATFORM_NAME will respond with <code>404 Not Found</code>.</p>
+      </div>
+      <div id='footer'>Copyright &copy; 2008-2011 GeoIQ</div>
+    </div>
+  </body>
+</html>

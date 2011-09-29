@@ -1,0 +1,87 @@
+---
+layout: default
+title: Map Search Example
+---
+
+
+  // Demo for showing how to do on-click buffer radius select and filtering of data
+  //
+  // To start, open this map: http://tr.geoiq.com/maps/17
+  // Then run the file below in your Javascript console
+  // Then click on the map.
+  // Author: Andrew Turner - andrew@geoiq.com
+  // Date: 8/3/2011
+
+  var sex_offender_layer = 2, 
+      radius_buffer_layer = 1, 
+      schools_layer = 0;
+
+  // Let's create some sample data
+  add_offenders()
+
+  // Generates a polygon approximate circle of latitude and longitude points given a 
+  //  center, radius distance and number of vertices
+  //
+  // @radius in miles
+  // @steps number of vertices in the circle
+  // @centerX longitude origin on the circle, decimal degrees
+  // @centerY longitude origin on the circle, decimal degrees
+  //
+  // @returns an array of [longitude,latitude] array points
+  function circle(radius, steps, centerX, centerY){
+     radiusDegrees = radius * 0.014483;
+     var points = []
+     for (var i = 0; i <= steps; i++) {
+         points.push([centerX + radiusDegrees * Math.cos(2 * Math.PI * i / steps-Math.PI),
+                      centerY + radiusDegrees * Math.sin(2 * Math.PI * i / steps-Math.PI)])
+    }
+    return [points];
+  }
+
+  // From a polygon, determine the minimum bounding extents in coordinates
+  //
+  // @returns an array of extents in [West, South, East, North]
+  function get_extent(polygon) {
+      var extent = [Math.min(), Math.min(), Math.max(), Math.max()]
+      for (var i = 0; i < polygon.length; ++i) {
+          if(polygon[i][0] < extent[0]) extent[0] = polygon[i][0];
+          if(polygon[i][1] < extent[1]) extent[1] = polygon[i][1];
+          if(polygon[i][0] > extent[2]) extent[2] = polygon[i][0];
+          if(polygon[i][1] > extent[3]) extent[3] = polygon[i][1];
+      }
+      return extent;
+  }
+  // Given a layer and bounding extent, only show the features that located in that area
+  //
+  // @layer_id index id or guid of the layer to filter
+  // @extent minimum bounding rectangle as decimal degrees [West, South, East, North]
+  //
+  // @returns Array of visible features
+  function search_within(layer_id,extent) {
+    F1.Maker.current_map.clearFilters(layer_id);
+    var filter = "$[longitude] >= " + extent[0] + " AND $[latitude] >= " + extent[1] + " AND $[longitude] <= " + extent[2] + " AND $[latitude] <= " + extent[3];
+    F1.Maker.current_map.addFilter(layer_id, {expression: filter});
+    return F1.Maker.current_map.getVisibleFeatures(layer_id);
+  }
+
+  // onMapClicked event handler that draws a radius circle and shows only the features within that bounding rectangle
+  //
+  // @returns None
+  F1.Maker.current_map.setCallback("onMapClicked", function(location) {
+      var buffer = circle(5, 20, location[0], location[1]);
+       F1.Maker.current_map.addFeatures(radius_buffer_layer, [{geometry: {type: "Polygon",
+  coordinates: buffer } }], true);
+    
+      // May return an empty array as the addFeatures call in asyncrhonous and may not have filtered yet. (race condition)
+     console.log(search_within(sex_offender_layer, get_extent(buffer[0])))
+  } );
+
+  // Array of test offenders
+  function add_offenders() {
+      F1.Maker.current_map.addFeatures(sex_offender_layer, [{"geometry":{"type":"Point","coordinates":[-78.75665288977578,37.54807959910797]},"longitude":-78.75665288977578,"guid":"iw409843ip","latitude":37.54807959910797},{"geometry":{"type":"Point","coordinates":[-78.58087164568609,37.49579873895581]},"longitude":-78.58087164568609,"guid":"fq409843wi","latitude":37.49579873895581},{"geometry":{"type":"Point","coordinates":[-78.09747322443943,37.49579873895581]},"longitude":-78.09747322443943,"guid":"iz409843vx","latitude":37.49579873895581},{"geometry":{"type":"Point","coordinates":[-77.74591073626004,37.5829131496498]},"longitude":-77.74591073626004,"guid":"qc409843gt","latitude":37.5829131496498},{"geometry":{"type":"Point","coordinates":[-77.10870372643491,37.63513292797717]},"longitude":-77.10870372643491,"guid":"oq409843ig","latitude":37.63513292797717},{"geometry":{"type":"Point","coordinates":[-77.10870372643491,37.98232675632772]},"longitude":-77.10870372643491,"guid":"od409843uk","latitude":37.98232675632772},{"geometry":{"type":"Point","coordinates":[-77.54815683665915,37.9996435714273]},"longitude":-77.54815683665915,"guid":"gz409843zs","latitude":37.9996435714273},{"geometry":{"type":"Point","coordinates":[-77.57012949217034,38.41401932741947]},"longitude":-77.57012949217034,"guid":"wd409843rq","latitude":38.41401932741947},{"geometry":{"type":"Point","coordinates":[-77.33392344542482,39.752829517255705]},"longitude":-77.33392344542482,"guid":"qr409843kc","latitude":39.752829517255705},{"geometry":{"type":"Point","coordinates":[-76.67474378008846,38.808912247896885]},"longitude":-76.67474378008846,"guid":"bp409843ag","latitude":38.808912247896885},{"geometry":{"type":"Point","coordinates":[-77.26800547889117,38.800350742990894]},"longitude":-77.26800547889117,"guid":"bs409843ff","latitude":38.800350742990894},{"geometry":{"type":"Point","coordinates":[-76.90545666295618,38.88591948798176]},"longitude":-76.90545666295618,"guid":"uc409843bz","latitude":38.88591948798176},{"geometry":{"type":"Point","coordinates":[-77.15814220133512,38.91157004115676]},"longitude":-77.15814220133512,"guid":"mp409843jm","latitude":38.91157004115676},{"geometry":{"type":"Point","coordinates":[-77.26800547889117,38.91157004115676]},"longitude":-77.26800547889117,"guid":"jr409843vl","latitude":38.91157004115676},{"geometry":{"type":"Point","coordinates":[-76.9301759004063,38.67609335241791]},"longitude":-76.9301759004063,"guid":"ed409843lh","latitude":38.67609335241791},{"geometry":{"type":"Point","coordinates":[-77.1389161277628,38.800350742990894]},"longitude":-77.1389161277628,"guid":"eb409843gr","latitude":38.800350742990894},{"geometry":{"type":"Point","coordinates":[-77.20483409429646,38.77894248016971]},"longitude":-77.20483409429646,"guid":"ii409843te","latitude":38.77894248016971},{"geometry":{"type":"Point","coordinates":[-77.14990245551843,38.9072955924142]},"longitude":-77.14990245551843,"guid":"lu409843mo","latitude":38.9072955924142},{"geometry":{"type":"Point","coordinates":[-77.08947765286258,38.89447070186546]},"longitude":-77.08947765286258,"guid":"hu409843li","latitude":38.89447070186546},{"geometry":{"type":"Point","coordinates":[-77.08398448898478,38.86881397207101]},"longitude":-77.08398448898478,"guid":"xr409843vr","latitude":38.86881397207101},{"geometry":{"type":"Point","coordinates":[-77.15539561939623,38.86881397207101]},"longitude":-77.15539561939623,"guid":"yi409843uy","latitude":38.86881397207101},{"geometry":{"type":"Point","coordinates":[-77.19934093041864,38.86881397207101]},"longitude":-77.19934093041864,"guid":"at409843yf","latitude":38.86881397207101},{"geometry":{"type":"Point","coordinates":[-77.25427256919667,38.85598213327518]},"longitude":-77.25427256919667,"guid":"yw409843ki","latitude":38.85598213327518}],true)
+  }
+  // Function to build a list of offenders
+  F1.Maker.current_map.setCallback("onMapClicked", function(loc) {
+      F1.Maker.current_map.addFeatures(sex_offender_layer, [{longitude: loc[0], latitude: loc[1], geometry: {type: "Point", coordinates: [loc[0],loc[1]]}}])
+      console.log(F1.Maker.current_map.getFeatures(sex_offender_layer));
+  });

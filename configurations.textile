@@ -1,0 +1,130 @@
+---
+layout: default
+title: Configurations API
+---
+
+h1. {{ page.title }}
+
+GeoIQ servers have full customization and configuration of settings such as if logged in users are required, streaming is enabled, SSL, and more. This information can be obtained by requesting from the configurations API.
+
+*Endpoint:* http://geocommons.com/configurations.:format
+
+*Description:* GeoIQ Configuration
+
+*HTTP Methods Available:* GET
+
+*URL Summary:*
+
+|*Task*|*URL*|*Formats*|*HTTP METHOD*|
+|Analyze|http://geocommons.com/configurations.:format|json|POST|
+
+*Response*
+
+A public user will receive a limited information:
+
+  {
+    "platform": "cloud",
+     "use_client_certificates": "",
+     "instance_id": "customer.geoiq.com",
+     "revision": "ab1ce050b52313d70ba082d07e2c8570f83f116b\n",
+     "version": "ab1ce050b52313d70ba082d07e2c8570f83f116b\n",
+     "basemap_list": "",
+     "socket_server": null,
+     "enable_sockets": null,
+     "feature_render_limit": "25000",
+     "enable_streaming": null,
+     "streaming_data_store_id": null,
+     "require_ssl_for_login": ""
+  }
+
+An admin user will receive the entire configuration:
+
+
+    {
+        "dynamic_geometry_limit": "10000",
+         "enable_streaming": null,
+         "default_file_size_limit": "104857600",
+         "climgen_enabled": "false",
+         "geocoder_enabled": "true",
+         "async_geolocate_gecode_limit": "100",
+         "kml_file_size_limit_description": "Twenty (20) megabytes",
+         "preview_images_enabled": "",
+         "basemap_list": "",
+         "addthis_profile_id": null,
+         "kml_file_size_limit": "20485760",
+         "classifications": "",
+         "licenses": "12",
+         "user_limit": "",
+         "addthis_twitter_user": null,
+         "private_data_licensed": "true",
+         "periodically_compute_dynamic_statistics": "f",
+         "user_defined_groups_enabled": "false",
+         "streaming_data_store_id": null,
+         "password_expiration": "90",
+         "async_file_processing": "",
+         "upsell_whitelist": "",
+         "georss_file_size_limit_description": "Five (5) Megabytes",
+         "concurrent_analysis_limit": "2",
+         "revision": "ab1ce050b52313d70ba082d07e2c8570f83f116b\n",
+         "updated_at": "Wed Sep 29 18:25:47 UTC 2010",
+         "allow_signup": "true",
+         "async_licensed": "false",
+         "async_geolocate_gejoin_limit": "10",
+         "async_analysis_enabled": "",
+         "identity": "Customer name",
+         "private_data_limiting_enabled": "false",
+         "enable_data_classification": "",
+         "user_defined_group_limiting_enabled": "false",
+         "geocoder_row_limit_description": "5,
+        000 Rows",
+         "enable_sockets": null,
+         "require_login": "",
+         "enable_classification_notice": "",
+         "periodic_analysis_limit": "10",
+         "paranoid_deletion_enabled": "false",
+         "analysis_enabled": "true",
+         "upsell_enabled": "f",
+         "feature_limit": "10000",
+         "socket_server": null,
+         "require_ssl_for_login": "",
+         "analytics_key": "",
+         "google_maps_api_key": "",
+         "login_blurb": "",
+         "private_data_enabled": "true",
+         "aggregation_boundary_1": "",
+         "async_upload_limit": "5000",
+         "version": "ab1ce050b52313d70ba082d07e2c8570f83f116b\n",
+         "preview_basemap": "",
+         "pro_enabled": "f",
+         "aggregation_boundary_2": "",
+         "async_geolocate_included_geometry_limit": "100000",
+         "login_timeout": "",
+         "platform": "cloud",
+         "public_like_groups": "false",
+         "aggregation_boundary_3": "",
+         "classification_notice": "THIS DATA IS CLASSIFIED AND MAY ONLY BE USED FOR OFFICIAL USE.",
+         "async_histogram_generation_enabled": "",
+         "geocoder_row_limit": "5000",
+         "analysis_licensed": "true",
+         "use_client_certificates": "",
+         "enable_email_notifications": "",
+         "geojoin_overlay_owner": "data",
+         "analysis_limiting_enabled": "false",
+         "georss_file_size_limit": "5242880",
+         "support_email": "",
+         "map_filtering_enabled": "false",
+         "created_at": "Wed Sep 29 18:25:47 UTC 2010",
+         "histograms_enabled": "",
+         "strong_passwords": "",
+         "license_mode": "none",
+         "default_file_size_limit_description": "One Hundred (100) Megabytes",
+         "database_row_limit": "50000",
+         "periodic_analysis_period": "86400",
+         "instance_id": "customer.geoiq.com",
+         "feature_render_limit": "25000",
+         "geojoin_default_query": "tag:priority1",
+         "id": "1",
+         "max_bytes_per_map": "20971520"
+    }
+    
+*Example*

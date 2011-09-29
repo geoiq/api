@@ -1,0 +1,126 @@
+<html>
+  <head>
+    <meta content='text/html;charset=UTF-8' http-equiv='Content-Type'>
+    <title>GeoIQ &mdash; Create Features API</title>
+    <style type='text/css'>
+      @import '/css/default.css';
+      @import '/css/syntax.css';
+    </style>
+    <style media='print' type='text/css'>
+      @import '/css/print.css';
+    </style>
+    <meta content='GeoIQ API' name='subject'>
+    <link href='/images/favicon.png' rel='shortcut icon'>
+  </head>
+  <body>
+    <div id='wrap'>
+      <div id='header'>
+        <a href='http://fortiusone.github.com/api' title="GeoIQ API"></a>
+        <div class='tagline'>GeoIQ API</div>
+      </div>
+      <div id='pages'>
+        <ol class='toc'>
+          <li>Start Here
+            <ol class="toc">
+              <li><a href='/index.html'>Welcome</a></li>
+              <li><a href='/tutorial.html'>Quick Start</a></li>
+              <li><a href='https://github.com/fortiusone/api/wiki'>Community Wiki</a></li>
+            </ol>
+          </li>
+          <li>REST API
+            <ol class="toc">
+              <li><a href='/methods.html'>Methods</a></li>
+              <li><a href="/analysis.html">Analysis</a></li>
+              <li><a href="/chart.html">Chart</a></li>
+              <li><a href="/configurations.html">Configurations</a></li>
+              <li><a href="/filter.html">Filter</a></li>
+              <li><a href="/groups.html">Groups</a></li>
+              <li><a href="/features/index.html">Data Features</a>
+                <ol class="toc">
+                  <li><a href="/features/features_create.html">Create</a></li>
+                  <li><a href="/features/features_retrieve.html">Read</a></li>
+                  <li><a href="/features/features_delete.html">Delete</a></li>
+                </ol></li>
+            </ol>
+          </li>
+          <li>JavaScript API
+            <ol class="toc">
+              <li><a href="/javascript.html">Javascript</a>
+              <li><a href="/javascript/methods.html">Javascript Methods</a>
+            </ol>
+          </li>          
+          <li>Examples
+            <ol class="toc">
+              <li><a href='/examples/dashboard.html'>Dashboard Example</a></li>
+              <li><a href='/examples/map.html'>Map Example</a></li>
+              <li><a href='/examples/map_drawing.html'>Map Drawing Example</a></li>
+              <li><a href='/examples/editing_features.html'>Editing Features Example</a></li>
+              <li><a href='/examples/map_search'>Map Search Example</a></li>
+              <li><a href='http://getsatisfaction.com/geocommons'>Troubleshooting</a></li>
+            </ol>
+          </li>
+        </ol>
+      </div>
+      <div id='content'>
+        <h1 id='create features api'>Create Features API</h1>
+        <p>Adds one or more features to the dataset.</p>
+<p><strong>Required Parameters:</strong> (none)</p>
+<p><strong>Optional Parameters</strong>:</p>
+<p>Creating a feature in GeoIQ depends on the format, or schema, of the dataset. The Features include any of the optional attributes that are in the dataset and additionally a Geometry that is formatted as GeoJSON.</p>
+<table>
+	<tr>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
+	</tr>
+	<tr>
+		<td> <em>any attribute</em> </td>
+		<td> any attribute value from the dataset schema </td>
+		<td> {title: &#8220;My new Feature&#8221;} </td>
+	</tr>
+	<tr>
+		<td> geometry </td>
+		<td> GeoJSON formatted geometry </td>
+		<td> {geometry: {type: &#8220;Point&#8221;, coordinates: [-100, 80.3]}} </td>
+	</tr>
+</table>
+<p>Note that any attributes specified in the feature that are not defined for the dataset are ignored.</p>
+<p><strong>Example</strong>:</p>
+<p>Assuming you created an empty dataset as described under <a href="/api/datasets/dataset_create">Create an empty dataset with <span class="caps">JSON</span></a> and given a <span class="caps">JSON</span> array of features in a file <em>features.json</em>:</p>
+<pre>[{"House Price": 550000, Address: "123 4th St, Arlington, VA 22201", geometry: {type: "Point", coordinates: [-100, 80]}},
+  {"House Price": 850000, Address: "2200 Clarendon Blvd, Arlington, VA 22201", geometry: {type: "Point", coordinates: [-120, 62.4]}}]</pre>
+<p>You could then <span class="caps">POST</span> this to the endpoint:</p>
+<pre><code>curl -X POST -u "user:pass" -H "Content-Type: application/json" -d @features.json http://geocommons.com/datasets/98696/features.json</code></pre>
+        <p>Adds one or more features to the dataset.</p>
+<p><strong>Required Parameters:</strong> (none)</p>
+<p><strong>Optional Parameters</strong>:</p>
+<p>Creating a feature in GeoIQ depends on the format, or schema, of the dataset. The Features include any of the optional attributes that are in the dataset and additionally a Geometry that is formatted as GeoJSON.</p>
+<table>
+	<tr>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
+	</tr>
+	<tr>
+		<td> <em>any attribute</em> </td>
+		<td> any attribute value from the dataset schema </td>
+		<td> {title: &#8220;My new Feature&#8221;} </td>
+	</tr>
+	<tr>
+		<td> geometry </td>
+		<td> GeoJSON formatted geometry </td>
+		<td> {geometry: {type: &#8220;Point&#8221;, coordinates: [-100, 80.3]}} </td>
+	</tr>
+</table>
+<p>Note that any attributes specified in the feature that are not defined for the dataset are ignored.</p>
+<p><strong>Example</strong>:</p>
+<p>Assuming you created an empty dataset as described under <a href="/api/datasets/dataset_create">Create an empty dataset with <span class="caps">JSON</span></a> and given a <span class="caps">JSON</span> array of features in a file <em>features.json</em>:</p>
+<pre>[{"House Price": 550000, Address: "123 4th St, Arlington, VA 22201", geometry: {type: "Point", coordinates: [-100, 80]}},
+  {"House Price": 850000, Address: "2200 Clarendon Blvd, Arlington, VA 22201", geometry: {type: "Point", coordinates: [-120, 62.4]}}]</pre>
+<p>You could then <span class="caps">POST</span> this to the endpoint:</p>
+<pre><code>curl -X POST -u "user:pass" -H "Content-Type: application/json" -d @features.json http://geocommons.com/datasets/98696/features.json</code></pre>
+      </div>
+      <div id='footer'>Copyright &copy; 2008-2011 GeoIQ</div>
+    </div>
+  </body>
+</html>

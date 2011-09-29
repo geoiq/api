@@ -1,0 +1,2 @@
+[{"House Price": 550000, Address: "123 4th St, Arlington, VA 22201", geometry: {type: "Point", coordinates: [-100, 80]}},
+  {"House Price": 850000, Address: "2200 Clarendon Blvd, Arlington, VA 22201", geometry: {type: "Point", coordinates: [-120, 62.4]}}]

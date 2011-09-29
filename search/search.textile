@@ -1,0 +1,57 @@
+h1. Search API
+
+*Endpoint:* http://geocommons.com/search
+
+*Description:* GeoIQ provides a common search across the application using the OpenSearch protocol. 
+
+*HTTP Methods Available:* GET
+
+*URL Summary:*
+
+|*Task*|*URL*|*Formats*|*HTTP METHOD*|
+|search|http://geocommons.com/search.{format}|atom,json,kml|GET|
+
+h2. *Search*
+
+*Authentication:* 
+
+Not required for GeoCommons datasets, GeoIQ appliance datasets depends on the permissions of the data
+
+*Required Parameters:*
+
+|Parameter|Description|Example|
+|query|information to search on|query=unemployment|
+
+*Optional Parameters:*
+
+|Parameter|Description|Example|
+|bbox|a box encompassing the area being searched the order is West/South/East/North|bbox=-79.5,20,-78,50|
+|page|which page of results to return|page=3|
+|limit|number of results to return|limit=15|
+|order|'ascending' or 'descending' of the sort attribute (default ascending)|order=descending|
+|sort|attribute name to sort on|sort=name|
+|lat|find results containing the given latitude and longitude in their bounding box|lat=-46.902&lon=37.74|
+|lon|find results containing the given latitude and longitude in their bounding box|lat=-46.902&lon=37.74|
+|groups|list of group ids to constrain search|groups=3,4,5|
+|model|Data type to search for. Can be any of: Overlay, Map, Analysis|model=Map|
+
+*Sort Parameters*
+
+|Parameter|Description|Example|
+|created|Date created|sort=created|
+|updated|Date last updated|sort=updated|
+|sname|Map or dataset sortable name.  Ignores capitalization|sort=sname|
+|area|The total area of the map or dataset's bounding box|sort=area|
+
+_A user can search specifically within the fields by prefixing "title:", "description:" or "tag:" before the query. So for example http://geocommons.com/search.atom?query=tag:economics would return only data that has been tagged with "economics"._
+
+
+*Returns:*
+
+|Type|Description|Example|
+|file|returns a file of the type requested|curl http://geocommons.com/search.json?query=chickens&limit=2&page=3|
+
+*Curl Examples:*
+
+<pre>curl http://geocommons.com/search.json?query=chickens</pre>
+<pre>curl http://geocommons.com/search.json?query=chickens&limit=2&page=3</pre>

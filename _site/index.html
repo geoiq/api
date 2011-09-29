@@ -1,0 +1,170 @@
+<html>
+  <head>
+    <meta content='text/html;charset=UTF-8' http-equiv='Content-Type'>
+    <title>GeoIQ &mdash; GeoIQ API Overview</title>
+    <style type='text/css'>
+      @import '/css/default.css';
+      @import '/css/syntax.css';
+    </style>
+    <style media='print' type='text/css'>
+      @import '/css/print.css';
+    </style>
+    <meta content='GeoIQ API' name='subject'>
+    <link href='/images/favicon.png' rel='shortcut icon'>
+  </head>
+  <body>
+    <div id='wrap'>
+      <div id='header'>
+        <a href='http://fortiusone.github.com/api' title="GeoIQ API"></a>
+        <div class='tagline'>GeoIQ API</div>
+      </div>
+      <div id='pages'>
+        <ol class='toc'>
+          <li>Start Here
+            <ol class="toc">
+              <li><a href='/index.html'>Welcome</a></li>
+              <li><a href='/tutorial.html'>Quick Start</a></li>
+              <li><a href='https://github.com/fortiusone/api/wiki'>Community Wiki</a></li>
+            </ol>
+          </li>
+          <li>REST API
+            <ol class="toc">
+              <li><a href='/methods.html'>Methods</a></li>
+              <li><a href="/analysis.html">Analysis</a></li>
+              <li><a href="/chart.html">Chart</a></li>
+              <li><a href="/configurations.html">Configurations</a></li>
+              <li><a href="/filter.html">Filter</a></li>
+              <li><a href="/groups.html">Groups</a></li>
+              <li><a href="/features/index.html">Data Features</a>
+                <ol class="toc">
+                  <li><a href="/features/features_create.html">Create</a></li>
+                  <li><a href="/features/features_retrieve.html">Read</a></li>
+                  <li><a href="/features/features_delete.html">Delete</a></li>
+                </ol></li>
+            </ol>
+          </li>
+          <li>JavaScript API
+            <ol class="toc">
+              <li><a href="/javascript.html">Javascript</a>
+              <li><a href="/javascript/methods.html">Javascript Methods</a>
+            </ol>
+          </li>          
+          <li>Examples
+            <ol class="toc">
+              <li><a href='/examples/dashboard.html'>Dashboard Example</a></li>
+              <li><a href='/examples/map.html'>Map Example</a></li>
+              <li><a href='/examples/map_drawing.html'>Map Drawing Example</a></li>
+              <li><a href='/examples/editing_features.html'>Editing Features Example</a></li>
+              <li><a href='/examples/map_search'>Map Search Example</a></li>
+              <li><a href='http://getsatisfaction.com/geocommons'>Troubleshooting</a></li>
+            </ol>
+          </li>
+        </ol>
+      </div>
+      <div id='content'>
+        <h1 id='geoiq api overview'>GeoIQ API Overview</h1>
+        <p>GeoIQ is the engine that powers the GeoCommons Community.  GeoIQ includes a full Application Programming Interface (<span class="caps">API</span>) that allows developers to build unique and powerful domain specific applications. The <span class="caps">API</span> provides capability for uploading and download data, searching for data and maps, building, embedding, and theming maps or charts, as well as general user, group, and permissions management.</p>
+<p><img src="GeoIQ_Platform.png" alt="" /></p>
+<p>The GeoIQ <span class="caps">API</span> consists of a <span class="caps">REST</span> <span class="caps">API</span> and a JavaScript <span class="caps">API</span>.  <span class="caps">REST</span> means that it uses simple URL&#8217;s and <span class="caps">HTTP</span> methods to perform all of the actions. For example, a dataset is a specific endpoint that a user can create, read, update or delete (<span class="caps">CRUD</span>).</p>
+<p>There are many sections to the <span class="caps">API</span> included in this documentation. Each section contains specific methods, examples, and illustrations.</p>
+<h2>Overall Capabilities</h2>
+<ol>
+	<li>Upload data and register web feeds</li>
+	<li>Manage, update, and delete datasets</li>
+	<li>Download datasets</li>
+	<li>Search for data and maps</li>
+	<li>Create maps and style layers</li>
+	<li>Embed maps and charts into websites</li>
+	<li>Create, update and delete users</li>
+	<li>Create groups and add or remove users</li>
+	<li>Set access permissions for viewing, downloading, or editing resources</li>
+</ol>
+<h2>Available Resources</h2>
+<p>GeoIQ uses general <span class="caps">HTTP</span> <span class="caps">REST</span> architecture. This provides a simple interface for working with PLATFORM_NAME. The following is a complete list of available endpoints. Some endpoints have full <span class="caps">CRUD</span> capability, while others are limited to just a subset of methods. Each are documented in more detail in the relevant <span class="caps">API</span> documentation section.</p>
+<ul>
+	<li>http://geocommons.com/datasets</li>
+	<li>http://geocommons.com/maps</li>
+	<li>http://geocommons.com/users</li>
+	<li>http://geocommons.com/groups</li>
+	<li>http://geocommons.com/search</li>
+</ul>
+<h2>Content Type</h2>
+<p>The GeoIQ relies heavily upon supporting many formats for each resource.</p>
+<ul>
+	<li><strong>atom</strong> &#8211; <em>application/atom+xml</em></li>
+	<li><strong>csv</strong> &#8211; <em>text/csv</em></li>
+	<li><strong>json</strong> &#8211; <em>application/json</em></li>
+	<li><strong>kml</strong> &#8211; <em>application/vnd.google-earth.kml+xml</em></li>
+	<li><strong>xml</strong> &#8211; <em>text/xml</em></li>
+</ul>
+<h2><span class="caps">HTTP</span> Status Codes</h2>
+<p>The PLATFORM_NAME <span class="caps">API</span> attempts to return appropriate <span class="caps">HTTP</span> status codes for every request.</p>
+<ul>
+	<li><strong>200 OK</strong>: Success!</li>
+	<li><strong>201 Created</strong>: The new resource was successfully created. The response will include a location <span class="caps">URL</span> to the new resource.</li>
+	<li><strong>202 Accepted</strong>: The update to a resource was successfully applied.</li>
+	<li><strong>304 Not Modified</strong>: There was no new data to return.</li>
+	<li><strong>400 Bad Request</strong>: The request was invalid. An accompanying error message will explain why.</li>
+	<li><strong>401 Unauthorized</strong>: Authentication credentials were missing or incorrect.</li>
+	<li><strong>403 Forbidden</strong>: The request is understood, but it has been refused. An accompanying error message will explain why.</li>
+	<li><strong>404 Not Found</strong>: The <span class="caps">URI</span> requested is invalid or the resource requested, such as a user, does not exists.</li>
+	<li><strong>406 Not Acceptable</strong>: Returned when an invalid format is specified in the request.</li>
+	<li><strong>500 Internal Server Error</strong>: Something is broken. Please post to the group so the PLATFORM_NAME team can investigate.</li>
+	<li><strong>502 Bad Gateway</strong>: GeoIQ is down or being upgraded.</li>
+	<li><strong>503 Service Unavailable</strong>: The PLATFORM_NAME servers are up, but overloaded with requests. Try again later.</li>
+</ul>
+        <p>GeoIQ is the engine that powers the GeoCommons Community.  GeoIQ includes a full Application Programming Interface (<span class="caps">API</span>) that allows developers to build unique and powerful domain specific applications. The <span class="caps">API</span> provides capability for uploading and download data, searching for data and maps, building, embedding, and theming maps or charts, as well as general user, group, and permissions management.</p>
+<p><img src="GeoIQ_Platform.png" alt="" /></p>
+<p>The GeoIQ <span class="caps">API</span> consists of a <span class="caps">REST</span> <span class="caps">API</span> and a JavaScript <span class="caps">API</span>.  <span class="caps">REST</span> means that it uses simple URL&#8217;s and <span class="caps">HTTP</span> methods to perform all of the actions. For example, a dataset is a specific endpoint that a user can create, read, update or delete (<span class="caps">CRUD</span>).</p>
+<p>There are many sections to the <span class="caps">API</span> included in this documentation. Each section contains specific methods, examples, and illustrations.</p>
+<h2>Overall Capabilities</h2>
+<ol>
+	<li>Upload data and register web feeds</li>
+	<li>Manage, update, and delete datasets</li>
+	<li>Download datasets</li>
+	<li>Search for data and maps</li>
+	<li>Create maps and style layers</li>
+	<li>Embed maps and charts into websites</li>
+	<li>Create, update and delete users</li>
+	<li>Create groups and add or remove users</li>
+	<li>Set access permissions for viewing, downloading, or editing resources</li>
+</ol>
+<h2>Available Resources</h2>
+<p>GeoIQ uses general <span class="caps">HTTP</span> <span class="caps">REST</span> architecture. This provides a simple interface for working with PLATFORM_NAME. The following is a complete list of available endpoints. Some endpoints have full <span class="caps">CRUD</span> capability, while others are limited to just a subset of methods. Each are documented in more detail in the relevant <span class="caps">API</span> documentation section.</p>
+<ul>
+	<li>http://geocommons.com/datasets</li>
+	<li>http://geocommons.com/maps</li>
+	<li>http://geocommons.com/users</li>
+	<li>http://geocommons.com/groups</li>
+	<li>http://geocommons.com/search</li>
+</ul>
+<h2>Content Type</h2>
+<p>The GeoIQ relies heavily upon supporting many formats for each resource.</p>
+<ul>
+	<li><strong>atom</strong> &#8211; <em>application/atom+xml</em></li>
+	<li><strong>csv</strong> &#8211; <em>text/csv</em></li>
+	<li><strong>json</strong> &#8211; <em>application/json</em></li>
+	<li><strong>kml</strong> &#8211; <em>application/vnd.google-earth.kml+xml</em></li>
+	<li><strong>xml</strong> &#8211; <em>text/xml</em></li>
+</ul>
+<h2><span class="caps">HTTP</span> Status Codes</h2>
+<p>The PLATFORM_NAME <span class="caps">API</span> attempts to return appropriate <span class="caps">HTTP</span> status codes for every request.</p>
+<ul>
+	<li><strong>200 OK</strong>: Success!</li>
+	<li><strong>201 Created</strong>: The new resource was successfully created. The response will include a location <span class="caps">URL</span> to the new resource.</li>
+	<li><strong>202 Accepted</strong>: The update to a resource was successfully applied.</li>
+	<li><strong>304 Not Modified</strong>: There was no new data to return.</li>
+	<li><strong>400 Bad Request</strong>: The request was invalid. An accompanying error message will explain why.</li>
+	<li><strong>401 Unauthorized</strong>: Authentication credentials were missing or incorrect.</li>
+	<li><strong>403 Forbidden</strong>: The request is understood, but it has been refused. An accompanying error message will explain why.</li>
+	<li><strong>404 Not Found</strong>: The <span class="caps">URI</span> requested is invalid or the resource requested, such as a user, does not exists.</li>
+	<li><strong>406 Not Acceptable</strong>: Returned when an invalid format is specified in the request.</li>
+	<li><strong>500 Internal Server Error</strong>: Something is broken. Please post to the group so the PLATFORM_NAME team can investigate.</li>
+	<li><strong>502 Bad Gateway</strong>: GeoIQ is down or being upgraded.</li>
+	<li><strong>503 Service Unavailable</strong>: The PLATFORM_NAME servers are up, but overloaded with requests. Try again later.</li>
+</ul>
+      </div>
+      <div id='footer'>Copyright &copy; 2008-2011 GeoIQ</div>
+    </div>
+  </body>
+</html>

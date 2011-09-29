@@ -1,0 +1,44 @@
+h2. *Retrieve Dataset*
+
+Retrieves a dataset in JSON format.
+
+h3. *End point*
+
+<pre>GET http://geocommons.com/datasets/:id.json</pre>
+
+Where :id is the id of the dataset.
+
+h3. *Authentication:*
+
+Not required for GeoCommons datasets, but may depend on the permissions of the data
+
+h3. Parameters
+
+*Required Parameters:*  (none)
+
+*Optional Parameters*:
+
+|_. Parameter         |_. Description                    |_. Example |
+|include_attributes   |include data_attributes           |include_attributes=1|
+|include_features     |include features                  |include_features=1|
+|include_geometry     |include feature geometries        |include_geometry=1|
+|hex_geometry         | use Hex EWKB for geometries      |hex_geometry=1|
+
+_default is false for option parameters use 0 or 1 (0 is false)_
+
+
+h3. Response
+
+This call returns a json object representing a dataset.
+
+
+h3. Examples
+
+<pre><code>curl http://geocommons.com/datasets/7294.json?include_attributes=1&hex_geometry=1</code></pre>
+
+
+h3. Errors
+
+HTTP Error 404 Not found - if the dataset does not exist
+
+HTTP Error 401 Unauthorized - If the user does not have permission to access the dataset

@@ -1,0 +1,22 @@
+---
+layout: default
+title: Embed Map Example
+---
+
+
+  {
+       "tags": ["demo"],
+       "title": "Pepsi Twitter Analysis ",
+       "layers": [
+          {
+              "opacity": 1.0,
+               "title": "My new layer",
+               "source": "finder:100"
+          }
+      ],
+       "extent": [231.907509790718,-30.4119523225636,-217.740912590718,80.9903562466537],
+       "description": "No description given",
+       "basemap": "Acetate"
+  }
+
+  cat ~/Downloads/simplemap.json | curl -i -u "admin:password" -X POST -H "Content-Type: application/json" -d @- http://geoiq.local/maps.json

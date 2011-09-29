@@ -1,0 +1,286 @@
+---
+layout: default
+title: Analysis API
+---
+
+GeoIQ provides a full suite of spatial and statistical analysis tools to process data. Analysis operations are performed as asynchronous jobs, so when a request is made for analysis the return will point to the placeholder for where there resulting dataset will be stored. Your applications should use the REST API to check overlay state for when it's done.
+
+*Endpoint:* http://geocommons.com/analysis.:format
+
+*Description:* GeoCommons is making a variety of analysis modules available including aggregation.  Through the analysis API you can run operations on a dataset to create a new resulting dataset.
+
+*HTTP Methods Available:* POST
+
+*URL Summary:*
+
+|*Task*|*URL*|*Formats*|*HTTP METHOD*|
+|Analyze|http://geocommons.com/analysis.:format|json|POST|
+
+h2. Buffer
+
+*Required Parameters:*
+
+|Parameter|Description|Example|
+|calculation|the algorithm for the analysis|calculation=buffer|
+|ds1|ID of dataset to compute buffer for|ds1=160474|
+|distance|Numeric value of distance to buffer|distance=25|
+
+*Optional Parameters:*
+
+|Parameter|Description|Example|
+|units|Distance units. Any of (km,miles,m,ft,degrees)|units=km|
+
+*Returns*
+
+|Type|Description|Example|
+|Dataset|returns the full resulting dataset|https://gist.github.com/860926|
+
+*Curl Examples:*
+
+_Create a dataset of areas within 25 miles of an electric vehicle charging station ("160474":http://geocommons.com/overlays/160474):_
+<pre>curl -i -X POST -u "username:password" -d "distance=25" -d "units=miles" -d "ds1=160474" -d "calculation=buffer" http://geocommons.com/analysis.json</pre>
+
+h2. Intersection
+
+Determine all the locations where one data set overlaps another data set on the map.
+
+*Required Parameters:*
+
+|Parameter|Description|Example|
+|calculation|the algorithm for the analysis|calculation=intersect|
+|ds1|First datasets to intersect with|ds1=160475|
+|ds2|Second datasets to intersect with|ds2=160379|
+
+*Optional Parameters:*
+
+|Parameter|Description|Example|
+|merge|how to merge attributes: combine, prefer_1 or prefer_2; defaults to prefer_1|merge=prefer_1|
+
+*Returns*
+
+|Type|Description|Example|
+|Dataset|returns the full resulting dataset|https://gist.github.com/860926|
+
+*Curl Examples:*
+
+_Create a dataset of areas within 25 miles of an electric vehicle charging station ("160475":http://geocommons.com/overlays/160475) AND 50 miles of a theme park ("160379":http://geocommons.com/overlays/160379):_
+<pre>curl -i -X POST -u "username:password" -d "ds1=160475" -d "ds2=160379" -d "calculation=intersect" http://geocommons.com/analysis.json</pre>
+
+h2. Spatial Aggregation
+
+You can aggregate an existing dataset to a set of boundaries to create a new dataset. This will create a new dataset that will be returned as an object in the response body.
+
+*Required Parameters:*
+
+|Parameter|Description|Example|
+|calculation|the algorithm for the analysis|calculation=aggregation|
+|ds1|ID of the dataset to aggregate|ds1=160474|
+|ds2|ID of the boundary dataset|ds2=160361|
+
+*Optional Parameters:*
+
+|Parameter|Description|Example|
+|aggregates|array of aggregate columns to add to the result|aggregates[][name]=population&aggregates[][calc]=sum|
+|keep_empty|carry over polygons that do not intersect with the dataset being aggregated (default: false)|keep_empty=0|
+
+A _count of <dataset>_ column is automatically added that has the number of features that were within that boundary.
+
+*Curl Example*
+
+_Create a map of electric vehicle charging stations ("160474":http://geocommons.com/overlays/160474) by state ("160361":http://geocommons.com/overlays/160361), with number public stations as a new attribute:_
+
+<pre>curl -i -X POST -u "username:password" -d "calculation=aggregation" -d "ds1=160474" -d "ds2=160361" -d "aggregates[][name]=public" -d "aggregates[][calc]=sum" -d "keep_empty=1" http://geocommons.com/analysis.json</pre>
+
+h2. Cross Dataset Correlation 
+
+You can cross correlate two datasets to a boundary dataset to create a new dataset. 
+
+*Required Parameters:*
+
+|Parameter|Description|Example|
+|calculation|the algorithm for the analysis|calculation=correlation|
+|ds1|ID of dependent dataset to correlate|ds1=160474|
+|atr_1|Attribute name in dependent dataset|atr_1=public|
+|ds2|ID of independent dataset to correlate to|ds2=160476|
+|atr_2|Attribute name in dependent dataset|atr_2=PERCENT|
+|ds3|Boundary dataset to aggregate to|ds3=160361|
+
+*Optional Parameters:*
+
+|Parameter|Description|Example|
+|calculation_1|aggregate calculation for dependent dataset: one of "sum", "average", "max", or "min"; defaults to count|sum|
+|calculation_2|aggregate calculation for independent dataset: one of "sum", "average", "max", or "min"; defaults to count|sum|
+
+*Curl Example*
+
+_Determine how number of electric vehicle charging stations ("160474":http://geocommons.com/overlays/160474) is correlated with cloud-free days ("160476":http://geocommons.com/overlays/160476), aggregating by state ("160361":http://geocommons.com/overlays/160361):_
+<pre>curl -u username:password -X POST -d "calculation=correlation" -d "ds1=160474" -d "atr_1=public" -d "calculation_1=sum" -d "ds2=160476" -d "atr_2=PERCENT" -d "calculation_2=average" -d "ds3=160361" http://geocommons.com/analysis.json
+</pre>
+
+h2. Sum
+
+You can create a new dataset with two attributes added. 
+
+*Required Parameters:*
+
+|Parameter|Description|Example|
+|calculation|the algorithm for the analysis|calculation=sum|
+|ds1|ID of dataset|ds1=160502|
+|atr_1|First attribute to add|atr1=Under5|
+|atr_2|Second attribute to add|atr2=Y5to13|
+
+*Optional Parameters:*
+
+_none_
+
+*Curl Example*
+
+_Get a dataset with number of people in each state who are under 13 by adding two age groups in ("160502":http://geocommons.com/overlays/160502):_
+<pre>curl -u username:password -X POST -d "calculation=sum" -d "ds1=160502" -d "atr_1=Under5" -d "atr_2=Y5to13"  http://geocommons.com/analysis.json
+</pre>
+
+
+h2. Difference
+
+You can create a new dataset with the difference between two attributes. 
+
+*Required Parameters:*
+
+|Parameter|Description|Example|
+|calculation|the algorithm for the analysis|calculation=difference|
+|ds1|ID of dataset|ds1=160506|
+|atr_1|Attribute to subtract from|atr1=Total|
+|atr_2|Attribute to subtract|atr2=sum of Under5 and Y5to13|
+
+*Optional Parameters:*
+
+_none_
+
+*Curl Example*
+
+_Get a dataset with number of people in each state who are 13 or older by subtracting the number under 13 from the total population in ("160506":http://geocommons.com/overlays/160506):_
+<pre>curl -u "username:password" -X POST -d "calculation=difference" -d "ds1=160506" -d "atr_1=Total" -d "atr_2=sum of Under5 and Y5to13"   http://geocommons.com/analysis.json
+</pre>
+
+h2. Group By
+
+Combine features of a dataset based on a common value. Each resulting feature will have the geometry of one of the items in the group.
+
+*Required Parameters:*
+
+|Parameter|Description|Example|
+|calculation|the algorithm for the analysis|calculation=group_by|
+|ds1|ID of dataset|ds1=160474|
+|atr_1|Attribute to group on|atr_1=state|
+
+*Optional Parameters:*
+
+|Parameter|Description|Example|
+|aggregates|list of aggregate calculations|aggregates[][name]=public&aggregates[][calc]=sum|
+
+_none_
+
+A _count of <dataset>_ column is automatically added that has the number of features that were in the group.
+
+*Curl Example*
+
+_Create a map of electric vehicle charging stations ("160474":http://geocommons.com/overlays/160474) by state using the state column to group on, with number public stations as a new attribute:_
+<pre>curl -u "username:password" -X POST -d "calculation=group_by" -d "ds1=160474" -d "atr_1=state" -d "aggregates[][name]=public" -d "aggregates[][calc]=sum" http://geocommons.com/analysis.json
+</pre>
+
+h2. Simplify
+
+Simplify a dataset to make the features less complex
+
+*Required Parameters:*
+
+|Parameter|Description|Example|
+|calculation|the algorithm for the analysis|calculation=simplify|
+|ds1|ID of dataset to compute buffer for|ds1=160474|
+|tolerance|Numeric value of distance to simplify to|tolerance=25|
+
+*Optional Parameters:*
+
+|Parameter|Description|Example|
+|unit|Tolerance units. Any of (km,miles,m,ft,degrees); defaults to km|units=km|
+|method|method to use: Either "douglas peucker" or "preserve topology"; defaults to "douglas peucker"|method=preserve topology|
+
+*Returns*
+
+|Type|Description|Example|
+|Dataset|returns the full resulting dataset|https://gist.github.com/860926|
+
+*Curl Examples:*
+
+_Simplify a dataset of US states ("160361":http://geocommons.com/overlays/160361) to reduce its size:_
+<pre>curl -i -X POST -u "username:password" -d "tolerance=20" -d "unit=miles" -d "ds1=160361" -d "method=preserve topology" -d "calculation=simplify" http://geocommons.com/analysis.json</pre>
+
+h2. Expression
+
+Use your own equation to calculate a result for the attributes in a dataset
+
+*Required Parameters:*
+
+|Parameter|Description|Example|
+|calculation|the algorithm for the analysis|calculation=expression|
+|ds1|ID of dataset|ds1=160502|
+|expression|Expression to compute|expression=$[Total]-$[Under5]-$[Y5to13]|
+
+*Optional Parameters:*
+
+_none_
+
+*Curl Example*
+
+"$[Total]-($[Under5]+$[Y5to13])"
+
+_Get a dataset with number of people in each state who are 13 or older by subtracting the number under 5 and 5-13 from the total population in ("160502":http://geocommons.com/overlays/160502):_
+<pre>curl -u "username:password" -X POST -d "calculation=expression" -d "ds1=160502" -d "expression=$[Total]-$[Under5]-$[Y5to13]"  http://geocommons.com/analysis.json
+</pre>
+
+h2. Clip
+
+Clip an input dataset based on a clipping dataset
+
+*Required Parameters:*
+
+|Parameter|Description|Example|
+|calculation|the algorithm for the analysis|calculation=clip|
+|ds1|ID of the dataset to clip|ds1=160474|
+|ds2|ID of the clipping dataset|ds2=160379|
+
+*Optional Parameters:*
+
+_none_
+
+*Curl Example*
+
+_Create a dataset of only those electric vehicle charging stations ("160474":http://geocommons.com/overlays/160474) that are within 50 miles of a theme park ("160379":http://geocommons.com/overlays/160379):_
+
+<pre>curl -i -X POST -u "username:password" -d "calculation=clip" -d "ds1=160474" -d "ds2=160379" http://geocommons.com/analysis.json</pre>
+
+h2. Dissolve
+
+Merge polygons together that have a common attribute
+
+*Required Parameters:*
+
+|Parameter|Description|Example|
+|calculation|the algorithm for the analysis|calculation=dissolve|
+|ds1|ID of the dataset to aggregate|ds1=160474|
+|atr_1|Attribute to dissolve on|atr_1=Subregion|
+
+*Optional Parameters:*
+
+|Parameter|Description|Example|
+|aggregates|array of aggregate columns to add to the result|aggregates[][name]=population&aggregates[][calc]=sum|
+
+A _count of <dataset>_ column is automatically added that has the number of features that were within each boundary.
+
+*Curl Example*
+
+_Create a dataset of US regions by dissolving on the Subregion attribute of states dataset ("160361":http://geocommons.com/overlays/160361):_
+
+<pre>curl -i -X POST -u "username:password" -d "calculation=dissolve" -d "ds2=160361" http://geocommons.com/analysis.json</pre>
+
+

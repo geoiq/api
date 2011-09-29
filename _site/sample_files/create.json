@@ -1,0 +1,8 @@
+{
+  "title": "Plotting our houses",
+  "description": "no description here",
+  "attributes": [
+    { "name": "Address", "type": "street" },
+    { "name": "House Price", "description": "The value of the house", "type": "decimal" }
+  ]
+}

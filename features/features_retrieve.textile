@@ -1,0 +1,89 @@
+---
+layout: default
+title: Filtered Features API
+---
+
+*Required Parameters:* (none)
+
+*Optional Parameters*:
+
+|_. Parameter |_. Description |_. Example |
+|limit|number of features to return (default is 30)|limit=2|
+|order|'ascending' or 'descending' of the sort attribute (default ascending)|order=descending|
+|start|index to start with. 1 would be the first. Allows paginating through data|start=6|
+|callback|callback method to wrap the response in| callback=filteredLayer |
+|bbox|West/South/East/North is the order of the bounding box to get the features contained within an area|bbox=-79.5,20,-78,50|
+|units|sets the unit for the radius parameter by default is km (requires radius parameter)possible options are: km,m,ft,miles,degrees|units=ft|
+|lon|longitude of a point being searched from requires use of radius and lat parameters additionally|lon=-77.9998|
+|lat|latitude of a point being search from requires use of the radius and lon parameters additionally|lat=39.8282|
+|radius|defines distanced to be search from of a polygon,line,points or lat/lon pair (default is km)|radius=100|
+|intersect|specify if polygons are _contained_ or _full_. By default is set to _contained_ which means only polygons completely inside the buffer will be returned, _full_ means any part inside or touching|intersect=contained| 
+|with_distance|set to "true" to get a distance calculation of the centroid of the feature to the boundary polygon sent back with the features.|with_distance=1|
+|filter|filter parameters for specific attributes within the dataset| filter[dec_col][][max]=.22 |
+|group_by|array of columns to "group by" in aggregating features|group_by[]=state|
+|aggregates|array of aggregation values. Includes by name and calc. Name is the attribute name and calc can be any of: max,min,sum,average|aggregates[][name]=timestamp&aggregates[][calc]=max|
+|geojson|returns the geometry in GeoJSON format|geojson=1|
+|hex_geometry|returns the geometry in HEX EWKB format|hex_geometry=1|
+|encode|returns the geometry in Google Maps encoded polyline format|encode=1|
+
+_all latitude and longitude is in decimal degrees_
+
+*Curl Examples:*
+
+<pre><code>curl http://geocommons.com/datasets/98696/features.json?bbox=-79.5,20,-78,50</code></pre>
+_Filter features within a bounding box_
+
+<pre><code>curl http://geocommons.com/datasets/98696/features.json?lat=39.2&lon=-77.1&radius=100</code></pre>
+_Filter features within 100 km of a point_
+
+<pre><code>curl http://geocommons.com/datasets/98696/features.json?points=-77.1,39.8,-77.2,39.9,-77.3,39.99,-77.1,39.8&radius=100</code></pre>
+_Filter features within 100 kilometers of multiple points by longitude,latitude_
+
+<pre><code>curl http://geocommons.com/datasets/98696/features.json?polygon=-77,34,-78.5,34.5,-82,32,-79,30,-77,34&radius=100</code></pre>
+_Filter features within a 100 kilometer distance of a polygon_
+
+<pre><code>curl http://geocommons.com/datasets/98696/features.json?line=-77,34,-78.5,34.5,-82,32,-79,30&radius=100</code></pre>
+_Filter features within 100 km of a geographic line (such as a road)_
+
+<pre><code>curl http://geocommons.com/datasets/22146/features.json?lat=38.8&lon=-78.9&radius=2&intersect=full</code></pre>
+_Filter features within or overlapping 2 km of a point_
+
+<pre><code>curl http://geocommons.com/datasets/98696/features.json?filter[int_col][][equals]=1&filter[dec_col][][max]=.22</code></pre>
+_Filter features where int_col is equal to 1 and dec_col is less than 0.22_
+
+*Filter Parameters*:
+
+Datasets can be filtered when requested from the server. This is done by calling the dataset/:id/features/ with the optional filter= paramter. The filter parameter can include a filter for any attribute name, and an array of filter conditions. Filter names must be URI encoded.
+
+|_. Parameters |_. Description|_. Example |
+|min|the minimum value of the attribute|filter[financing_amt][][min]=100|
+|max|the maximum value of the attribute|filter[financing_amt][][max]=120|
+|equals|the value the attribute must be equal to|filter[name][][equals]=bob|
+
+<pre>http://geocommons.com/datasets/98696/features.json?filter[int_col][][max]=5&filter[name][][equals]=point%201</code></pre>
+<pre>http://geocommons.com/datasets/98696/features.json?filter[int_col][][max]=5&filter[int_col][][min]=3</code></pre>
+
+h2. Aggregate Statistics
+
+Using the Feature API it's possible to calculate roll-up statistics of features. Using the @group_by@ and @aggregates@ you can specify to summarize max,min,sum, or average values. If a @group_by@ is specified but no aggregates, then just a count is returned of the number of features in that group.
+
+h3. group_by
+
+The @group_by@ option groups features based on the value of the attribute specified. This ends up with summarized data, by default with a count and optionally with additional @aggregates@ as specified below.
+
+<pre><code>curl http://geocommons.com/datasets/98696/features.json?group_by[]=sortable</code></pre>
+
+h3. aggregates
+
+The @aggregates@ option is an array of objects that contain both a @name@ and a @calc@. So for example: @aggregates[][name]=cost&aggregates[][calc]=average@. A request can have multiple aggregates.
+
+The calc parameter can be any of:
+
+* max - maximum value of all attribute features
+* min - minimum value of all attribute features
+* sum - summation of all values
+* average - average of all values
+
+*Example*
+
+<pre><code>curl http://geocommons.com/datasets/98696/features.json?aggregates[][name]=int_col&aggregates[][calc]=sum&group_by[]=sortable</code></pre>

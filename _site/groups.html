@@ -1,0 +1,96 @@
+<html>
+  <head>
+    <meta content='text/html;charset=UTF-8' http-equiv='Content-Type'>
+    <title>GeoIQ &mdash; Groups API</title>
+    <style type='text/css'>
+      @import '/css/default.css';
+      @import '/css/syntax.css';
+    </style>
+    <style media='print' type='text/css'>
+      @import '/css/print.css';
+    </style>
+    <meta content='GeoIQ API' name='subject'>
+    <link href='/images/favicon.png' rel='shortcut icon'>
+  </head>
+  <body>
+    <div id='wrap'>
+      <div id='header'>
+        <a href='http://fortiusone.github.com/api' title="GeoIQ API"></a>
+        <div class='tagline'>GeoIQ API</div>
+      </div>
+      <div id='pages'>
+        <ol class='toc'>
+          <li>Start Here
+            <ol class="toc">
+              <li><a href='/index.html'>Welcome</a></li>
+              <li><a href='/tutorial.html'>Quick Start</a></li>
+              <li><a href='https://github.com/fortiusone/api/wiki'>Community Wiki</a></li>
+            </ol>
+          </li>
+          <li>REST API
+            <ol class="toc">
+              <li><a href='/methods.html'>Methods</a></li>
+              <li><a href="/analysis.html">Analysis</a></li>
+              <li><a href="/chart.html">Chart</a></li>
+              <li><a href="/configurations.html">Configurations</a></li>
+              <li><a href="/filter.html">Filter</a></li>
+              <li><a href="/groups.html">Groups</a></li>
+              <li><a href="/features/index.html">Data Features</a>
+                <ol class="toc">
+                  <li><a href="/features/features_create.html">Create</a></li>
+                  <li><a href="/features/features_retrieve.html">Read</a></li>
+                  <li><a href="/features/features_delete.html">Delete</a></li>
+                </ol></li>
+            </ol>
+          </li>
+          <li>JavaScript API
+            <ol class="toc">
+              <li><a href="/javascript.html">Javascript</a>
+              <li><a href="/javascript/methods.html">Javascript Methods</a>
+            </ol>
+          </li>          
+          <li>Examples
+            <ol class="toc">
+              <li><a href='/examples/dashboard.html'>Dashboard Example</a></li>
+              <li><a href='/examples/map.html'>Map Example</a></li>
+              <li><a href='/examples/map_drawing.html'>Map Drawing Example</a></li>
+              <li><a href='/examples/editing_features.html'>Editing Features Example</a></li>
+              <li><a href='/examples/map_search'>Map Search Example</a></li>
+              <li><a href='http://getsatisfaction.com/geocommons'>Troubleshooting</a></li>
+            </ol>
+          </li>
+        </ol>
+      </div>
+      <div id='content'>
+        <h1 id='groups api'>Groups API</h1>
+        <p>curl -i -u &#8220;testinguser:testinguser&#8221; &#8220;http://geoiq.local/users/testinguser.json&#8221;</p>
+<p><span class="caps">HTTP</span>/1.1 200 OK</p>
+<p>{&quot;created_at&quot;: &#8220;2011/08/15 21:10:12 +0000&#8221;, &#8220;updated_at&#8221;: &#8220;2011/08/15 21:20:41 +0000&#8221;, &#8220;id&#8221;: 13, &#8220;full_name&#8221;: &#8220;testinguser&#8221;, &#8220;groups&#8221;: [{&quot;name&quot;: &#8220;testinguser&#8221;, &#8220;created_at&#8221;: &#8220;2011/08/15 21:10:13 +0000&#8221;, &#8220;owner_id&#8221;: null, &#8220;id&#8221;: 20, &#8220;parent_group_id&#8221;: null}, {&quot;name&quot;: &#8220;My Awesome Group&#8221;, &#8220;created_at&#8221;: &#8220;2011/08/15 21:20:39 +0000&#8221;, &#8220;owner_id&#8221;: 13, &#8220;id&#8221;: 21, &#8220;parent_group_id&#8221;: null}], &#8220;login&#8221;: &quot;testinguser&quot;}</p>
+<p>&#8212;</p>
+<p>] curl -i -u &#8220;testinguser:testinguser&#8221; &#8220;http://geoiq.local/groups/21.json&#8221;<br />
+<span class="caps">HTTP</span>/1.1 200 OK</p>
+<p>{&quot;name&quot;: &#8220;My Awesome Group&#8221;, &#8220;created_at&#8221;: &#8220;2011/08/15 21:20:39 +0000&#8221;, &#8220;owner_id&#8221;: 13, &#8220;id&#8221;: 21, &#8220;parent_group_id&#8221;: null}</p>
+<p>] curl -u &#8220;admin:password&#8221; http://geoiq.local/groups/13/datasets.json<br />
+{&quot;itemsPerPage&quot;: 10, &#8220;entries&#8221;: [{&quot;permissions&quot;: {&quot;edit&quot;: false, &#8220;view&#8221;: true, &#8220;download&#8221;: true}, &#8220;tags&#8221;: null, &#8220;author&#8221;: {&quot;uri&quot;: null, &#8220;name&#8221;: null}, &#8220;type&#8221;: &#8220;Overlay&#8221;, &#8220;data_type&#8221;: &#8220;Dataset&#8221;, &#8220;title&#8221;: &#8220;location.change&#8221;, &#8220;published&#8221;: &#8220;2011-08-15T17:28:56-04:00&#8221;, &#8220;link&#8221;: &#8220;http://geoiq.local/overlays/91.json&#8221;, &#8220;contributor&#8221;: {&quot;uri&quot;: &#8220;http://geoiq.local/users/public_user&#8221;, &#8220;name&#8221;: &quot;public_user&quot;}, &#8220;pk&#8221;: 91, &#8220;bbox&#8221;: &#8220;37.31961,-122.0508,37.38904,-121.9292&#8221;, &#8220;feature_count&#8221;: 39, &#8220;source&#8221;: null, &#8220;geometry_types&#8221;: &#8220;point&#8221;, &#8220;created&#8221;: &#8220;2011-07-06T17:03:24Z&#8221;, &#8220;icon_path&#8221;: null, &#8220;detail_link&#8221;: &#8220;http://geoiq.local/overlays/91&#8221;, &#8220;unique_name&#8221;: null, &#8220;short_classification&#8221;: null, &#8220;layer_size&#8221;: 16938, &#8220;description&#8221;: null, &#8220;name&#8221;: &#8220;location.change&#8221;, &#8220;id&#8221;: &#8220;Overlay:91&#8221;, &#8220;analyzable&#8221;: true}], &#8220;totalResults&#8221;: 1}</p>
+<p>] curl -u &#8220;admin:password&#8221; http://geoiq.local/groups/13/maps.json<br />
+{&quot;itemsPerPage&quot;: 10, &#8220;entries&#8221;: [{&quot;permissions&quot;: {&quot;edit&quot;: true, &#8220;view&#8221;: true, &#8220;download&#8221;: true}, &#8220;tags&#8221;: null, &#8220;author&#8221;: {&quot;uri&quot;: &#8220;http://geoiq.local/users/admin&#8221;, &#8220;name&#8221;: &quot;admin&quot;}, &#8220;type&#8221;: &#8220;Map&#8221;, &#8220;title&#8221;: &#8220;facilities_with_timestamp_query&#8221;, &#8220;link&#8221;: &#8220;http://geoiq.local/maps/42&#8221;, &#8220;pk&#8221;: 42, &#8220;bbox&#8221;: &#8220;9.752581,57.148884,9.745993,57.15062&#8221;, &#8220;created&#8221;: &#8220;2011-08-01T16:03:08Z&#8221;, &#8220;short_classification&#8221;: null, &#8220;description&#8221;: &#8220;No description given&#8221;, &#8220;id&#8221;: &#8220;Map:42&#8221;}], &#8220;totalResults&#8221;: 1}</p>
+<p>] curl -u &#8220;admin:password&#8221; http://geoiq.local/groups/13/users.json<br />
+[&#8220;public_user&#8221;, &#8220;testing7&#8221;, &#8220;admin&#8221;]</p>
+        <p>curl -i -u &#8220;testinguser:testinguser&#8221; &#8220;http://geoiq.local/users/testinguser.json&#8221;</p>
+<p><span class="caps">HTTP</span>/1.1 200 OK</p>
+<p>{&quot;created_at&quot;: &#8220;2011/08/15 21:10:12 +0000&#8221;, &#8220;updated_at&#8221;: &#8220;2011/08/15 21:20:41 +0000&#8221;, &#8220;id&#8221;: 13, &#8220;full_name&#8221;: &#8220;testinguser&#8221;, &#8220;groups&#8221;: [{&quot;name&quot;: &#8220;testinguser&#8221;, &#8220;created_at&#8221;: &#8220;2011/08/15 21:10:13 +0000&#8221;, &#8220;owner_id&#8221;: null, &#8220;id&#8221;: 20, &#8220;parent_group_id&#8221;: null}, {&quot;name&quot;: &#8220;My Awesome Group&#8221;, &#8220;created_at&#8221;: &#8220;2011/08/15 21:20:39 +0000&#8221;, &#8220;owner_id&#8221;: 13, &#8220;id&#8221;: 21, &#8220;parent_group_id&#8221;: null}], &#8220;login&#8221;: &quot;testinguser&quot;}</p>
+<p>&#8212;</p>
+<p>] curl -i -u &#8220;testinguser:testinguser&#8221; &#8220;http://geoiq.local/groups/21.json&#8221;<br />
+<span class="caps">HTTP</span>/1.1 200 OK</p>
+<p>{&quot;name&quot;: &#8220;My Awesome Group&#8221;, &#8220;created_at&#8221;: &#8220;2011/08/15 21:20:39 +0000&#8221;, &#8220;owner_id&#8221;: 13, &#8220;id&#8221;: 21, &#8220;parent_group_id&#8221;: null}</p>
+<p>] curl -u &#8220;admin:password&#8221; http://geoiq.local/groups/13/datasets.json<br />
+{&quot;itemsPerPage&quot;: 10, &#8220;entries&#8221;: [{&quot;permissions&quot;: {&quot;edit&quot;: false, &#8220;view&#8221;: true, &#8220;download&#8221;: true}, &#8220;tags&#8221;: null, &#8220;author&#8221;: {&quot;uri&quot;: null, &#8220;name&#8221;: null}, &#8220;type&#8221;: &#8220;Overlay&#8221;, &#8220;data_type&#8221;: &#8220;Dataset&#8221;, &#8220;title&#8221;: &#8220;location.change&#8221;, &#8220;published&#8221;: &#8220;2011-08-15T17:28:56-04:00&#8221;, &#8220;link&#8221;: &#8220;http://geoiq.local/overlays/91.json&#8221;, &#8220;contributor&#8221;: {&quot;uri&quot;: &#8220;http://geoiq.local/users/public_user&#8221;, &#8220;name&#8221;: &quot;public_user&quot;}, &#8220;pk&#8221;: 91, &#8220;bbox&#8221;: &#8220;37.31961,-122.0508,37.38904,-121.9292&#8221;, &#8220;feature_count&#8221;: 39, &#8220;source&#8221;: null, &#8220;geometry_types&#8221;: &#8220;point&#8221;, &#8220;created&#8221;: &#8220;2011-07-06T17:03:24Z&#8221;, &#8220;icon_path&#8221;: null, &#8220;detail_link&#8221;: &#8220;http://geoiq.local/overlays/91&#8221;, &#8220;unique_name&#8221;: null, &#8220;short_classification&#8221;: null, &#8220;layer_size&#8221;: 16938, &#8220;description&#8221;: null, &#8220;name&#8221;: &#8220;location.change&#8221;, &#8220;id&#8221;: &#8220;Overlay:91&#8221;, &#8220;analyzable&#8221;: true}], &#8220;totalResults&#8221;: 1}</p>
+<p>] curl -u &#8220;admin:password&#8221; http://geoiq.local/groups/13/maps.json<br />
+{&quot;itemsPerPage&quot;: 10, &#8220;entries&#8221;: [{&quot;permissions&quot;: {&quot;edit&quot;: true, &#8220;view&#8221;: true, &#8220;download&#8221;: true}, &#8220;tags&#8221;: null, &#8220;author&#8221;: {&quot;uri&quot;: &#8220;http://geoiq.local/users/admin&#8221;, &#8220;name&#8221;: &quot;admin&quot;}, &#8220;type&#8221;: &#8220;Map&#8221;, &#8220;title&#8221;: &#8220;facilities_with_timestamp_query&#8221;, &#8220;link&#8221;: &#8220;http://geoiq.local/maps/42&#8221;, &#8220;pk&#8221;: 42, &#8220;bbox&#8221;: &#8220;9.752581,57.148884,9.745993,57.15062&#8221;, &#8220;created&#8221;: &#8220;2011-08-01T16:03:08Z&#8221;, &#8220;short_classification&#8221;: null, &#8220;description&#8221;: &#8220;No description given&#8221;, &#8220;id&#8221;: &#8220;Map:42&#8221;}], &#8220;totalResults&#8221;: 1}</p>
+<p>] curl -u &#8220;admin:password&#8221; http://geoiq.local/groups/13/users.json<br />
+[&#8220;public_user&#8221;, &#8220;testing7&#8221;, &#8220;admin&#8221;]</p>
+      </div>
+      <div id='footer'>Copyright &copy; 2008-2011 GeoIQ</div>
+    </div>
+  </body>
+</html>

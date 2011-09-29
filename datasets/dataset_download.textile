@@ -1,0 +1,46 @@
+h2. *Download Dataset*
+
+Downloads a dataset in various formats.
+
+h3. *End point*
+
+<pre>GET http://geocommons.com/datasets/:id.:format</pre>
+
+Where :id is the id of the dataset, and :format is one of following
+kml - Keyhole Markup Language - Google's format. Used in Google Earth
+csv - Comma separated values - tablular text file
+zip - zipped shapefile (ESRI format shapefile, zipped)
+kmz - Zipped KML file
+atom - XML file format
+json (see Retrieve Dataset for more options)
+sqlite - portable sql database (in beta)
+
+h3. *Authentication:*
+
+Not required for GeoCommons datasets, but may depend on the permissions of the data
+
+h3. Parameters
+
+*Required Parameters:*
+
+|_. Parameter         |_. Description                    |_. Example |
+|format               |download format (kml csv zip kmz atom json sqlite)          |1234.kml|
+
+
+h3. Response
+
+This call downloads a file representing a dataset.
+
+
+h3. Examples
+
+<pre><code>curl http://geocommons.com/datasets/7294.kml</code></pre>
+
+
+h3. Errors
+
+HTTP Error 406 Not acceptable - if the wrong format is given
+
+HTTP Error 404 Not found - if the dataset does not exist
+
+HTTP Error 401 Unauthorized - If the user does not have permission to access the dataset

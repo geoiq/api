@@ -1,0 +1,29 @@
+---
+layout: default
+title: Groups API
+---
+
+curl -i -u "testinguser:testinguser" "http://geoiq.local/users/testinguser.json"
+
+HTTP/1.1 200 OK
+
+{"created_at": "2011/08/15 21:10:12 +0000", "updated_at": "2011/08/15 21:20:41 +0000", "id": 13, "full_name": "testinguser", "groups": [{"name": "testinguser", "created_at": "2011/08/15 21:10:13 +0000", "owner_id": null, "id": 20, "parent_group_id": null}, {"name": "My Awesome Group", "created_at": "2011/08/15 21:20:39 +0000", "owner_id": 13, "id": 21, "parent_group_id": null}], "login": "testinguser"}
+
+--
+
+] curl -i -u "testinguser:testinguser" "http://geoiq.local/groups/21.json"
+HTTP/1.1 200 OK
+
+
+{"name": "My Awesome Group", "created_at": "2011/08/15 21:20:39 +0000", "owner_id": 13, "id": 21, "parent_group_id": null}
+
+
+] curl -u "admin:password" http://geoiq.local/groups/13/datasets.json
+{"itemsPerPage": 10, "entries": [{"permissions": {"edit": false, "view": true, "download": true}, "tags": null, "author": {"uri": null, "name": null}, "type": "Overlay", "data_type": "Dataset", "title": "location.change", "published": "2011-08-15T17:28:56-04:00", "link": "http://geoiq.local/overlays/91.json", "contributor": {"uri": "http://geoiq.local/users/public_user", "name": "public_user"}, "pk": 91, "bbox": "37.31961,-122.0508,37.38904,-121.9292", "feature_count": 39, "source": null, "geometry_types": "point", "created": "2011-07-06T17:03:24Z", "icon_path": null, "detail_link": "http://geoiq.local/overlays/91", "unique_name": null, "short_classification": null, "layer_size": 16938, "description": null, "name": "location.change", "id": "Overlay:91", "analyzable": true}], "totalResults": 1}
+
+
+] curl -u "admin:password" http://geoiq.local/groups/13/maps.json
+{"itemsPerPage": 10, "entries": [{"permissions": {"edit": true, "view": true, "download": true}, "tags": null, "author": {"uri": "http://geoiq.local/users/admin", "name": "admin"}, "type": "Map", "title": "facilities_with_timestamp_query", "link": "http://geoiq.local/maps/42", "pk": 42, "bbox": "9.752581,57.148884,9.745993,57.15062", "created": "2011-08-01T16:03:08Z", "short_classification": null, "description": "No description given", "id": "Map:42"}], "totalResults": 1}
+
+] curl -u "admin:password" http://geoiq.local/groups/13/users.json
+["public_user", "testing7", "admin"]

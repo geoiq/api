@@ -1,0 +1,32 @@
+---
+layout: default
+title: Map Drawing Example
+---
+
+{% highlight javascript %}
+var map = F1.Maker.current_map;
+
+var layer = 2;
+var line = []
+function drawLine(drawing_layer) {
+    map.setCallback("onMapClicked", function(location) {
+        line.push(location);
+        map.addFeatures(drawing_layer, [{geometry: {type: "LineString", coordinates: line}}], true)
+        console.log(line);
+    })
+}
+drawLine(layer)
+
+var points = []
+function drawPoints(drawing_layer) {
+    map.setCallback("onMapClicked", function(loc) {
+        points.push(loc);
+        var p = []
+        for(var i = 0; i < points.length; ++i) {
+            p.push({geometry: {type: "Point", coordinates: points[i]}})
+        }
+        map.addFeatures(drawing_layer, p, true)
+    })
+}
+drawPoints(layer)
+{% endhighlight %}

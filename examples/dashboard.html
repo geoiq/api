@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>GeoIQ Dashboard Example</title>
+    <style type="text/css" media="screen">
+      #container  { width: 1000px; }
+      #map_div    { height: 400px; width: 800px; float: left; }
+      #sidebar    { float: right; }
+      #items      { height: 300px; }
+    </style>
+  </head>
+  <body onload="createMap()">
+    
+    <h1>GeoIQ Dashboard</h1>
+    <div id="container">
+        <div id="map_div"></div>
+        <div id="sidebar">
+          <div id="chart"></div>
+          <ul id="items"></ul>
+        </div>    
+    </div>
+  
+    <script type="text/javascript" charset="utf-8" src="http://geoiq.local/javascripts/f1.api.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      var example_map;
+      function updateMap() {
+        example_map.setCallback("onFeatureSelected", function(features) {
+          alert(features);
+        })
+      }
+      
+      function createMap() {
+        example_map = new F1.Maker.Map({
+            map_id: "49", 
+            dom_id: "map_div", 
+            uiZoom: false, 
+            uiLegend: false, 
+            onMapLoaded: function() { updateMap() }});
+      }
+    </script>
+    
+  </body>
+</html>

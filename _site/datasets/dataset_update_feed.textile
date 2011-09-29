@@ -1,0 +1,23 @@
+h2. *Update Dataset Feed*
+
+It is possible to ping GeoIQ when new updates are available.
+
+h3. *End point*
+
+<pre>POST http://geocommons.com/datasets/:id/fetch.json</pre>
+
+*Authentication:*
+
+Requires basic authentication for both GeoCommons and GeoIQ appliances.  The user must be either the owner or an authorized user with edit access.
+
+*Required Parameters:* (none)
+
+*Optional Parameters*:  (none)
+
+*Returns:*
+
+|_. Type |_. Description |_. Example |
+|HTTP Response|returns a HTTP response 202 Accepted|HTTP/1.1 202 Accepted|
+
+*Curl Examples:*
+<pre><code>curl -i -X POST -u "user:password" http://geocommons.com/datasets/98737/fetch.json</code></pre>

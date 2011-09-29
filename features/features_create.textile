@@ -1,0 +1,29 @@
+---
+layout: default
+title: Create Features API
+---
+
+Adds one or more features to the dataset.
+
+*Required Parameters:* (none)
+
+*Optional Parameters*:
+
+Creating a feature in GeoIQ depends on the format, or schema, of the dataset. The Features include any of the optional attributes that are in the dataset and additionally a Geometry that is formatted as GeoJSON.
+
+|_. Parameter |_. Description |_. Example |
+| _any attribute_ | any attribute value from the dataset schema | {title: "My new Feature"} |
+| geometry | GeoJSON formatted geometry | {geometry: {type: "Point", coordinates: [-100, 80.3]}} |
+
+Note that any attributes specified in the feature that are not defined for the dataset are ignored.
+
+*Example*: 
+
+Assuming you created an empty dataset as described under "Create an empty dataset with JSON":/api/datasets/dataset_create and given a JSON array of features in a file _features.json_:
+
+<pre>[{"House Price": 550000, Address: "123 4th St, Arlington, VA 22201", geometry: {type: "Point", coordinates: [-100, 80]}},
+  {"House Price": 850000, Address: "2200 Clarendon Blvd, Arlington, VA 22201", geometry: {type: "Point", coordinates: [-120, 62.4]}}]</pre>
+
+You could then POST this to the endpoint:
+
+<pre><code>curl -X POST -u "user:pass" -H "Content-Type: application/json" -d @features.json http://geocommons.com/datasets/98696/features.json</code></pre>

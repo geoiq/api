@@ -1,0 +1,1408 @@
+---
+layout: default
+title: JavaScript API
+---
+
+{{>toc}}
+
+GeoIQ supports a developer friendly JavaScript API for integrating data and visualizations into web pages and applications.
+
+h2. Includes
+
+To begin using the GeoIQ JavaScript, you must first include the API library:
+
+<pre><script src="http://geocommons.com/javascripts/f1.api.js" type="text/javascript"></script></pre>
+
+The server will be searched based on where the library is loaded from. 
+
+h2. Embed map
+
+Usually the easiest way to get started with the GeoIQ JavaScript API is to first embed a map.  You can then easily expand your integration from there.
+
+<div class="code">
+&lt;style&gt;#maker_map_78378 {width: 100%; height: 400px;}&lt;/style&gt;
+&lt;div class=&quot;geocommons_map&quot; id=&quot;maker_map_78378&quot;&gt;&lt;/div&gt;&lt;br/&gt;
+&lt;a class=&quot;geocommons_map_link&quot; id=&quot;maker_map_78378_link&quot; href=&quot;http://geocommons.com/maps/78378&quot;&gt;View map on GeoCommons&lt;/a&gt;
+&lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot; src=&quot;http://geocommons.com/javascripts/f1.api.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+  maker_map_78378 = new F1.Maker.Map({map_id: &quot;78378&quot;, dom_id: &quot;maker_map_78378&quot;});
+&lt;/script&gt;
+</div>
+
+h2. Creating a map
+
+A map requires simple creating using @F1.Maker.Map@ and a number of options. These options specify loading a saved map, where to put the map into the HTML page, and other options such as user interface controls, basemap and function callbacks.
+
+<pre><code class="javascript">
+var mymap = new F1.Maker.Map(options)
+</code></pre>
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|map_id|integer ID number of the map to load on the embed|map_id: "42698"|
+|dom_id|string name of the DOM element to place the map. Must have it's height set in pixels|dom_id: "sample_map"|
+
+
+*Optional Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|uiZoom|show the Zoom controls (default: true)|uiZoom: false|
+|uiLayers|show the Layer controls (default: true)|uiLayers: false|
+|uiStyles|show the Styles controls (default: true)|uiStyles: false|
+|uiLegend|show the Legends controls (default: true)|uiLegend: false|
+|uiHeader|show the Header title and controls - only visible in "Edit" mode (default: true)|uiHeader: false|
+|mapProvider|String - name of the basemap provider (e.g. "Yahoo Road", "OpenStreetMap (Road)", "Google Hybrid")|mapProvider: "Yahoo Road"|
+|zoomLevel|Integer - zoom level to view the map (default: loaded map or 1)| zoomLevel: 5|
+|f1_session_id|String - optional session key for authenticated requests|see *authenticatin* below|
+|f1_auth|String - optional authentication key for authenticated requests|see *authentication* below|
+| _callbacks_ |a javascript callback method. See *Callback options* below for more information||
+
+*Example:*
+
+<pre><code class="javascript">
+	var mymap = new F1.Maker.Map({
+  	  map_id: map_id, 
+  	  dom_id: "my_test_map", 
+  	  uiZoom: false,
+  	  uiLayers: false,
+  	  uiStyles: false,
+  	  uiLegend: false,
+  	  extent: "-80, 35, -75, 40",
+  	  zoomLevel: 5,
+  	  mapProvider: "Yahoo Road"
+  	});
+</code></pre>
+
+h2. Callback options
+
+When creating a map, you can set a number of Javascript callback functions that can be used to provide additional interactivity. For example, you can set a callback for when the map finished loading, or when a layer is added. 
+
+*Optional Arguments:*
+
+|_. Callback |_. Returns |_. Description |
+
+|onFeatureSelected | array of features |  Triggered when a feature is clicked on or selected|
+|onLayerAdded | layer |  Triggered when a layer is added|
+|onLayerRemoved | layer |  Triggered when a layer is removed|
+|onLayerError | | Triggered when there is an error loading error|
+|onLayerLoading | layer, progress |  Triggered during layer loading|
+|onLayerLoaded | layer |  Triggered once a layer is loaded|
+|onLayerParsing | layer |  Triggered while layer is parsing|
+|onLayerParsed | layer |  Triggered once a layer data is parsed|
+|onLayerRendering | layer |  Triggered during layer rendering (drawing)|
+|onLayerRendered | layer |  Triggered once a layer is fully rendered|
+|onLayerStyleChange | layer |  Triggered when layer style is changed|
+|onMapLoaded | | Triggered when a map and all of its layers are fully loaded|
+|onMapReady | | Triggered when a map initialized|
+|onMapInitialized | | Deprecated. Fired at the same time as onMapReady|
+|onMapClicked | | Triggered when a map is clicked|
+|onMapPan | | Triggered during map pan|
+|onMapPanStart | | Triggered at the beginning of map pan|
+|onMapPanStop | | Triggered when map pan is finished|
+|onMapZoomed | | Triggered when map is zoomed|
+|onBaseMapChanged | | Triggered when a basemap is changed|
+|onTemporalReady | | Triggered once temporal buckets have been calculated. (Dispatched only with temporal layers.)|
+
+*Example:*
+
+<pre style="clear: both"><code class="javascript">var map_id = 81930;
+var mymap = new F1.Maker.Map({
+	  map_id: map_id, 
+	  dom_id: "callback_map", 
+	  onMapLoaded: function() { showEvent("onMapLoaded") };
+	  onMapClicked: function() { showEvent("onMapClicked") };
+	  onMapPanStart: function() { showEvent("onMapPanStart") },
+	  onMapPanStop: function() { showEvent("onMapPanStop") };
+	  onMapZoomed: function() { showEvent("onMapZoomed") };
+	  }
+	});
+function showEvent(event_name) { document.getElementById('callback_results').innerHTML += event_name + "<br/>" }
+</code></pre>
+
+h3. setCallback
+
+*Method*
+ setCallback(eventName, callbackFunction)
+ 
+*Scope*
+ F1.Maker.Map
+ 
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|eventName|String name of the event to register|'onMapClicked'|
+|callbackFunction|The function to get called when the event fired|function(value) { alert(value) }|
+
+Each event will only call a single callback. So it is not possible to have multiple callback events.
+
+*Returns:* (None)
+
+*Example:*
+
+<pre><code class="javascript">mymap.setCallback("onFeatureSelected", function(features) { alert("Clicking here returned " + features.length + " features!")});</code></pre>
+
+h2. Authentication
+
+If a map or dataset is marked as private to a user or group, then you will have to authenticate requests to GeoIQ in order to load these. Currently GeoIQ Maps requires authentication to happen via session keys. Session keys are requested by making an authenticated request to the server and using the returned session cookie data:
+
+<pre><code>curl -I -u "username:password" http://geocommons.com
+
+HTTP/1.1 200 OK
+Set-Cookie: _f1gc_session_session08f8=BAh7BjoPc...rest of session key...2e8e7; domain=http://geocommons.com; path=/; HttpOnly
+Content-Length: 32129
+Status: 200
+Content-Type: text/html; charset=utf-8
+</code></pre>
+
+Then the session and authentication can be used in the map creation as shown here:
+
+<pre><code class="javascript">var sample_map = new F1.Maker.Map( ..., "f1_session_id": "_f1gc_session_08f8", "f1_auth" : "BAh7BjoPc...rest of session key...2e8e7")</code></pre>
+
+
+h1. Map Methods
+
+h3. getExtent()
+
+_*Method*_
+ getExtent()
+
+_*Scope*_
+ F1.Maker.Map
+
+*Required Arguments:* (none)
+
+*Optional Arguments:* (none)
+
+*Returns:*
+
+<pre><code class="javascript">{ west: float,
+  south: float,
+  east: float,
+  north: float,
+  northWest: {lat: float, lon: float},
+  southEast: {lat: float, lon: float}
+}</code></pre>
+
+*Example*
+
+<pre>
+  <div style="width: 100%; height: 300px"><div id="geocommons_map"></div></div>
+  <code class="javascript">var sample_map = new F1.Maker.Map({
+  	  map_id: 81930, 
+  	  dom_id: "geocommons_map", 
+  	  uiZoom: true,
+  	  uiLayers: false,
+  	  uiLegend: false,
+      onmaploaded: function () { updateExtent() },
+      onmappanned: function() { updateExtent() }
+  	});
+function updateExtent() { var extent = sample_map.getExtent(); 
+  document.getElementById('results').innerHTML = "[" + extent.west + ", " + extent.south + ", " + extent.east + ", " + extent.north +"]" 
+};</code></pre>
+
+_Returns_
+<pre><code class="javascript" id="extent_results" class="results">[Object northWest=[Object lat=39.52367858860299 lon=-77.90582198404641] southEast=[Object lat=39.37627930774779 lon=-77.49417801595357] east=-77.49417801595357 west=-77.90582198404641 north=39.52367858860299 south=39.37627930774779]</code></pre>
+
+
+h3. setExtent()
+
+_*Method*_
+ setExtent(west, south, east, north)
+
+_*Scope*_
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|west|longitude furthest west of extent|-77.3783|
+|south|latitude furthest south of extent|12.1002|
+|east|longitude furthest east of extent|139.3535|
+|north|latitude furthest north of extent|39.2422|
+
+_Set extent passes a bounding box in WSEN order as either a string,array or separate arguments_
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Examples:*
+
+<pre><code class="javascript">mymap.setExtent(-80, 35, -75, 40);
+mymap.setExtent("-80, 35, -75, 40");
+mymap.setExtent([-80, 35, -75, 40]);</code></pre>
+
+h3. getCenterZoom()
+
+*Method*
+ getCenterZoom()
+
+*Scope*
+ F1.Maker.Map
+
+*Example*
+
+<pre><code class="javascript">var zoom = mymap.getCenterZoom();</code></pre>
+
+*Returns:*
+
+Returns: {lat, lon, zoom}
+<pre><code class="javascript">[Object lon=-77.08585 lat=38.891142999999985, 15]</code></pre>
+
+h3. setCenter()
+
+*Method*
+ setCenter(latitude, longitude)
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|latitude|the latitude of the center point of the map|39.999|
+|longitude|the longitude of the center point of the map|-73.333|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example*
+
+<pre><code class="javascript">mymap.setCenter(38.891143, -77.08585);</code></pre>
+
+h3. setCenterZoom()
+
+*Method*
+ setCenterZoom(latitude, longitude, zoom)
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|latitude|the latitude of the center point of the map|39.999|
+|longitude|the longitude of the center point of the map|-73.333|
+|zoom|the zoom level of the map furthest zoom out is 1, most maps go to zoom level 18|15|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+<pre><code class="javascript">mymap.setCenterZoom(38.891143, -77.08585, 15);</code></pre>
+
+h3. getZoom()
+
+*Method*
+ getZoom()
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:* (none)
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+<pre><code class="javascript">var zoomLevel = mymap.getZoom(); // 10</code></pre>
+
+*Example*
+<pre><code class="javascript">mymap.getZoom();</code></pre>
+
+h3. setZoom()
+
+*Method*
+ setZoom(zoomLevel)
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|zoomLevel|the zoom level of the map, maps are zoom level 1 when they are zoomed all the way out|12|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example*
+
+<pre><code class="javascript">mymap.setZoom(10);</code></pre>
+
+h3. zoomToLayer
+
+Zooms the entire map to the extents of the specified layer.
+
+*Method*
+ zoomToLayer(layerID)
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|the 0-based index or unique guid of the layer for which you would like to zoom to|1|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example*
+
+<pre><code class="javascript">mymap.zoomToLayer(0);</code></pre>
+
+
+h3. getMapProviderList()
+
+Gets an array list of tile providers available to use for the map.
+
+*Method*
+ getMapProviderList()
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:* (none)
+
+*Optional Arguments:* (none)
+
+*Returns:* 
+
+Array of tile providers available on GeoCommons or your GeoIQ Appliance.  Varies by appliance.
+
+<pre><code class="javascript">Array ["Google Aerial", "Google Hybrid", "Google Road", "Google Terrain", "Historic Map", "Microsoft Aerial", "Microsoft Hybrid", "Microsoft Road", "NASA Blue Marble", "OpenStreetMap (Road)", "Yahoo Aerial", "Yahoo Hybrid", "Yahoo Road"]</code></pre>
+
+*Example*
+
+<pre><code class="javascript">mymap.getMapProviderList();</code></pre>
+
+
+h3. getMapProvider()
+
+Returns the current map provider.
+
+*Method*
+ getMapProvider()
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:* (none)
+
+*Optional Arguments:* (none)
+
+*Returns:* 
+
+Returns the map provider object, which includes the tileSchema in addition to the displayName of the tile provider and the tileHeight and tileWidth
+
+<pre><code class="javascript">[Object displayName=OpenStreetMap (Road) tileSchema=http://tile.openstreetmap.org/{Z}/{X}/{Y}.png tileHeight=256 tileWidth=256]</code></pre>
+
+*Example*
+
+<pre><code class="javascript">var currentProvider = mymap.getMapProvider();</code></pre>
+
+
+h3. setMapProvider()
+
+*Method*
+ setMapProvider(providerString)
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|providerString|name of the tile provider all providers can be returned by selecting getMapProviderList|"Acetate Terrain"|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example*
+
+<pre><code class="javascript">mymap.setMapProvider("Yahoo Aerial");</code></pre>
+
+
+h3. getFeature - deprecated
+
+*Method*
+getFeature(finderOverlayIndex, featureIndex);
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|finderOverlayIndex|which overlay to return features from is a 0 array index starting from the bottom layer|2|
+|featureIndex|index number of the feature to get, also a 0 array index|2|
+
+*Optional Arguments:* (none)
+
+*Returns:*
+ Array of feature as JSON hash
+
+<pre><code class="javascript">[Object { attributes={...}, id=1}]</code></pre>
+
+*Example*
+
+<pre><code class="javascript">mymap.getFeature(finderOverlayIndex, featureIndex);</code></pre>
+
+h3. addFeatures
+
+The GeoIQ Javascript API includes a method called addFeatures that allows developers to add a list of structured features to any layer on a map. The addFeatures method uses the "GeoJSON specification":http://geojson.org/ for geography, which supports points, lines and polygons. Styling of features is currently inherited from the layer styling based on general or thematic options as specified. 
+
+*Method*
+ addFeatures(layerID, featuresArray, replaceFeatures)
+ 
+*Scope*
+ F1.Maker.Map
+ 
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|which overlay to return features from is a 0 array index starting from the bottom layer|2|
+|featuresArray|array of feature objects, including attributes and a _geometry_ attribute using "GeoJSON":http://geojson.org/| [{title: "Post 1", date: "01/05/2008", geometry: {type: Point, coordinates: [-122.9,45.902]}}]|
+|replaceFeatures|boolean option if these new features should remove the old features before adding the new features.|true|
+
+The _featuresArray_ objects should match the schema of the layer they are being added to. So for example, if the original dataset for the layer had attributes: title, date, description, author - then the feature could have none, some, or all of these attributes.
+
+The geometry object should match the "GeoJSON specification":http://geojson.org/ which includes two attributes: type, coordinates. _type_ can be any of Point, LineString, or Polygon. The coordinates are longitude, latitude pairs in WGS84 decimal degrees (or the projection of the map if different).
+
+*Returns:* (None)
+
+*Example:*
+
+<pre><code class="javascript">mymap.addFeatures(52, [{title: "Post 1", date: "01/05/2008", geometry: {type: Point, coordinates: [-122.9,45.902]}}], true);</code></pre>
+
+h3. getFeatures()
+
+*Method*
+ getFeatures(layerID, count, start);
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|which overlay to return features from is a 0 array index starting from the bottom layer|2|
+|start|index number of the feature to get, also a 0 array index|2|
+|count|number of features to return. Use -1 for all features. (default:10)|5|
+
+*Optional Arguments:* (none)
+
+*Returns:* 
+
+Array of features as JSON hash
+
+<pre><code class="javascript">[Object { attributes={...}, id=0}, Object { attributes={...}, id=1}, Object { attributes={...}, id=2}, Object { attributes={...}, id=3}, Object { attributes={...}, id=4}, Object { attributes={...}, id=5}, Object { attributes={...}, id=6}, Object { attributes={...}, id=7}, Object { attributes={...}, id=8}, Object { attributes={...}, id=9}]</code></pre>
+
+*Example:*
+
+<pre><code class="javascript">mymap.getFeatures(finderOverlayIndex, count, start);</code></pre>
+
+h3. updateAttributes() - deprecated
+
+Updates map metadata (title, description and tags).
+
+*Method*
+ updateAttributes()
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:* (none)
+
+*Optional Arguments:* 
+
+|_. Argument |_. Description|_. Example |
+|title|title of the map|"Map of Unemployment"|
+|description|description of the map|"This map describes unemployment in California"|
+|tags|tags of the map separated by a space|"unemployment California"|
+
+
+*Returns:* (none) 
+
+*Example*
+
+<pre><code class="javascript">mymap.updateAttributes( { title: "new title", description: "new description", tags: "tag1 tag2" } );</code></pre>
+
+h3. saveMap() - deprecated
+
+Saves any updates to the map or styling back to GeoIQ. It requires an already created map that will be updated with this call. This will require authentication from the user.  If not authenticated a basic authentication login box will appear to the user.
+
+*Method*
+ saveMap()
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:* (none)
+
+*Optional Arguments:* (none)
+
+*Returns:*
+
+Returns: the id of the Map if successful. 
+
+*Example*
+
+<pre><code class="javascript">mymap.saveMap();</code></pre>
+
+h2. Layer Methods
+
+These Javascript methods allow you to inspect, add, remove, and style layers on a map.
+
+h3. getLayers()
+
+Get an array of the layers hash.
+
+*Method*
+ getLayers()
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:* (none)
+
+*Optional Arguments:* (none)
+
+*Returns:*
+
+An array of Layer objects. 
+
+*Example:*
+
+<pre><code class="javascript">mymap.getLayers();</code></pre>
+
+
+<pre><code class="javascript">
+var layers = mymap.getLayers();
+
+// layers = [
+// {
+//  title: "My First Layer",
+//  source: "finder:45",
+//  styles: {...},
+//  opacity: 1,
+//  visibility: 1,
+//  order: 1
+// }]
+</code></pre>
+
+h3. removeLayer()
+
+Deletes a layer from the map.
+
+*Method*
+ F1.Maker.Map.removeLayer(layerID)
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|index of the layer to show or hide. 0 is the bottom layer and then layers increase up|1|
+
+*Optional Arguments:* (none)
+
+*Returns:*
+
+"1" if the layer is deleted and 0 if the delete was unsuccessful.
+
+*Example:*
+
+<pre><code class="javascript">mymap.removeLayer(0);</code></pre>
+
+h3. addLayer()
+
+*Method*
+addLayer(layerDefinition)
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerDefinition|a hash of options for defining the layer|{}|
+|source|the id of the layer|"finder:99084"|
+
+
+*Optional Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|title|the string name to use for the layer title (default is the dataset title|"Hospitals in Virginia"|
+|subtitle|string name for the subtitle (default: selectedAttribute name)|"Type of Hospital"|
+|order|integer value to put the layer in the layers index. 0 is bottom (default:topmost layer)|0|
+|visibility|if the layer is visible (default: true)|{visibility:false}|
+|opacity|decimal amount of opacity from 0-1 0 is transparent, 1 is fully opaque (default: .75)|{opacity: 1.0}|
+|styles|the JSON hash that defines the layer. See the REST Styling API for details|styles: { type: "CHOROPLETH", fill: { color: 0x0000FF, opacity: 0.5 } }|
+|zoomToExtent|zoom to the extent of the dataset after it is mapped (default: false)|{zoomToExtent:true}|
+
+*Returns:* (none)
+
+*Examples:*
+
+<pre><code class="JSON">mymap.addLayer( { source: "finder:55" } );
+
+// Set the title on loading, but make it hidden
+mymap.addLayer( { source: "finder:55", 
+    title: "A new layer",
+    subtitle: "Source: News Agency"
+    order: 1,
+    visibility: false,
+    opacity: 0.7,
+    styles: { type: "CHOROPLETH", fill: { color: 0x0000FF, opacity: 0.5 } } } );</code></pre>
+
+<pre><code class="JSON">// Automatically zoom to the layer extent on loading
+mymap.addLayer( { source: "finder:55", zoomToExtent: true, styles: { type: "CHOROPLETH", fill: { color: 0x0000FF, opacity: 0.5 } } });</code></pre>
+
+
+<pre><code class="JSON">// Adding a point dataset
+mymap.addLayer( { source: "finder:59", title: "new layer title", position: 0, styles: { type: "GRADUATED", icon: { color: 0x0000FF, selectedAttribute: "count", classificationType: "Equal Interval", opacity: 0.5 } } } );</code></pre>
+
+<pre><code class="JSON">// Adding a polygon dataset
+mymap.addLayer( { source: "finder:59", title: "new layer title", position: 0, styles: { type: "GRADUATED", icon: { colors: [14343142, 11580379, 7505585, 4481915, 2966850], selectedAttribute: "count", classificationType: "Manual", classificationBreaks: "[100, 130, 160, 200]", opacity: 0.5 } } } );</code></pre>
+
+
+h3. showLayer
+
+*Method*
+ showLayer(layerID, visibility)
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|index of the layer to show or hide. 0 is the bottom layer and increasing up|1|
+|visibility| true if visible, false to hide (default: true)|true|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+
+<pre><code class="javascript">mymap.showLayer(10, true);</code></pre>
+
+h3. getLayer()
+
+Returns the definition of a particular layer in the map as a hash.
+
+*Method*
+ getLayer(layerID)
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|index of the layer to show or hide. 0 is the bottom layer and increasing up|1|
+
+*Optional Arguments:* (none)
+
+*Returns:*
+
+A reference to the layer
+
+<pre><code>Object { source="finder:12784", styles={...}, more...}</code></pre>
+
+*Example:*
+
+<pre><code class="javascript">mymap.getLayer(2);</code></pre>
+
+h3. setLayerStyle()
+
+*Method*
+ setLayerStyle(layerDefinition)
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerDefinition|the JSON hash of the layer definition and styles. For this use, the "source" actually refers to the layer index in the array of layers. See the Styling API for details on the "styles" parameter.||
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+
+<pre><code class="JSON">//Point
+mymap.setLayerStyle( 0, { type: "POINT", icon: { size: 5, symbol: "flagIcon" } } );
+mymap.setLayerStyle( 0, { type: "PROPORTIONAL", icon: { size: 10, symbol: "circleIcon", color: 0x00FF66, opacity: 0.5 } } );
+mymap.setLayerStyle( 0, { type: "GRADUATED", icon: { classificationType: "EQUAL INTERVAL", categories: 5, symbol: "outlineSquare", colors: [0xFF776D, 0xFCC5BB, 0xF7F7F7, 0xC6DBEF, 0x4292C6], opacity: 0.75 } } );
+//Custom Point Icons
+mymap.setLayerStyle(0, {type: "POINT", icon:{symbol: "http://iconurlhere.com/icon.png"}});
+
+//Polygon
+mymap.setLayerStyle( 0, { type: "CHOROPLETH", fill: {  classificationType: "QUANTILE", categories: 5, colors: [0xEFF3FF, 0xBDD7E7, 0x6BAED6, 0x3182BD, 0x08519C], opacity: 0.75 } } );
+
+//Line
+mymap.setLayerStyle( 0, { type: "LINE", fill: {  lineStyle: "thick", color: 0x0000FF, opacity: 0.75 }, stroke: { weight: 4 } } );
+mymap.setLayerStyle( 0, { type: "LINE", icon: {  lineStyle: "dashedThick" }, stroke: { color: 0x0000FF, alpha: 1, weight: 3 } } );</code></pre>
+
+
+h3. setLayerTitle()
+
+*Method:*
+ setLayerTitle(layerID, title)
+
+*Scope:*
+ F1.Maker.Map
+
+|_. Argument |_. Description|_. Example |
+|layerID|the 0-based index of the layer for which you would like to change the title|1|
+|title|the new title of the layer (is a string)|"US States"|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+
+<pre><code class="JSON">
+mymap.setLayerTitle(0, "US States");
+</code></pre>
+
+h3. setLayerSubTitle()
+
+*Method*
+ setLayerSubTitle(layerID, subTitle)
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|the 0-based index of the layer for which you would like to change the title|1|
+|subTitle|the new sub-title of the layer (is a string)|"Population"|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+
+<pre><code class="javascript">
+mymap.setLayerSubTitle(0, "Population by state");
+</code></pre>
+
+
+h3. addLayerCategoryFilter()
+
+Sets layer categorical icons based on the string value of an attribute. This is useful for setting the icons of a the features in a dataset based on categories such as land use or business type.
+
+*Method:*
+addLayerCategoryFilter(layerID, categoryDefinition)
+
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|the index of the layer being cleared of filters lowest being 0|3|
+|categoryDefinition|a hash of defining the attribute and categories|categories:{"Health":"image1.jpg","Water and Infrastructure:"image2.jpg"}|
+|attribute|the string name of the attribute based on category|attribute:"name"|
+|categories|a hash of category (string) with icon URL (string)|"Health":"image1.jpg"|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+
+<pre><code class="javascript">mymap.addLayerCategoryFilter(0,{attribute:"Operation Sector",categories:{"Health":"image1.jpg","Water and Infrastructure:"image2.jpg"}})</code></pre>
+
+You can also set the category when you add a layer to a map:
+
+<pre><code class="javascript">mymap.addLayer({source: "finder:133771",categoryFilter:{attribute:"mjsector 1",categories:{"Health and other social services":"http://maps.worldbank.org/images/icons/round/health-16.png","Transportation":"http://maps.worldbank.org/images/icons/round/transportation-16.png","Water, sanitation and flood protection":"http://maps.worldbank.org/images/icons/round/water-16.png"}}})</code></pre>
+
+
+h3. addLayerInfoWindowFilter()
+
+Defines InfoWindow content. Sets content filters based on layer attributes. 
+
+*Method:*
+addLayerInfoWindowFilter(layerID, filterDefinition)
+
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|the index of the layer where the info window is being adjusted|0|
+|filterDefinition|a hash defining info window parameters||
+|value|string, tab content. Use $[attribute] to pass attribute value. When populating a table simple pass attribute names $[attribute1]$[attribute2]$[attribute3] etc.|$[name] + ' value:' + $[value]|
+|type|string, tab type, Available types: text, table|type:"text"|tabs:[{title:"Text tab", type:"text", value:"Hello world $[attribute]"}|
+
+*Optional Arguments:* 
+
+|_. Argument |_. Description|_. Example |
+|title|content of the title tab, us $[attribute] to pass an attribute value|$[name]|
+|subtitle|a string definint info window subtitle|"Hospitals in Virginia:"|
+|tabs|a hash defining tabs - title, content|
+
+*Returns:* (none)
+
+*Example:*
+
+<pre><code class="javascript">mymap.addLayerInfoWindowFilter('0',{title:"Title is $[attribute]", subtitle:"Subtitle string", tabs:[{title:"Text tab", type:"text", value:"Hello world $[attribute]"},{title:"Table tab", value:"$[attribute]", type:"table"}]})</code></pre>
+
+
+h2. Control Styles
+
+The Javascript API provides interfaces for setting the look and feel of the map elements such as the zoom bar and legend.
+
+h3. setStyle()
+
+Sets the style of control elements in the map such as the zoom and legend. Options include the position, size, layout, color, transparency, and more.
+
+*Method:*
+ setStyle(style object);
+
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|style object|an object with optional settings for zoom or legend controls| { zoom: {bgColor: 0x92948C, autoHeight: false, height:100, cornerRadius: 5}} |
+
+*Optional Arguments:* 
+
+Within the @style object@ there are several optional elements: @legend@, @zoom@. Each of these has numerous optional attributes to set specific style parameters.
+
+h4. Legend
+
+* bgColor (_optional) uint - Legend background color.
+* bgAlpha (_optional) Number - Background alpha.
+* fontColor (_optional) uint - Legend font color. Default 0xFFFFFF
+* fontFace (optional) String - Legend font. Default _sans
+* fontSize (_optional) Number - Legend font size. Default 12.
+* btnPlacement (optional) String - Button placement "horizontal" or "vertical". Default "horizontal".
+* btnBgColor (optional) uint - Background color of the legend button.
+* btnBgAlpha (optional) Number - Legend button background alpha.
+* btnFontFace (optional) String - Legend button font.
+* btnFontColor (optional) uint - Legend button color. Default 0xFFFFFF
+* btnFontSize (optional) Number - Legend button font size.
+* btnLabel (optional) String - Legend button label. Default value "Legend".
+* btnWidth (optional) Number - Legend button width.
+* btnHeight (optional) Number - Legend button height.
+* offset (optional) object - defines the distance from the bottom right corner on x and y axis. For example, {x:20,y:0} will move the legend 20 pixels left from the right corner of the stage.
+** x (required) Number - offset of x axis
+** y (required) Number - offset of y axis
+* width (optional) Number - Legend (content) width.
+* visible (_optional) Boolean - Legend visibility.
+* expanded (optional) Boolean - When set to true the legend is expanded.
+  
+
+h4. Zoom
+
+* autoHeight (optional) : Boolean - When set to true zoom control height changes based on the number of available zoom levels. Use zoomStepHeight parameter to further adjust zoom control height.
+* bgAlpha (optional) : Number - Background color of zoom control elements. Range: 0-1.
+* bgColor (optional) : uint - Background opacity of zoom control elements. Use hex 0xFFFFFF format.
+* borderColor (optional) : uint - Control border. Use hex 0xFFFFFF format.
+* dropShadow (optional) : Boolean - Drop shadow.
+* enabled (optional) : Boolean - Disable / Enable zoom control.
+* expanded (optional) : Boolean - When set to true the control is expanded.
+* iconColor (optional) : uint - Zoom icon (+)(-) color. Use hex 0xFFFFFF format.
+* offset (optional) : Point - Offset of x and y axis from the top left corner. In JS use {x:3,y:5}.
+* padding (optional) : Number - Padding between zoom bar elements.
+* snapToZoomLevel (optional) : Boolean - When set to true slider snaps to a zoom level.
+* width (optional) : Number - Width of the scroll track. Width is used to determine size of +- icons.
+* height (optional) : Number - Scroll track height. Use this only when autoHeight is set to false.
+* alpha (optional) : Number - Overall opacity of the control. Range: 0-1.
+* offset (optional) object - defines the distance from the bottom right corner on x and y axis. For example, offset: {x:20,y:0} will move the legend 20 pixels left from the right corner of the stage.
+** x (optional) : Number - Position of the control on x axis.
+** y (optional) :Number - Position of the control on y axis.
+* zoom (optional) : int - Current zoom level.
+* zoomStepHeight (optional) : Number - Works only if autoHeight set to true.
+* horizontal (optional) : Boolean - Moves (-) button to the right of (+) button. Overrides expanded parameter and sets it to false.
+* cornerRadius (optional) : Number - Sets corner radius for zoom control.
+
+
+*Returns:* (none)
+
+*Examples:*
+
+<pre><code class="javascript">
+      mymap.setStyle( { zoom: {bgColor: 0x92948C, autoHeight: false, height:100, cornerRadius: 5}})
+      mymap.setStyle( { legend: { btnBgColor:0x92948C, btnPlacement:"horizontal", btnFontColor:0xFFFFFF, btnBgAlpha:0.7,offset:{x:0,y:95}}});      
+</code></pre>
+
+<pre><code class="javascript">// Zoom
+  sample_map.setStyle({zoom: {visible: true }});
+  sample_map.setStyle({zoom: {visible: false }});
+
+  // Legend
+  setStyle({legend:{visible:false})
+  setStyle({legend:{expanded:false, visible:true})
+  setStyle({legend:{expanded:true, visible:true});</code></pre>
+
+h3. showEmbedWindow()
+
+Creates a light box over the map and displays the embed or link window
+
+*Method:*
+showEmbedWindow(window)
+
+*Scope:*
+F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|window|if the window should contain a link or an embed code|"link"|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+<pre><code class="javascript">
+mymap.showEmbedWindow("embed");
+</code></pre>
+
+h2. Layer Filter API
+
+h3. addFilter()
+
+Adds a filter to the filters list on an overlay
+
+*Method:*
+addFilter(layerID,expression)
+
+*Scope:*
+F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|the index of the layer being filtered lowest being 0|3|
+|expression|actual filter expression being applied to a layer|"$[sales] > 1000"|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+<pre><code class="javascript">
+mymap.addFilter(0, { expression: "$[sales] > 1000" });
+</code></pre>
+
+h3. removeFilter()
+
+Adds a filter to the filters list on an overlay
+
+*Method:*
+removeFilter(layerID,expression)
+
+*Scope:*
+F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|the index of the layer being filtered lowest being 0|3|
+|expression|actual filter expression being remove from a layer|"$[sales] > 1000"|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+
+<pre>mymap.removeFilter(0, { expression: "$[sales] > 1000" });</pre>
+
+h3. getFilters()
+
+List all filters for an overlay
+
+*Method:*
+getFilters(layerID)
+
+*Scope:*
+F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|the index of the layer being filtered lowest being 0|3|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+
+<pre>mymap.getFilters(0);</pre>
+
+h3. clearFilters()
+
+List all filters for an overlay
+
+*Method:*
+clearFilters(layerID)
+
+*Scope:*
+F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|the index of the layer being cleared of filters lowest being 0|3|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+
+<pre>mymap.clearFilters(0);</pre>
+
+h3. addHighlight()
+
+Highlights features using a given expression
+
+*Method*
+ addHighlight(layerID, expression)
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|the 0-based index of the layer for which you would like to change the filter|1|
+|expression|the filter-style expression to evaluate for  highlighting|"$[population] > 100000"|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+
+<pre><code class="javascript">
+mymap.addHighlight(0, "$[population] > 100000");
+</code></pre>
+
+h3. removeHighlight()
+
+Removes a previously added highlight
+
+*Method:*
+ removeHighlight(layerID, expression)
+
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|the 0-based index of the layer for which you would like to change the filter|1|
+|expression|the filter-style expression to remove  highlighting|"$[population] > 100000"|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+
+<pre><code class="javascript">
+mymap.removeHighlight(0, "$[population] > 100000");
+</code></pre>
+
+h3. clearHighlights()
+
+Removes all highlights on a given layer
+
+*Method:*
+ clearHighlights(layerID)
+
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|the 0-based index of the layer for which you would like to remove all the filters|1|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+
+<pre><code class="javascript">
+mymap.clearHighlights(0);
+</code></pre>
+
+
+h1. Temporal Controls
+
+h2. Methods
+
+h3. setLayerTemporalAttribute
+
+*Method:*
+ setLayerTemporalAttribute(layer id, attribute:String)
+ 
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+
+*Optional Arguments:* 
+
+|_. Argument |_. Description|_. Example |
+
+*Returns:* (none)
+
+*Example:*
+
+h3. setTemporalResolution
+
+*Method:*
+ setTemporalResolution(resolution:String)
+ 
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+
+*Optional Arguments:* 
+
+|_. Argument |_. Description|_. Example |
+
+*Returns:* (none)
+
+*Example:*
+
+h3. getTemporalResolution
+
+*Method:*
+ getTemporalResolution()
+ 
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+ None
+
+*Optional Arguments:* 
+
+ None
+
+*Returns:* String
+
+*Example:*
+
+h3. getTimeSlots
+
+*Method:*
+ getTimeSlots()
+ 
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+ None
+
+*Optional Arguments:* 
+
+ None
+
+*Returns:* Array of time slots
+
+*Example:*
+
+h3. setTimeSpan
+
+*Method:*
+ setTimeSpan(min:Date, max:Date)
+
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+
+*Optional Arguments:* 
+
+|_. Argument |_. Description|_. Example |
+
+*Returns:* (none)
+
+*Example:*
+
+h3. getTimeSpan
+
+*Method:*
+ getTimeSpan()
+ 
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+
+*Optional Arguments:* 
+
+|_. Argument |_. Description|_. Example |
+
+*Returns:* TimeSpan //{min:Date, max:Date}
+
+*Example:*
+
+h3. getGlobalTimeSpan
+
+*Method:*
+ getGlobalTimeSpan()
+ 
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+
+*Optional Arguments:* 
+
+|_. Argument |_. Description|_. Example |
+
+*Returns:* TimeSpan //{min:Date, max:Date}
+
+*Example:*
+
+
+h3. setTimeFilter
+
+Sets the visible time range of data on the map
+
+*Method:*
+ setTimeFilter(timeSliderRange)
+
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|timeSliderRange|object describing the optional elements below|{begin:"2010-05-05T00:00:00Z", end: "2010-05-12T00:00:00Z"}|
+
+*Optional Arguments:* 
+
+|_. Argument |_. Description|_. Example |
+|begin|earliest time of data on the map. The format is ISO8601 or YYYY-MM-DDTHH:MM:SSZ. You can also use 'now' for the current time.|"2010-05-05T00:00:00Z" or @"now"@|
+|end|latest time of data on the map. The format is ISO8601 or YYYY-MM-DDTHH:MM:SSZ. You can also use 'now' for the current time.|"2010-05-12T00:00:00Z" or @"now"@|
+|period|time period in milliseconds after the begin, or before the end period if only one is specified. | "604800000" |
+ 
+*Returns:* (none)
+
+*Example:*
+
+<pre><code class="javascript">
+// From May 5th 2010 to May 12 2010
+
+mymap.setTimeFilter({begin:"2010-05-05T00:00:00Z", end: "2010-05-12T00:00:00Z"});
+
+// From now until 1 week in the Future
+
+mymap.setTimeFilter({begin:"now", period: "604800000"});
+</code></pre>
+
+h2. Callback
+
+h3. onTemporalReady
+
+Fired whenever temporal is re-calculated.
+
+*Method:*
+ onTemporalReady()
+
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+
+*Optional Arguments:* 
+
+|_. Argument |_. Description|_. Example |
+
+*Returns:* (none)
+
+*Example:*
+
+h1. Search Methods
+
+h2. Search
+
+The search method is a helper for querying any GeoIQ server to find datasets, maps, and analysis. The results can then be used to create or load a map or additional calls to download or operate on datasets and analysis methods.
+
+_*Method*_
+ search(query, callback)
+
+_*Scope*_
+ F1.Maker
+
+_*Scope*_
+ F1.Maker
+
+_*Arguments*_ 
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|query|The string query to send to search. | "economy AND type:Map" |
+|callback|javascript callback method to call with the results object||
+
+_*Returns*_
+
+In the callback there is a results object that includes the following elements:
+
+* entries - array of objects that describe the Map, Dataset, or Analysis matching results
+* itemsPerPage - number of items in the entries
+* totalResults - total number of items that matched the query
+
+_*Example*_
+
+<pre><code class="javascript">MapClass = {
+  searchCallback: function(results) {
+    MapClass.results = results;
+    var map_id = results.entries[0].id.replace(/Map:/,'')
+    mymap = new F1.Maker.Map({map_id: map_id, dom_id: "geoiq_map"})
+  }
+}
+
+function init() {
+  F1.Maker.search('type:map', MapClass.searchCallback)
+}</code></pre>
+
+
+

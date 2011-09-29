@@ -1,0 +1,104 @@
+---
+layout: default
+title: JavaScript Methods
+---
+
+h2. Map Interaction
+
+Geographic Maps can be panned, zoomed, and modified.
+
+|. Method |. Description |
+| F1.Maker.Map | Create a new map on the page |
+| setExtent | |
+| getCenterZoom | |
+| getCenter | |
+| setCenter | |
+| setCenterZoom | |
+| getZoom | |
+| setZoom | |
+| getMapProviderList | |
+| getMapProvider | |
+| setMapProvider | |
+| saveMap | |
+
+h2. Map Layers
+
+Layers are styled datasets on a map. They can be simple styles such as color, size, or transparency. For more advanced visualizations thematic styling can vary the styling by an attribute value or category.
+
+|. Method |. Description |
+| getLayers | |
+| removeLayer | |
+| addLayer | |
+| showLayer | |
+| getLayer | |
+| setLayerStyle | |
+| setLayerTitle | |
+| setLayerSubTitle | |
+| addLayerCategoryFilter | |
+| addLayerInfoWindowFilter | |
+| setStyle | |
+
+
+h1. Layer Filters
+
+Map layers can be filtered to show a limited subset of data based on an attribute, or visible area. It is also possible to highlight specific dataset features based on a simple or complex comparison with the attributes.
+
+|. Method |. Description |
+| addFilter | |
+| removeFilter | |
+| getFilters | |
+| clearFilters | |
+| addHighlight | |
+| removeHighlight | |
+| clearHighlights | |
+
+
+h1. Data Features API
+
+Each dataset layer has a collection of features, or individual geographic points, lines or polygons. It is possible to access all of the features or some features. Drawing new features must be added to an existing layer.
+
+|. Method |. Description |
+| addFeatures | |
+| getFeatures | |
+| getVisibleFeatures | |
+
+
+h1. Temporal Controls
+
+Map layers can be animated by a time attribute. 
+
+|. Method |. Description |
+| setLayerTemporalAttribute | |
+| setTemporalResolution | |
+| getTemporalResolution | |
+| getTimeSlots | |
+| setTimeSpan | |
+| getTimeSpan | |
+| getGlobalTimeSpan | |
+| setTimeFilter | |
+
+h1. Events
+
+Maps and layers can reference callback methods when an event occurs.
+
+|. Method |. Description |
+| onMapLoaded | Called when the map has finished loading all layer data |
+| onMapClicked | Called when the map has been clicked on |
+| onMapPanStart | Called when a user starts moving map |
+| onMapPanStop | Called when a user stops moving the map |
+| onMapZoomed | Called after a user has zoomed in or out of the map |
+| onFeatureSelected | Called after a feature has been selected by the map user. |
+| onBaseMapChanged | Called when the basemap changes |
+| onLayerAdded | Called once after a layer has been added to the map |
+| onLayerLoading | Called while the layer is loading, used for progress |
+| onLayerLoaded | Called once a layer has been completely loaded |
+| onLayerStyleChange | Called every time a style is changed  |
+| onLayerParsing | Called while a layer is being parsed |
+| onLayerParsed | Called after a layer has been parsed |
+| onLayerRendering | Called while an overlay is rendering, post init and pre-loaded |
+| onLayerRendered | Called once a layer has been completely rendered on the map |
+| onLayerError | Called on an error loading layers |
+| onLayerRemoved | Called when a layer is removed from the map  |
+| onMapClassificationChange | Called every time a map's classification is changed  |
+| onTemporalReady | Called when the temporal features are ready to be animated |
+| onTemporalChange | Called after the time slider is changed in any way |

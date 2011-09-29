@@ -1,0 +1,134 @@
+---
+layout: default
+title: Permissions API
+---
+
+{{>toc}}
+
+PLATFORM_NAME has a robust permissions system that allows users to grant the ability for groups to perform specific actions on datasets and maps that they own.
+
+h2. Set permissions
+
+You can set permissions for a dataset or map by updating the permissions attribute.
+
+_*API URL*_
+
+<pre>PLATFORM_API_URL/:object/:id.json</pre>
+
+* @object@ can be "datasets", "overlays", or "maps"
+* @id@ is the unique id of the @object@
+
+
+_*HTTP method*_ 
+  PUT
+
+_*authentication requried?*_ 
+  Yes
+
+_*URL formats*_
+  json
+
+_*Parameters*_
+
+* group_id - (required) id of a group for which the permissions should be set. Can also be "everyone"
+* permissions - (required) a set of individual permission options:
+** view - the group or user is allowed to search and view the metadata for this object (default: false)
+** download - the group or user is allowed to download the data for this object (default: false)
+** edit - the group or user is allowed to edit the data for this object (default: false)
+
+_*Examples*_
+
+* Status: See Response Codes Below
+* Content Body: 
+
+<pre><code class="JSON">
+{
+  permissions: [{
+    group_id: 12
+    permissions: { 
+      view: true,
+      download: true,
+      edit: false
+    }
+  }]
+}
+</code></pre>
+
+h3. Examples
+
+Updating a Dataset with permissions defined in a JSON content body:
+
+<pre><code class="JSON">
+{
+  permissions: [ 
+  { group_id: 12
+    permissions: { 
+      view: true,
+      download: true,
+      edit: false
+    }
+  },
+  { group_id: "everyone"
+    permissions: {
+      view: true,
+      download: true,
+      edit: false
+    }
+  }]
+}
+</code></pre>
+
+
+<pre><code class="bash">
+curl -u "admin:password" -X PUT -i --data "@new_permissions.json"  --header Content-Type:application/json PLATFORM_API_URL/datasets/140.json
+</code>
+</pre>
+
+or via key/value pairs:
+
+<pre><code class="bash">
+curl -u "admin:password" -X PUT -i -d "permissions[][group_id]=12" -d "permissions[][permissions][view]=true" -d "permissions[][permissions][download]=true" -d "permissions[][group_id]=everyone" -d "permissions[][permissions][view]=true" -d "permissions[][permissions][download]=true"  PLATFORM_API_URL/datasets/140.json
+</code></pre>
+
+Note: permissions will default to false if not specified.
+
+h2. Combined Calls
+
+Permissions can also be included as parameters on other calls made via the Data API
+
+POST @PLATFORM_API_URL/datasets.json@
+
+h3. Examples
+
+<pre><code class="JSON">
+{
+ title: "New Overlay",
+ permissions: [
+{
+  group_id: "12",
+  permissions: {
+    view: true,
+    download: true,
+    edit: false
+  }
+}
+]}
+</code></pre>
+
+h2. Response Codes
+
+h3. 200 OK
+
+If the user request to set permissions has worked, then PLATFORM_NAME will respond with @200 OK@. This is OK since it isn't apparent if new permissions were created, deleted, or just modified.
+
+h3. 400 Bad Request
+
+If the API request was not formed correctly (e.g. bad JSON syntax), PLATFORM_NAME will respond with @400 Bad Request@.
+
+h3. 401 Unauthorized
+
+If the user is not logged in at all, PLATFORM_NAME will respond with @401 Unauthorized@. If the user is logged in, and they are not able to change permissions, use @403 Forbidden@ below.
+
+h3. 404 Not Found
+
+If a user attempts to change permissions on a PLATFORM_NAME dataset or map that does not exist, then PLATFORM_NAME will respond with @404 Not Found@.

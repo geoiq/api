@@ -1,0 +1,1003 @@
+h1. REST API
+
+{{>toc}}
+
+The GeoIQ REST API has methods to perform all of the actions available in the GeoIQ GUI, but with greater granularity.  Create maps of any color scheme you desire, update datasets in real-time and set user permissions.  This is all accomplished through creates, reads, updates or deletes (CRUD) to various endpoints through HTTP methods.
+
+As an overview of what is possible with the API, after reading the documentation you will be able to:
+
+* Upload a desktop file or register a URL
+* Modify dataset metadata such as source, description and tags
+* Search and download any dataset in a number of formats
+* Query the dataset based on spatial, numeric, and string attributes
+* Create or Modify dataset features
+* Create a new map with layers and styling
+* Download the map
+* Create new users and groups
+* Set access permissions to data and maps to a user or groups
+
+Beyond just this REST API, the GeoIQ [[Javascript API]] allows you to integrate new functionality with created maps in web applications. You can combine the REST API with the [[Javascript API]] to create full data visualization web applications with GeoIQ.
+
+h1. Datasets API
+
+*Endpoint:* http://geocommons/datasets
+
+*Description:* The datasets endpoint allows creation, modification, download and deletion of data in GeoIQ.  Methods for modifying and deleting datasets require basic authentication.  For reading of data it depends on the configuration of the GeoIQ instance for GeoCommons it is not required.
+
+*HTTP Methods Available:* GET, POST, PUT, DELETE
+
+*URL Summary*
+
+|_. Task |_. URL |_. Formats |_. HTTP METHOD |
+|Download|http://geocommons.com/datasets/{id}.{format}|kml,csv,zip,atom,json,spatialite|GET|
+|Create|http://geocommons.com/datasets|xml,json,atom|POST|
+|Update|http://geocommons.com/datasets/{id}.{format}|json,atom|PUT|
+|Update Feed|http://geocommons.com/datasets/{id}/fetch.{format}|json,xml,html|PUT|
+|Delete|http://geocommons.com/datasets/{id}|json|DELETE|
+
+_zip returns compressed folder with shapefile inside_
+
+h2. *Download Dataset*
+
+*Authentication:* 
+
+Not required for GeoCommons datasets, GeoIQ appliance datasets depends on the permissions of the data
+
+*Required Parameters:* (none)
+
+*Optional Parameters*:
+
+|_. Parameter |_. Description|_. Example |
+|include_attributes|include data_attributes in the output: 0 or 1 (default: 0 (false))|include_attributes=1|
+|include_features|include features in the output|include_features=1|
+|include_geometry|include feature geometries|include_geometry=1|
+|hex_geometry|use Hex EWKB for geometries|hex_geometry=1|
+
+_default is false for option parameters use 0 or 1 (0 is false)_
+
+*Returns:*
+
+|_. Type |_. Description |_. Example |
+|file|returns a file of the type requested|http://geocommons.com/overlays/7294.kml|
+
+*Curl Examples:*
+
+<pre><code>curl http://geocommons.com/overlays/7294.csv</code></pre>
+<pre><code>curl http://geocommons.com/overlays/7294.json?include_attributes=1&hex_geometry=1</code></pre>
+
+h2. *Create Dataset*
+
+You can currently upload data using two methods: via files from your hard drive, or via a URL from the Internet. 
+
+h3. *Create Dataset by Upload*
+
+*Required Parameters Upload:* (none)
+
+|_. Parameter |_. Description|_. Example |
+|dataset[shp]|Name of your file(s) you are uploading|dataset[shp]=@elect_precincts.shp;|
+
+_shp files require shp/shx/dbf files_
+
+*Optional Parameters*:
+
+|_. Parameter |_. Description|_. Example |
+|title|name of dataset|Unemployment in the USA 2010|
+|description|description of what the dataset is|This dataset shows the increase in unemployment in the USA between 2009-2010|
+|author|who created the dataset|Bureau of Labor Statistics|
+|tags|words that describe the dataset and relate it to others|unemployment,labor,workforce|
+|metadata_url|link to url containing metadata|http://www.example.com|
+|citation_url|link to the organization the data is from|http://www.exampleorg.com|
+|contact_name|person to contact about the data|John Doe|
+|contact_address|address of the organization the data is from|123 Main Street, Somewhere VA|
+|contact_phone|phone number of organization creating the data|555-555-5555|
+|process_notes|additional notes about how you created the dataset|Ran data through Google Refine to remove duplicates before uploading|
+
+*Returns:*
+
+|_. Type |_. Description |_. Example |
+|Location|returns the URI of the file requested|http://geocommons.com/overlays/7294.json|
+
+*Curl Examples:*
+
+Download sample data for examples from here:
+
+<pre><code>curl -i -X POST -u "username:password" -F "dataset[dbf]=@sample_file.dbf;" -F "dataset[shp]=@sample_file.shp" -F "dataset[shx]=@sample_file.shx;" http://geocommons.com/datasets.json</code></pre>
+<pre><code>cat 98633.csv | curl -i -X POST -u "username:password" --data-binary @- -H "Content-Type: text/csv" http://geocommons.com/datasets.json</code></pre>
+
+h3. *Create Dataset from URL*
+
+URL's can only be registered once in GeoIQ. So if the URL has already been registered by a user, you will receive a redirect to this existing dataset. You can make a copy of that dataset if you want to modify the metadata.
+
+*Required Parameters Upload:*
+
+|_. Parameter |_. Description|_. Example |
+|url|url linking to the data feed|http://api.flickr.com/services/feeds/geo/?tags=glitter&lang=en-us&format=kml_nl|
+
+*Optional Parameters*:
+
+|_. Parameter |_. Description|_. Example |
+|type|type of file being uploaded|csv,kml,atom|
+|title|name of dataset|Unemployment in the USA 2010|
+|description|description of what the dataset is|This dataset shows the increase in unemployment in the USA between 2009-2010|
+|author|who created the dataset|Bureau of Labor Statistics|
+|tags|words that describe the dataset and relate it to others|unemployment,labor,workforce|
+|metadata_url|link to url containing metadata|http://www.example.com|
+|citation_url|link to the organization the data is from|http://www.exampleorg.com|
+|contact_name|person to contact about the data|John Doe|
+|contact_address|address of the organization the data is from|123 Main Street, Somewhere VA|
+|contact_phone|phone number of organization creating the data|555-555-5555|
+|process_notes|additional notes about how you created the dataset|Ran data through Google Refine to remove duplicates before uploading|
+
+_default is false for option parameters use 0 or 1 (0 is false)_
+
+*Returns:*
+
+|_. Type |_. Description |_. Example |
+|Location|returns the URI of the file requested|http://geocommons.com/overlays/7294.json|
+
+*Curl Examples:*
+
+<pre><code>curl -i -X POST -u "user:password" -d "url=http://api.flickr.com/services/feedsgeo/?tags=glitter&lang=en-us&format=kml_nl" http://geocommons.com/datasets.xml
+</code></pre>
+
+h2. *Update Dataset*
+
+Allows you to update the contents of the metadata for a dataset and define attributes types
+
+h3. *Metadata Dataset Update*
+
+*Authentication:* 
+
+Requires basic authentication for both GeoCommons and GeoIQ appliances.
+
+*Required Parameters:* (none)
+
+*Optional Parameters*:
+
+|_. Parameter |_. Description |_. Example |
+|type|type of file being uploaded|csv,kml,atom|
+|title|name of dataset|Unemployment in the USA 2010|
+|description|description of what the dataset is|This dataset shows the increase in unemployment in the USA between 2009-2010|
+|author|who created the dataset|Bureau of Labor Statistics|
+|tags|words that describe the dataset and relate it to others|unemployment,labor,workforce|
+|metadata_url|link to url containing metadata|http://www.example.com|
+|citation_url|link to the organization the data is from|http://www.exampleorg.com|
+|contact_name|person to contact about the data|John Doe|
+|contact_address|address of the organization the data is from|123 Main Street, Somewhere VA|
+|contact_phone|phone number of organization creating the data|555-555-5555|
+|process_notes|additional notes about how you created the dataset|Ran data through Google Refine to remove duplicates before uploading|
+
+*Returns:*
+
+|_. Type |_. Description |_. Example|
+|HTTP Response|returns response indicating success or failure|201 Created|
+
+*Curl Examples:*
+
+<pre><code>curl -i -X PUT -u "username:password" http://geocommons.com/datasets/98735.json?title=changing%20title</code></pre>
+
+h2. *Update Dataset Feed*
+
+It is possible to ping GeoIQ when new updates are available.  
+
+*Authentication:*
+
+Requires basic authentication for both GeoCommons and GeoIQ appliances.  The user must be either the owner or an authorized user with edit access.
+
+h2. *Delete Dataset*
+
+You can currently Delete datasets by sending a DELETE HTTP request to the dataset endpoint. Deleted datasets are not recoverable.
+
+*Authentication:* 
+
+Basic authentication is required for all delete requests.
+
+*Required Parameters:* (none)
+
+*Optional Parameters*:  (none)
+
+*Returns:*
+
+|_. Type |_. Description |_. Example |
+|HTTP Response|returns a HTTP response 202 Accepted|HTTP/1.1 202 Accepted|
+
+*Curl Examples:*
+
+<pre><code>curl -i -X GET -u "user:password" http://geocommons.com/datasets/98737/fetch.json</code></pre>
+
+
+h1. Features API
+
+Developers can get dataset features, add new features and delete existing features. In the future there will be support for accessing and editing individual features.
+
+*Endpoint:* http://geocommons.com/datasets/:id/features.{format}
+
+*Description:* The features API allows you to retrieve all or a portion of features in a given dataset.
+
+*HTTP Methods Available:* GET, POST, DELETE
+
+*URL Summary:* 
+
+|_. Task |_. URL |_. Formats |_. HTTP METHOD |
+|Retrieve Filtered Features|http://geocommons.com/datasets/{id}/features.{format}|json|GET|
+|Create Features|http://geocommons.com/datasets/{id}/features.{format}|json|POST|
+|Delete Features|http://geocommons.com/datasets/{id}/features.{format}?ids={feature_ids}|json|DELETE|
+
+*Authentication:* 
+
+Depends on permissions. "Download" required for reading filtered features, and "Edit" required for Creating or Deleting features.
+
+h2. Retrieve Filtered Features
+
+*Required Parameters:* (none)
+
+*Optional Parameters*:
+
+|_. Parameter |_. Description |_. Example |
+|limit|number of features to return (default is 30)|limit=2|
+|order|'ascending' or 'descending' of the sort attribute (default ascending)|order=descending|
+|start|index to start with. 1 would be the first. Allows paginating through data|start=6|
+|callback|callback method to wrap the response in| callback=filteredLayer |
+|bbox|West/South/East/North is the order of the bounding box to get the features contained within an area|bbox=-79.5,20,-78,50|
+|units|sets the unit for the radius parameter by default is km (requires radius parameter)possible options are: km,m,ft,miles,degrees|units=ft|
+|lon|longitude of a point being searched from requires use of radius and lat parameters additionally|lon=-77.9998|
+|lat|latitude of a point being search from requires use of the radius and lon parameters additionally|lat=39.8282|
+|radius|defines distanced to be search from of a polygon,line,points or lat/lon pair (default is km)|radius=100|
+|intersect|specify if polygons are _contained_ or _full_. By default is set to _contained_ which means only polygons completely inside the buffer will be returned, _full_ means any part inside or touching|intersect=contained| 
+|with_distance|set to "true" to get a distance calculation of the centroid of the feature to the boundary polygon sent back with the features.|with_distance=1|
+|filter|filter parameters for specific attributes within the dataset| filter[dec_col][][max]=.22 |
+|group_by|array of columns to "group by" in aggregating features|group_by[]=state|
+|aggregates|array of aggregation values. Includes by name and calc. Name is the attribute name and calc can be any of: max,min,sum,average|aggregates[][name]=timestamp&aggregates[][calc]=max|
+|geojson|returns the geometry in GeoJSON format|geojson=1|
+|hex_geometry|returns the geometry in HEX EWKB format|hex_geometry=1|
+|encode|returns the geometry in Google Maps encoded polyline format|encode=1|
+
+_all latitude and longitude is in decimal degrees_
+
+*Curl Examples:*
+
+<pre><code>curl http://geocommons.com/datasets/98696/features.json?bbox=-79.5,20,-78,50</code></pre>
+_Filter features within a bounding box_
+
+<pre><code>curl http://geocommons.com/datasets/98696/features.json?lat=39.2&lon=-77.1&radius=100</code></pre>
+_Filter features within 100 km of a point_
+
+<pre><code>curl http://geocommons.com/datasets/98696/features.json?points=-77.1,39.8,-77.2,39.9,-77.3,39.99,-77.1,39.8&radius=100</code></pre>
+_Filter features within 100 kilometers of multiple points by longitude,latitude_
+
+<pre><code>curl http://geocommons.com/datasets/98696/features.json?polygon=-77,34,-78.5,34.5,-82,32,-79,30,-77,34&radius=100</code></pre>
+_Filter features within a 100 kilometer distance of a polygon_
+
+<pre><code>curl http://geocommons.com/datasets/98696/features.json?line=-77,34,-78.5,34.5,-82,32,-79,30&radius=100</code></pre>
+_Filter features within 100 km of a geographic line (such as a road)_
+
+<pre><code>curl http://geocommons.com/datasets/22146/features.json?lat=38.8&lon=-78.9&radius=2&intersect=full</code></pre>
+_Filter features within or overlapping 2 km of a point_
+
+<pre><code>curl http://geocommons.com/datasets/98696/features.json?filter[int_col][][equals]=1&filter[dec_col][][max]=.22</code></pre>
+_Filter features where int_col is equal to 1 and dec_col is less than 0.22_
+
+*Filter Parameters*:
+
+Datasets can be filtered when requested from the server. This is done by calling the dataset/:id/features/ with the optional filter= paramter. The filter parameter can include a filter for any attribute name, and an array of filter conditions. Filter names must be URI encoded.
+
+|_. Parameters |_. Description|_. Example |
+|min|the minimum value of the attribute|filter[financing_amt][][min]=100|
+|max|the maximum value of the attribute|filter[financing_amt][][max]=120|
+|equals|the value the attribute must be equal to|filter[name][][equals]=bob|
+
+<pre>http://geocommons.com/datasets/98696/features.json?filter[int_col][][max]=5&filter[name][][equals]=point%201</code></pre>
+<pre>http://geocommons.com/datasets/98696/features.json?filter[int_col][][max]=5&filter[int_col][][min]=3</code></pre>
+
+h2. Aggregate Statistics
+
+Using the Feature API it's possible to calculate roll-up statistics of features. Using the @group_by@ and @aggregates@ you can specify to summarize max,min,sum, or average values. If a @group_by@ is specified but no aggregates, then just a count is returned of the number of features in that group.
+
+h3. group_by
+
+The @group_by@ option groups features based on the value of the attribute specified. This ends up with summarized data, by default with a count and optionally with additional @aggregates@ as specified below.
+
+<pre><code>curl http://geocommons.com/datasets/98696/features.json?group_by[]=sortable</code></pre>
+
+h3. aggregates
+
+The @aggregates@ option is an array of objects that contain both a @name@ and a @calc@. So for example: @aggregates[][name]=cost&aggregates[][calc]=average@. A request can have multiple aggregates.
+
+The calc parameter can be any of:
+
+* max - maximum value of all attribute features
+* min - minimum value of all attribute features
+* sum - summation of all values
+* average - average of all values
+
+*Example*
+
+<pre><code>curl http://geocommons.com/datasets/98696/features.json?aggregates[][name]=int_col&aggregates[][calc]=sum&group_by[]=sortable</code></pre>
+
+h2. Create Features
+
+*Required Parameters:* (none)
+
+*Optional Parameters*:
+
+Creating a feature in GeoIQ depends on the format, or schema, of the dataset. The Features include any of the optional attributes that are in the dataset and additionally a Geometry that is formatted as GeoJSON.
+
+|_. Parameter |_. Description |_. Example |
+| _any attribute_ | any attribute value from the dataset schema | {title: "My new Feature"} |
+| geometry | GeoJSON formatted geometry | {geometry: {type: "Point", coordinates: [-100, 80.3]}} |
+
+*Example*: 
+
+Given a JSON array of features in a file _features.json_:
+
+<pre>[{name: "My new feature", sortable: "true", dec_col: 50.8, geometry: {type: "Point", coordinates: [-100, 80]}},
+  {name: "My other feature", sortable: "false", dec_col: 20.8, geometry: {type: "Point", coordinates: [-120, 62.4]}}]</pre>
+
+You could then POST this to the endpoint:
+
+<pre><code>cat features.json | curl -X POST -u "user:pass" -H "Content-Type: application/json" -d @- http://geocommons.com/maps/98696/features.json</code></pre>
+
+h2. Delete Features
+
+At this time, the delete features endpoint requires a "resource identifier" that is not actually used. So you can put whatever value you want for this. The important aspect are the array of @ids@ that will be deleted. Currently these are a simple index into the feature array, starting at 0.
+
+*Required Parameters:* 
+
+|_. Parameter |_. Description |_. Example |
+| ids | array of feature index identifiers. Starts at 0 | ids=0,5,99 |
+
+*Optional Parameters*: (none)
+
+*Example*: 
+
+<pre><code>curl -X DELETE -u "user:pass" http://geocommons.com/maps/98696/features/0.json?ids=0,5,59</code></pre>
+
+
+h1. Maps API
+
+*Endpoint:* http://geocommons.com/maps
+
+*Description:* The maps endpoint allows creation, styling, download and deletion of maps. Methods of modifying and deleting maps require basic authenitcation.  For download of maps it depends on the configuration of the GeoIQ instance for GeoCommons it is not required.
+
+*HTTP Methods Available*: GET, POST, PUT, DELETE
+
+*URL Summary*
+
+|_. Task |_. URL |_. Formats |_. HTTP METHOD |
+|Download|http://geocommons.com/maps/{id}.{format}|json, kml|GET|
+|Create|http://geocommons.com/maps|xml,json|POST|
+|Update|http://geocommons.com/maps/{id}.{format}|json,atom|PUT|
+|Delete|http://geocommons.com/maps/{id}|json|DELETE|
+|Add Layer|http://geocommons.com/maps/{id}/layers.{format}|json|POST|
+
+h2. *Download Map*
+
+*Authentication:* 
+
+Basic authentication is required for maps that are not publicly shared.
+
+*Required Parameters:*(none)
+
+*Optional Parameters:*(none)
+
+*Returns*
+
+|_. Type|Description|Example |
+|file|returns a file of the type requested|http://geocommons.com/maps/51541.json|
+
+*Curl Examples:*
+
+<pre><code>curl http://geocommons.com/maps/51541.json</code></pre>
+
+h2. *Create Map*
+
+*Authentication:* 
+
+Basic authentication is required for both GeoCommons and GeoIQ appliances.
+
+*Required Parameters:*
+
+|_. Parameter |_. Description|_. Example |
+|title|the title of the map|title=World%20Population|
+|basemap|the basemap provider|basemap="Acetate"|
+ 
+
+*Optional Parameters:*
+
+|_. Parameter |_. Description|_. Example |
+|description|text description of a map|description=This%20map%20shows|
+|tags|tags categorizing you map|tags=economy| 
+|extent|array of the area covered by the map order is west,south,east,north|extent=[-180,-90,180,90]|
+|projection|the projection of the map default is EPSG:3785 also supported is EPSG:4326|"projection=EPSG:4326"|
+|layers|array of layers to add to the map|layers[][source]=finder:98696|
+|permissions|must be admin on GeoCommons to change permissions, on GeoIQ must be data owner or have edit permissions|{"permissions": [{"group_id": "everyone", "permissions" : {"view":true,"download":false,"edit":false}]}|
+
+*Returns*
+
+|_. Type|Description|Example |
+|file|returns a file of the type requested|http://geocommons.com/maps/51541.json|
+
+*Curl Examples:*
+
+<pre><code>curl -i -u "user:password" -d "basemap=Google Terrain" -d "title=mappy" -X POST http://geocommons.com/maps.json
+</code></pre>
+
+<pre><code>curl -i -u "user:password" -d "basemap=Google Terrain" -d "title=Sample Custom Icon Map" -d "layers[][source]=finder:98696" -d "layers[][styles][icon][symbol]=http://farm5.static.flickr.com/4125/5219379732_e7251b5a47_o_d.png"   -X POST http://geocommons.com/maps.json</code></pre>
+
+<pre><code>curl -i -u "user:password" -d "title=Vehicles by Ward"  -d "layers[][source]=finder:92674" -d "layers[][visible]=true" -d "[layers][][styles][fill][classificationType]=Standard Deviation" -d "layers[][styles][fill][categories]=5" -d "layers[][styles][fill][colors][]=15725567" -d "layers[][styles][fill][colors][]=12441575" -d "layers[][styles][fill][colors][]=7057110" -d "layers[][styles][fill][colors][]=3244733" -d "layers[][styles][fill][colors][]=545180" -d "basemap=Google Terrain" -d "title=Abandoned Vehicle Requests by Ward DC" -d "layers[][styles][fill][selectedAttribute]=overdue request count" -d "layers[][styles][type]=CHOROPLETH"  -d "extent[]=-77" -d "extent[]=38" -d "extent[]=-76" -d "extent[]=39" -X POST http://geocommons.com/maps.json</code></pre>
+
+
+
+h2. *Update Map*
+
+*Authentication:* 
+
+Basic authentication is required for both GeoCommons and GeoIQ appliances.
+
+*Required Parameters:* (none)
+
+*Optional Parameters:*
+
+|_. Parameter |_. Description|_. Example |
+|title|the title of the map|title=World%20Population|
+|basemap|the basemap provider|basemap="Acetate"|
+|description|text description of a map|description=This%20map%20shows|
+|tags|tags categorizing you map|tags=economy| 
+|extent|array of the area covered by the map order is west,south,east,north|extent=[-180,-90,180,90]|
+|projection|the projection of the map default is EPSG:3785 also supported is EPSG:4326|"projection=EPSG:4326"|
+|permissions|must be admin on GeoCommons to change permissions, on GeoIQ must be data owner or have edit permissions|{"permissions": [{"group_id": "everyone", "permissions" : {"view":true,"download":false,"edit":false}]}|
+
+*Returns*
+
+|_. Type|Description|Example |
+|map|returns a representation of the updated map|{"updated_at": "2011/03/10 15:33:00 +0000", "basemap": "Google Terrain", "title": "changing the title like", "permissions": [], "tags": [], "layers": [], "extent": [-180.0, -85.0, 180.0, 85.0], "id": 56821, "description": null, "show_state": {"basemap": {"name": "Google Terrain", "providerType": null, "tint": {"redMultiplier": 1, "blueMultipler": 1, "greenMultipler": 1, "alphaMultiplier": 1, "greenOffset": 1, "blueOffset": 0, "alphaOffset": 0, "color": 0, "redOffset": 0}, "mapDisplayName": "Google Terrain", "vanillaColor": null, "tileType": null}}, "classification": null, "created_at": "2011/03/10 15:15:40 +0000"}|
+
+*Curl Examples:*
+
+<pre><code>curl -i -u "user:password" -d "title=changing the title like whoa" -X PUT http://geocommons.com/maps/56821.json</code></pre>
+
+h2. *Delete Map*
+
+You can currently Delete maps by sending a DELETE HTTP request to the dataset endpoint. 
+
+*Authentication:* 
+
+Basic authentication is required for all delete requests.
+
+*Required Parameters:* (none)
+
+*Optional Parameters*:  (none)
+
+*Returns:*
+
+|_. Type |_. Description |_. Example |
+|HTTP Response|returns a HTTP response 204 no Content|HTTP/1.1 204 No Content|
+
+*Curl Examples:*
+
+<pre><code>curl -i -X DELETE -u "username:password" http://geocommons.com/maps/56290.json</code></pre>
+
+h2. *Add Layer to Map*
+
+*Authentication:* 
+
+Basic authentication is required for both GeoCommons and GeoIQ appliances.
+
+*Required Parameters:* 
+
+|_. Parameter |_. Description|_. Example |
+|source|the source of the data layer for GeoIQ/GeoCommons layers it is "finder:xxxx" for external sources it is "url:http://example.com"|source=finder:98765|
+
+*Optional Parameters:*
+
+|_. Parameter |_. Description|_. Example |
+|title|the title of the layer|title="Population and Age"|
+|subtitle|the subtitle of the layer|subtitle="200 Census Demographics|
+|opacity|the opacity of the layer default is 1.0|opacity=.5|
+|styles|the styling of the layer (see detailed styling information below)|see style examples below|
+|visible|sets if the layer is visible, or turned off|visible=true|
+
+*Returns*
+
+|_. Type|Description|Example |
+|Location|returns the index of the added layer in the map|http://geocommons.com/maps/56821/layers/0.json|
+
+*Curl Examples:*
+
+<pre><code>curl -i -u "username:password" -d "source=finder:98765" -X POST http://geocommons.com/maps/56821/layers.json</code></pre>
+
+h3. *Detailed Map Styling Information*
+
+The GeoIQ API allows extremely granular control of the look and feel of each individual map layer beyond what is available in the GUI.  All of the parameters fit into the styles parameter to specifically style a layer.
+
+*Primary Options Styling:*
+
+|_. Option |_. Description |_. Example |
+|icon|the type of icon|icon:{symbol:"circle",size:3}|
+|stroke|controls the color, transparency and thickness of the outline of a feature|"stroke": {"alpha": 1, "weight": 1, "color": 16777215}|
+|fill|controls the inside color and opacity of a feature|"fill": {"opacity": 0.75, "color": 11637367}|
+|temporal|controls if there is a time feature associated with a layer and which attribute is used|"temporal": {"attributes": ["timestamp"]}|
+|type|the type of map layer options are: POINT, PRIMITIVE, GRADUATED, PROPORTIONAL, CHOROPLETH, PROPORTIONAL|"type": "GRADUATED"|
+|click|controls the event when a layer feature is clicked on can either be a url or a javascript function|styles: { click: "javascript:showInfo('$[state]')" }|
+|hover|controls the event when a feature is hovered over can be a javascript event or specific data for the info window|1 styles: { hover: "State: $[state]. Population: $[population]. Average Income: $[avg_inc_2000]" }|
+
+*Specific Styling Options:*
+
+h4. Icon
+
+Specific Options for Styling the Icon
+
+|_. Option |_. Description |_. Example |
+|selectedAttribute|required for CHOROPLETH OR Graduated the attribute name of the dataset for theming|selectedAttribute: "rate of change"|
+|color|hex or decimal number for icon fills| color: 0xFF0000|
+|symbol|symbol name from palette of icons or URL to an image default are circle, propCircle, outlineCircle, hollowCircle, square, propSquare, outlineSquare, hollowSquare, balloonIcon, pushpinIcon, circleIcon, featherIcon, flagIcon, pushpinIcon, ringIcon, squareIcon, xPointIcon|{symbol: "outlineSquare"}, {symbol:"http://farm5.static.flickr.com/4125/5219379732_e7251b5a47_o_d.png"}|
+|opacity|0 is tranparent 1 is opaque|opacity=.75|
+|dropshadow|1 for a drop shadow underneath the icon, 0 for no drop shadow|dropshadow=1|
+|lineStyle|the style of the line from the following styles: dashedThin,dashedThick,cased,thick,regular|{lineStyle: "dashedThin"}|
+|size|scale size by area 0.1 is 10% of original size, 2 is twice the size (default:1)|{size: .2}|
+|classificationType|type of classification algorithm to use Manual, Equal Interval, Quantile, Standard Deviation, Max Breaks, Critical Value (default: Equal Interval if type of CHOROPLETH)|{classificationType: "Standard Deviation"}|
+|classificationBreaks|the specifically defined breaks required for {classificationType: "Manual"} array of values for the actual breakpoints for the bins|"classificationBreaks": [13, 13, 20, 30, 40, 50]|
+|categories|number of categories or bins to use for classifying the data.  Not necessary if the _classificationType_ is 'Manual' and the _classificationBreaks_ (default is 5 if type is CHOROPLETH)|{"categories": 7}|
+|range|the range of the data to bin, not required though useful if you only want to bin/display a specific portion of the data|"range": [13, 25]|
+
+h4. Stroke
+
+Styling for the line that is the perimeter around a polygon or an icon.
+
+|_. Option |_. Description |_. Example |
+|color|the color either in hex or integer |color: 0xFF0000|
+|alpha|the transparency 0 is transparent 1 is opaque (default: 0.75)|alpha: .5|
+|weight|the thickness of the line|weight: 3|
+
+h4. Fill
+
+|_. Option |_. Description |_. Example |
+|selectedAttribute|required for CHOROPLETH OR Graduated the attribute name of the dataset for theming|selectedAttribute: "rate of change"|
+|color|hex or decimal number for icon fills| color: 0xFF0000|
+|colors|array of colors there should be a color value for each category. So if categories are 5 there should be 5 colors|"colors": [16573399, 15124426, 13938370, 12619966, 10450099, 7620507, 5313667]|
+|opacity|0 is transparent 1 is opaque (default is .75|opacity: .5|
+|classificationType|type of classification algorithm to use Manual, Equal Interval, Quantile, Standard Deviation, Max Breaks, Critical Value (default: Equal Interval if type of CHOROPLETH)|{classificationType: "Standard Deviation"}|
+|classificationBreaks|the specifically defined breaks required for {classificationType: "Manual"} array of values for the actual breakpoints for the bins|"classificationBreaks": [13, 13, 20, 30, 40, 50]|
+|categories|number of categories or bins to use for classifying the data.  Not necessary if the _classificationType_ is 'Manual' and the _classificationBreaks_ (default is 5 if type is CHOROPLETH)|{"categories": 7}|
+
+h4. Temporal
+
+If a layer has an attribute column with a time component temporal information can be defined in the layer.
+
+|_. Option |_. Description |_. Example |
+|attributes|the column to animate temporally by|attributes: ["timestamp"]|
+
+
+
+h4. Time Slider
+
+You can specify a specific @begin@, @end@, and @period@ of both the time window and the time slider on the map. Time elements can be any of: 
+
+* ISO8601 - YYYYMMDDTHH:MM:SSZ (e.g. 20100801T12:31:22Z, or 20100801T07:31:22-0500)
+* String for "now"
+* Milliseconds since (or before for negative) Epoch - Midnight, January 1, 1970
+
+For *period* - it is the span of the timeslider or timeline in milliseconds.
+
+|_. Option |_. Description |_. Example |
+|slider|the period of time the slider (window of data being shown) covers in milliseconds or "now" for current time|"slider": {"period":86400,"end":"now"}|
+|timeline|the range of time the slider covers|"timeline":{"begin":"20100505T00:00:00Z", "end": "now"}|
+
+!Time_Controls.png!
+
+_Only use 2 of the begin/end/period variables or specify _null_. For example, setting end: "now" and period:86400 would show the last day of data._
+
+
+
+h4. Color Samples
+
+GeoIQ supports any hexadecimal color values for setting the icon, fill, stroke, or color ramps. However, in designing GeoIQ we spent considerable time and research considering how semi-transparent colors appeared on top of basemaps while retaining high-contrast and impact. We recommend using these, or similar color schemes, when designing your maps using the GeoIQ API. 
+
+*Diverging*
+
+
+* ramp:[0x909FC2, 0xFE9929]
+* ramp:[0x909FC2, 0xF7F7F7, 0xFE9929]
+* ramp:[0x909FC2, 0xD0D1E6, 0xFEE281, 0xFE9929]
+* ramp:[0x909FC2, 0xD0D1E6, 0xF7F7F7, 0xFEE281, 0xFE9929]
+* ramp:[0x44637B, 0x909FC2, 0xD0D1E6, 0xFEE281, 0xFE9929, 0xB84C02]
+* ramp:[0x44637B, 0x909FC2, 0xD0D1E6, 0xF7F7F7, 0xFEE281, 0xFE9929, 0xB84C02]
+		
+*Diverging_Reverse*
+
+
+* ramp:[0xFE9929, 0x909FC2]
+* ramp:[0xFE9929, 0xF7F7F7, 0x909FC2]
+* ramp:[0xFE9929, 0xFEE281, 0xD0D1E6, 0x909FC2]
+* ramp:[0xFE9929, 0xFEE281, 0xF7F7F7, 0xD0D1E6, 0x909FC2]
+* ramp:[0xB84C02, 0xFE9929, 0xFEE281, 0xD0D1E6, 0x909FC2, 0x44637B]
+* ramp:[0xB84C02, 0xFE9929, 0xFEE281, 0xF7F7F7, 0xD0D1E6, 0x909FC2, 0x44637B]
+		
+*White-Brown*
+
+* ramp:[0xD7C5AE, 0x866C5D]
+* ramp:[0xD7C5AE, 0xB89A81, 0x866C5D]
+* ramp:[0xD7C5AE, 0xB89A81, 0x866C5D, 0x5E4840]
+* ramp:[0xEBD9C2, 0xD1B79F, 0xA4866D, 0x7C6253, 0x4A342C]
+* ramp:[0xEBD9C2, 0xD1B79F, 0xA4866D, 0x7C6253, 0x543E36, 0x361E18]
+* ramp:[0xEBD9C2, 0xD1B79F, 0xB19277, 0x917763, 0x72594B, 0x543E36, 0x361E18]
+		
+*Brown-White*
+
+* ramp:[0x866C5D, 0xD7C5AE]
+* ramp:[0x866C5D, 0xB89A81, 0xD7C5AE]
+* ramp:[0x5E4840, 0x866C5D, 0xB89A81, 0xD7C5AE]
+* ramp:[0x4A342C, 0x7C6253, 0xA4866D, 0xD1B79F, 0xEBD9C2]
+* ramp:[0x361E18, 0x543E36, 0x7C6253, 0xA4866D, 0xD1B79F, 0xEBD9C2]
+* ramp:[0x361E18, 0x543E36, 0x72594B, 0x917763, 0xB19277, 0xD1B79F, 0xEBD9C2]
+		
+*White-Gray*
+
+* ramp:[0xF0F0F0, 0x636363]
+* ramp:[0xF0F0F0, 0xBDBDBD, 0x636363]
+* ramp:[0xF7F7F7, 0xCCCCCC, 0x969696, 0x525252]
+* ramp:[0xF7F7F7, 0xCCCCCC, 0x969696, 0x636363, 0x252525]
+* ramp:[0xF7F7F7, 0xD9D9D9, 0xBDBDBD, 0x969696, 0x636363, 0x252525]
+* ramp:[0xF7F7F7, 0xD9D9D9, 0xBDBDBD, 0x969696, 0x737373, 0x525252, 0x252525]
+		
+*Gray-White*
+
+* ramp:[0x636363, 0xF0F0F0]
+* ramp:[0x636363, 0xBDBDBD, 0xF0F0F0]
+* ramp:[0x525252, 0x969696, 0xCCCCCC, 0xF7F7F7]
+* ramp:[0x252525, 0x636363, 0x969696, 0xCCCCCC, 0xF7F7F7]
+* ramp:[0x252525, 0x636363, 0x969696, 0xBDBDBD, 0xD9D9D9, 0xF7F7F7]
+* ramp:[0x252525, 0x525252, 0x737373, 0x969696, 0xBDBDBD, 0xD9D9D9, 0xF7F7F7]
+		
+
+*White-Dark Green*
+
+* ramp:[0xD0D1E6, 0x44637B]
+* ramp:[0xD0D1E6, 0x909FC2, 0x44637B]
+* ramp:[0xD0D1E6, 0x909FC2, 0x44637B, 0x2D4542]
+* ramp:[0xDADBE6, 0xB0B3DB, 0x7286B1, 0x44637B, 0x2D4542]
+* ramp:[0xDADBE6, 0xB0B3DB, 0x7286B1, 0x4E6D8A, 0x2D4A4C, 0x192E24]
+* ramp:[0xDADBE6, 0xB0B3DB, 0x7C86B6, 0x547298, 0x375976, 0x2D4A4C, 0x192E24]
+		
+*Dark Green-White*
+
+* ramp:[0x44637B, 0xD0D1E6]
+* ramp:[0x44637B, 0x909FC2, 0xD0D1E6]
+* ramp:[0x2D4542, 0x44637B, 0x909FC2, 0xD0D1E6]
+* ramp:[0x2D4542, 0x44637B, 0x7286B1, 0xB0B3DB, 0xDADBE6]
+* ramp:[0x192E24, 0x2D4A4C, 0x4E6D8A, 0x7286B1, 0xB0B3DB, 0xDADBE6]
+* ramp:[0x192E24, 0x2D4A4C, 0x375976, 0x547298, 0x7C86B6, 0xB0B3DB, 0xDADBE6]
+		
+*White-Orange*
+
+* ramp:[0xFEE281, 0xB84C02]
+* ramp:[0xFEE281, 0xFE9929, 0xB84C02]
+* ramp:[0xFEE281, 0xFE9929, 0xB84C02, 0x822D04]
+* ramp:[0xFEF7A5, 0xFECE6D, 0xEC8414, 0xAE4C02, 0x662506]
+* ramp:[0xFEF7A5, 0xFECE6D, 0xEC8414, 0xAE4C02, 0x793404, 0x512506]
+* ramp:[0xFEF7A5, 0xFECE6D, 0xFEA329, 0xD96814, 0xAE4C02, 0x793404, 0x512506]
+		
+*Orange-White*
+
+* ramp:[0xB84C02, 0xFEE281]
+* ramp:[0xB84C02, 0xFE9929, 0xFEE281]
+* ramp:[0x822D04, 0xB84C02, 0xFE9929, 0xFEE281]
+* ramp:[0x662506, 0xAE4C02, 0xEC8414, 0xFECE6D, 0xFEF7A5]
+* ramp:[0x512506, 0x793404, 0xAE4C02, 0xEC8414, 0xFECE6D, 0xFEF7A5]
+* ramp:[0x512506, 0x793404, 0xAE4C02, 0xD96814, 0xFEA329, 0xFECE6D, 0xFEF7A5]
+		
+*White-Red*
+
+* ramp:[0xFEE0D2, 0xDE2D26]
+* ramp:[0xFEE0D2, 0xFC9272, 0xDE2D26]
+* ramp:[0xFEE5D9, 0xFCAE91, 0xFB6A4A, 0xCB181D]
+* ramp:[0xFEE5D9, 0xFCAE91, 0xFB6A4A, 0xDE2D26, 0xA50F15]
+* ramp:[0xFEE5D9, 0xFCBBA1, 0xFC9272, 0xFB6A4A, 0xDE2D26, 0xA50F15]
+* ramp:[0xFEE5D9, 0xFCBBA1, 0xFC9272, 0xFB6A4A, 0xEF3B2C, 0xCB181D, 0x99000D]
+		
+*Red-White*
+
+* ramp:[0xDE2D26, 0xFEE0D2]
+* ramp:[0xDE2D26, 0xFC9272, 0xFEE0D2]
+* ramp:[0xCB181D, 0xFB6A4A, 0xFCAE91, 0xFEE5D9]
+* ramp:[0xA50F15, 0xDE2D26, 0xFB6A4A, 0xFCAE91, 0xFEE5D9]
+* ramp:[0xA50F15, 0xDE2D26, 0xFB6A4A, 0xFC9272, 0xFCBBA1, 0xFEE5D9]
+* ramp:[0x99000D, 0xCB181D, 0xEF3B2C, 0xFB6A4A, 0xFC9272, 0xFCBBA1, 0xFEE5D9]
+		
+*White-Green*
+
+* ramp:[0xF7FCB9, 0x31A354]
+* ramp:[0xF7FCB9, 0xADDD8E, 0x31A354]
+* ramp:[0xFFFFCC, 0xC2E699, 0x78C679, 0x238443]
+* ramp:[0xFFFFCC, 0xC2E699, 0x78C679, 0x31A354, 0x006837]
+* ramp:[0xFFFFCC, 0xD9F0A3, 0xADDD8E, 0x78C679, 0x31A354, 0x006837]
+* ramp:[0xFFFFCC, 0xD9F0A3, 0xADDD8E, 0x78C679, 0x41AB5D, 0x238443, 0x005A32]
+		
+*Green-White*
+
+* ramp:[0x31A354, 0xF7FCB9]
+* ramp:[0x31A354, 0xADDD8E, 0xF7FCB9]
+* ramp:[0x238443, 0x78C679, 0xC2E699, 0xFFFFCC]
+* ramp:[0x006837, 0x31A354, 0x78C679, 0xC2E699, 0xFFFFCC]
+* ramp:[0x006837, 0x31A354, 0x78C679, 0xADDD8E, 0xD9F0A3, 0xFFFFCC]
+* ramp:[0x005A32, 0x238443, 0x41AB5D, 0x78C679, 0xADDD8E, 0xD9F0A3, 0xFFFFCC]
+		
+*White-Blue*
+
+* ramp:[0xDEEBF7, 0x3182BD]
+* ramp:[0xDEEBF7, 0x9ECAE1, 0x3182BD]
+* ramp:[0xEFF3FF, 0xBDD7E7, 0x6BAED6, 0x2171B5]
+* ramp:[0xEFF3FF, 0xBDD7E7, 0x6BAED6, 0x3182BD, 0x08519C]
+* ramp:[0xEFF3FF, 0xC6DBEF, 0x9ECAE1, 0x6BAED6, 0x3182BD, 0x08519C]
+* ramp:[0xEFF3FF, 0xC6DBEF, 0x9ECAE1, 0x6BAED6, 0x4292C6, 0x2171B5, 0x084594]
+		
+*Blue-White*
+
+* ramp:[0x3182BD, 0xDEEBF7]
+* ramp:[0x3182BD, 0x9ECAE1, 0xDEEBF7]
+* ramp:[0x2171B5, 0x6BAED6, 0xBDD7E7, 0xEFF3FF]
+* ramp:[0x08519C, 0x3182BD, 0x6BAED6, 0xBDD7E7, 0xEFF3FF]
+* ramp:[0x08519C, 0x3182BD, 0x6BAED6, 0x9ECAE1, 0xC6DBEF, 0xEFF3FF]
+* ramp:[0x084594, 0x2171B5, 0x4292C6, 0x6BAED6, 0x9ECAE1, 0xC6DBEF, 0xEFF3FF]
+		
+*White-Purple*
+
+* ramp:[0xF5D9D7, 0x7268A4]
+* ramp:[0xF5D9D7, 0xD4AEC2, 0x7268A4]
+* ramp:[0xFCE3D7, 0xE3BBC2, 0xC090BD, 0x74479A]
+* ramp:[0xFCE3D7, 0xE3BBC2, 0xC090BD, 0x835BA4, 0x511483]
+* ramp:[0xFCE3D7, 0xE6C7CA, 0xD4AEC2, 0xC090BD, 0x835BA4, 0x511483]
+* ramp:[0xFCE3D7, 0xE6C7CA, 0xD4AEC2, 0xC090BD, 0x9F74B3, 0x74479A, 0x511483]
+		
+*Purple-White*
+
+* ramp:[0x7268A4, 0xF5D9D7]
+* ramp:[0x7268A4, 0xD4AEC2, 0xF5D9D7]
+* ramp:[0x74479A, 0xC090BD, 0xE3BBC2, 0xFCE3D7]
+* ramp:[0x511483, 0x835BA4, 0xC090BD, 0xE3BBC2, 0xFCE3D7]
+* ramp:[0x511483, 0x835BA4, 0xC090BD, 0xD4AEC2, 0xE6C7CA, 0xFCE3D7]
+* ramp:[0x511483, 0x74479A, 0x9F74B3, 0xC090BD, 0xD4AEC2, 0xE6C7CA, 0xFCE3D7]
+		
+*Green-Purple*
+
+* ramp:[0x78C679, 0xC090BD]
+* ramp:[0x78C679, 0xF7F7F7, 0xC090BD]
+* ramp:[0x78C679, 0xD9F0A3, 0xE6C7CA, 0xC090BD]
+* ramp:[0x78C679, 0xD9F0A3, 0xF7F7F7, 0xE6C7CA, 0xC090BD]
+* ramp:[0x238443, 0x78C679, 0xD9F0A3, 0xE6C7CA, 0xC090BD, 0x74479A]
+* ramp:[0x238443, 0x78C679, 0xD9F0A3, 0xF7F7F7, 0xE6C7CA, 0xC090BD, 0x74479A]
+		
+*Purple-Green*
+
+* ramp:[0xC090BD, 0x78C679]
+* ramp:[0xC090BD, 0xF7F7F7, 0x78C679]
+* ramp:[0xC090BD, 0xE6C7CA, 0xD9F0A3, 0x78C679]
+* ramp:[0xC090BD, 0xE6C7CA, 0xF7F7F7, 0xD9F0A3, 0x78C679]
+* ramp:[0x74479A, 0xC090BD, 0xE6C7CA, 0xD9F0A3, 0x78C679, 0x238443]
+* ramp:[0x74479A, 0xC090BD, 0xE6C7CA, 0xF7F7F7, 0xD9F0A3, 0x78C679, 0x238443]
+		
+*Blue-Red*
+
+* ramp:[0x4292C6, 0xFF776D]
+* ramp:[0x4292C6, 0xF7F7F7, 0xFF776D]
+* ramp:[0x4292C6, 0xC6DBEF, 0xFCC5BB, 0xFF776D]
+* ramp:[0x4292C6, 0xC6DBEF, 0xF7F7F7, 0xFCC5BB, 0xFF776D]
+* ramp:[0x2171B5, 0x4292C6, 0xC6DBEF, 0xFCC5BB, 0xFF776D, 0xCB181D]
+* ramp:[0x2171B5, 0x4292C6, 0xC6DBEF, 0xF7F7F7, 0xFCC5BB, 0xFF776D, 0xCB181D]
+		
+*Red-Blue*
+
+* ramp:[0xFF776D, 0x4292C6]
+* ramp:[0xFF776D, 0xF7F7F7, 0x4292C6]
+* ramp:[0xFF776D, 0xFCC5BB, 0xC6DBEF, 0x4292C6]
+* ramp:[0xFF776D, 0xFCC5BB, 0xF7F7F7, 0xC6DBEF, 0x4292C6]
+* ramp:[0xCB181D, 0xFF776D, 0xFCC5BB, 0xC6DBEF, 0x4292C6, 0x2171B5]
+* ramp:[0xCB181D, 0xFF776D, 0xFCC5BB, 0xF7F7F7, 0xC6DBEF, 0x4292C6, 0x2171B5]
+
+
+h1. Search API
+
+*Endpoint:* http://geocommons.com/search
+
+*Description:* GeoIQ provides a common search across the application using the OpenSearch protocol. 
+
+*HTTP Methods Available:* GET
+
+*URL Summary:*
+
+|_. Task |_. URL |_. Formats |_. HTTP METHOD |
+|search|http://geocommons.com/search.{format}|atom,json,kml|GET|
+
+h2. *Search*
+
+*Authentication:* 
+
+Not required for GeoCommons datasets, GeoIQ appliance datasets depends on the permissions of the data
+
+*Required Parameters:*
+
+|_. Parameter |_. Description|_. Example |
+|query|information to search on|query=unemployment|
+
+*Optional Parameters:*
+
+|_. Parameter |_. Description|_. Example |
+|bbox|a box encompassing the area being searched the order is West/South/East/North|bbox=-79.5,20,-78,50|
+|page|which page of results to return|page=3|
+|limit|number of results to return|limit=15|
+|order|'ascending' or 'descending' of the sort attribute (default ascending)|order=descending|
+|sort|attribute name to sort on|sort=name|
+
+_A user can search specifically within the fields by prefixing "title:", "description:" or "tag:" before the query. So for example http://geocommons.com/search.atom?query=tag:economics would return only data that has been tagged with "economics"._
+
+
+*Returns:*
+
+|_. Type |_. Description |_. Example |
+|file|returns a file of the type requested|curl http://geocommons.com/search.json?query=chickens&limit=2&page=3|
+
+*Curl Examples:*
+
+<pre><code>curl http://geocommons.com/search.json?query=chickens</code></pre>
+<pre><code>curl http://geocommons.com/search.json?query=chickens&limit=2&page=3</code></pre>
+
+h1. Users API
+
+*Endpoint:* http://geocommons.com/users
+
+*Description:* Used to create, modify and delete GeoCommons and GeoIQ users.
+
+*HTTP Methods Available:* GET POST PUT DELETE 
+
+*URL Summary:*
+
+|_. Task |_. URL |_. Formats |_. HTTP METHOD |
+|create|http://geocommons.com/users.{format}|json|POST|
+|retrieve|http://geocommons.com/users/{username}.{format}|json|GET|
+|modify|http://geocommons.com/users/{username}.{format}|json|PUT|
+|delete|http://geocommons.com/users/{username}.{format}|json|DELETE|
+
+
+h2. *Create User*
+
+*Authentication:*
+
+Authentication not required for GeoCommons.  GeoIQ appliances where user sign-up is disabled require basic authentication by an administrative user account.
+
+*Required Parameters:*
+
+|_. Parameter |_. Description|_. Example |
+|user[login]|username that the user will login with|user[login]=johndoe|
+|user[password]|password the user will login with|user[password]=s3curepassword|
+|user[password_confirmation]|sample information as password the user will login with|user[password_confirmation]=s3curepassword|
+|user[email]|users email address|user[email]=john@example.com|
+|user[fullname]|full name of the person whose account it is|"user[fullname]=John G. Doe"|
+
+*Optional Parameters:* (none)
+
+*Returns:* 
+
+|_. Type |_. Description |_. Example |
+
+|user object|returns id, login,email of created user|{"User": {"id": 23250, "login": "sampleapiuser", "email": "sampleapiuser1@example.com"}}|
+
+*Curl Examples:*
+
+<pre><code>curl -i -X POST -d "user[login]=sampleapiuser" -d "user[password]=password" -d "user[password_confirmation]=password" -d "user[email]=sampleapiuser@example.com" -d "user[fullname]=Sample A. User" http://geocommons.com/users.json</code></pre>
+
+h2. *Retrieve User Info*
+
+*Authentication:*
+
+Not required, but to get full user information basic authentication is required and the account must also be an administrator
+
+*Required Parameters:* (none)
+
+*Optional Parameters:* (none)
+
+*Curl Examples:*
+
+<pre><code>curl -u "username:password" http://geocommons.com/users/kate.json</code></pre>
+
+h2. *Modify User*
+
+*Authentication:*
+
+Must use basic authentication utilizing the account of the user being modified or an administrative account
+
+*Required Parameters:* (none)
+
+*Optional Parameters:*
+
+|_. Parameter |_. Description|_. Example |
+|user[password]|password the user will login with|user[password]=s3curepassword|
+|user[password_confirmation]|sample information as password the user will login with must be used in conjunction with user[password] if modifying a users password|user[password_confirmation]=s3curepassword|
+|user[email]|users email address|user[email]=john@example.com|
+|user[fullname]|full name of the person whose account it is|"user[fullname]=John G. Doe"|
+
+*Curl Examples:*
+
+<pre><code>curl -i -u "username:password" -X PUT -d "user[email]=anotheremail@example.com" http://geocommons.com/users/sampleapiuser.json</code></pre>
+<pre><code>curl -i -u "username:password" -X PUT -d "user[password]=newpassword" -d "user[password_confirmation]=newpassword" http://geocommons.com/users/sampleapiuser.json</code></pre>
+
+h1. Groups API
+
+*Endpoint:* http://geocommons.com/groups
+
+*Description:* The Groups API allows creation of groups of users to allow for granular access control to maps, data and analysis within GeoIQ.
+
+*HTTP Methods Available:* GET, POST, PUT, DELETE
+
+*URL Summary:*
+
+|_. Task |_. URL |_. Formats |_. HTTP METHOD |
+|create|http://geocommons.com/groups.{format}|json|POST|
+|add user|http://geocommons.com/groups/{id}/users.{format}|json|POST|
+|list group users|http://geocommons.com/groups/{id}/users.{format|json|GET|
+|delete|http://geocommons.com/groups/{id}.{format}|json|DELETE|
+
+h2. *Create Group*
+
+*Authentication:*
+
+Basic authentication is required for both GeoCommons and GeoIQ appliances.  The account being used must also be an administrator.
+
+*Required Parameters:*
+
+|_. Parameter |_. Description|_. Example |
+|group[name]|the name of the group|group[name]=thegroup|
+
+*Optional Parameters:* (none)
+
+|_. Type |_. Description |_. Example |
+|Location|returns the URI of the file requested|http://geocommons.com/groups/23360.json|
+
+*Curl Examples:*
+
+<pre><code>curl -u "user:password" -X POST -i -d "group[name]=example_group" http://geocommons.com/groups.json</code></pre>
+
+h2. *Add User to Group*
+
+*Authentication:*
+
+Basic authentication is required for both GeoCommons and GeoIQ appliances.  The account being used must also be an administrator.
+
+*Required Parameters:*
+
+|_. Parameter |_. Description|_. Example |
+|"username"|user to be added to the group|kate|
+
+*Optional Parameters:* (none)
+
+*Curl Examples:*
+
+<pre><code>curl -i -u "user:password" -d "kate" -X  POST http://geocommons.com/groups/23150/users.json</code></pre>
+
+h2. *List Group Users*
+
+*Authentication:*
+
+Basic authentication is required for both GeoCommons and GeoIQ appliances.  The account being used must also be an administrator.
+
+*Required Parameters:* (none)
+
+*Optional Parameters:* (none)
+
+*Curl Examples:*
+
+<pre><code>curl -u "user:password" http://geocommons.com/groups/23150/users.json</code></pre>
+
+h2. *Delete Group*
+
+*Authentication:*
+
+Basic authentication is required for both GeoCommons and GeoIQ appliances.  The account being used must also be an administrator.
+
+*Required Parameters:* (none)
+
+*Optional Parameters:* (none)
+
+*Curl Examples:*
+
+<pre><code>curl -u "user:password" -X DELETE http://geocommons.com/groups/23150.json</code></pre>
+

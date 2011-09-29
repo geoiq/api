@@ -1,0 +1,364 @@
+<html>
+  <head>
+    <meta content='text/html;charset=UTF-8' http-equiv='Content-Type'>
+    <title>GeoIQ &mdash; Filter API</title>
+    <style type='text/css'>
+      @import '/css/default.css';
+      @import '/css/syntax.css';
+    </style>
+    <style media='print' type='text/css'>
+      @import '/css/print.css';
+    </style>
+    <meta content='GeoIQ API' name='subject'>
+    <link href='/images/favicon.png' rel='shortcut icon'>
+  </head>
+  <body>
+    <div id='wrap'>
+      <div id='header'>
+        <a href='http://fortiusone.github.com/api' title="GeoIQ API"></a>
+        <div class='tagline'>GeoIQ API</div>
+      </div>
+      <div id='pages'>
+        <ol class='toc'>
+          <li>Start Here
+            <ol class="toc">
+              <li><a href='/index.html'>Welcome</a></li>
+              <li><a href='/tutorial.html'>Quick Start</a></li>
+              <li><a href='https://github.com/fortiusone/api/wiki'>Community Wiki</a></li>
+            </ol>
+          </li>
+          <li>REST API
+            <ol class="toc">
+              <li><a href='/methods.html'>Methods</a></li>
+              <li><a href="/analysis.html">Analysis</a></li>
+              <li><a href="/chart.html">Chart</a></li>
+              <li><a href="/configurations.html">Configurations</a></li>
+              <li><a href="/filter.html">Filter</a></li>
+              <li><a href="/groups.html">Groups</a></li>
+              <li><a href="/features/index.html">Data Features</a>
+                <ol class="toc">
+                  <li><a href="/features/features_create.html">Create</a></li>
+                  <li><a href="/features/features_retrieve.html">Read</a></li>
+                  <li><a href="/features/features_delete.html">Delete</a></li>
+                </ol></li>
+            </ol>
+          </li>
+          <li>JavaScript API
+            <ol class="toc">
+              <li><a href="/javascript.html">Javascript</a>
+              <li><a href="/javascript/methods.html">Javascript Methods</a>
+            </ol>
+          </li>          
+          <li>Examples
+            <ol class="toc">
+              <li><a href='/examples/dashboard.html'>Dashboard Example</a></li>
+              <li><a href='/examples/map.html'>Map Example</a></li>
+              <li><a href='/examples/map_drawing.html'>Map Drawing Example</a></li>
+              <li><a href='/examples/editing_features.html'>Editing Features Example</a></li>
+              <li><a href='/examples/map_search'>Map Search Example</a></li>
+              <li><a href='http://getsatisfaction.com/geocommons'>Troubleshooting</a></li>
+            </ol>
+          </li>
+        </ol>
+      </div>
+      <div id='content'>
+        <h1 id='filter api'>Filter API</h1>
+        <h2>Feature Search and Paging</h2>
+<p>Get a list of Features for a dataset</p>
+<p><em><strong><span class="caps">API</span> <span class="caps">URL</span></strong></em><br />
+ /datasets/:id/features.:format</p>
+<p><em><strong><span class="caps">HTTP</span> Method</strong></em><br />
+  <span class="caps">GET</span></p>
+<p><em><strong>Formats</strong></em><br />
+  json</p>
+<p><em><strong>Parameters</strong></em></p>
+<ul>
+	<li>limit &#8211; (optional) number of features to return (default 30)</li>
+	<li>order &#8211; (optional) &#8216;ascending&#8217; or &#8216;descending&#8217; of the sort attribute (default ascending)</li>
+	<li>sort &#8211; (optional) attribute name to sort by (default primary key of dataset from creation )</li>
+	<li>start &#8211; (optional) index to start with. 1 would be the first.</li>
+	<li><em>json</em> callback &#8211; (optional) callback method to wrap the response in</li>
+	<li>bbox &#8211; (optional) <span class="caps">WSEN</span> bounding box to get the features contained within the box</li>
+	<li>lon, lat, radius &#8211; (optional) &#8211; lat, lon of a point and radius distance in kilometers from that point to get the features contained within it.</li>
+	<li>points, radius &#8211; (optional) several lon,lat i.e. points=-82.833,35.538,-82.253,35.502,-77.014,34.829 that will be buffered to the given radius (in kms) and fe</li>
+	<li>polygon &#8211; (optional) like bbox, gets features within a custom bounding box, in lon lat pairs</li>
+	<li>line, radius &#8211; (optional) gets features within the buffer defined by the radius in kms, and the line in lon lat pairs
+	<ul>
+		<li><span class="caps">NOTE</span> for radius parameters, units are in kilometers, but units change according to latitude. We use 111km = 1 degree. If no radius is given, it defaults to 10</li>
+	</ul></li>
+	<li>with_columns &#8211; (optional) used in the overlay review views upon first uploading an overlay</li>
+	<li>aggregate &#8211; (optional)</li>
+</ul>
+<p><em><strong>Respone</strong></em><br />
+  200 OK<br />
+  <span class="caps">JSON</span> hash { features: [ &#8230; array of features &#8230; ], page: PageNumber, total: AvailableFeatures, start: StartIndex}</p>
+<p><em><strong>Error</strong></em> <br />
+  Server Error, 500·</p>
+<h2>Dataset Filters</h2>
+<p>Datasets can be filtered when requested from the server. This is done by calling the <code>dataset/:id/features/</code> with the optional <code>filter=</code> paramter. The filter parameter can include a filter for any attribute name, and an array of filter conditions. Filter names must be <span class="caps">URI</span> encoded.</p>
+<p><em><strong>Example</strong></em></p>
+<p>To find all features with &#8220;financing amt&#8221; between 100 and 120:</p>
+/dataset/21/features?filter[financing_amt][][min]=100&amp;filter[financing_amt][][max]=120&amp;
+<p>Possible operators include:</p>
+<ul>
+	<li>min</li>
+	<li>max</li>
+	<li>equals</li>
+</ul>
+<h2>Visualization Filters</h2>
+<h2>Basics</h2>
+<p>Filtering a dataset uses an mathematic syntax, using operators and operators.</p>
+<p>Syntax:<br />
+<pre><br />
+{ filters: [ { expression: &#8220;$[attribute] operator value&#8221; } ] }<br />
+</pre></p>
+<p>The operators you may use to evaluate expressions are:<br />
+&lt;, &gt;, ==, &lt;=, &gt;=</p>
+<p>Logical operators:<br />
+<span class="caps">AND</span>, OR</p>
+<p>Grouping operators:<br />
+(, )</p>
+<p>For example:<br />
+I want all the starbucks that sell (inclusively) between 10,000 and 50,000 cups yearly, where the median income is below $50,000, is franchised:<br />
+<pre><br />
+{ filters: [ { expression: &#8220;$[sales] &gt;= 10000 <span class="caps">AND</span> $[sales] &lt;= 50000 <span class="caps">AND</span> $[income] &lt; 50000 <span class="caps">AND</span> $[franchised] == true&#8221; } ] }<br />
+</pre></p>
+<p>Example with parentheses and OR operators:<br />
+<pre><br />
+{ filters: [ { expression: &#8220;($[sales] &lt;= 10000 OR $[sales] &gt; 50000) <span class="caps">AND</span> ($[income] &lt; 50000 <span class="caps">AND</span> $[franchised] == &#8216;true&#8217;) <span class="caps">AND</span> $[business] == &#8216;starbucks&#8217;&#8221; } ] }<br />
+</pre></p>
+<p>Multiple filters will all be run independently, so inherently executed with an <span class="caps">AND</span> logical operator.</p>
+<h2>Javascript <span class="caps">API</span></h2>
+<p>You may use the following methods to add, remove, list, and clear filters.<br />
+In the following examples, overlayId can be either the GeoIQ overlay ID, or the 0-based layer index on the map. (For example, the first layer in a map would be id 0)</p>
+<p><strong>addFilter(overlayId, filter)</strong> &#8211; Adds a filter to the filters list on an overlay<br />
+<pre>F1.Maker.current_map.addFilter(0, { expression: &#8220;$[sales] &gt; 1000&#8221; });</pre></p>
+<p><strong>removeFilter(overlayId, filter)</strong> &#8211; Removes a filter from the filters list on an overlay<br />
+<pre>F1.Maker.current_map.removeFilter(0, { expression: &#8220;$[sales] &gt; 1000&#8221; });</pre></p>
+<p><strong>getFilters(overlayId)</strong> &#8211; List all filters for an overlay<br />
+<pre>F1.Maker.current_map.getFilters(0);</pre></p>
+<p><strong>clearFilters(overlayId)</strong> &#8211; Remove all custom filters from an overlay<br />
+<pre>F1.Maker.current_map.clearFilters(0);</pre></p>
+<h2>Creating a Filtered Map</h2>
+<p>To create a map with filters on an overlay, or add an overlay with filters to a map, follow the instructions on the [[Visualization_API]], but add the &#8216;filters&#8217; section for each overlay on which you would like a filter, like so:</p>
+<pre>
+{   
+	"title": "State Population",
+	"tags": ["demographics","US"],
+	"description": "A map showing the US state population in 2005.",
+	"layers": [{
+		"source": "finder:968",
+		"visible": true,
+		"opacity": 1.0,
+		"title": "Population by State",
+		"subtitle": "2005",
+		"filters": [ { expression: "$[population] &lt; 5000000 or $[population] &gt; 10000000" } ],
+		"styles": {
+			"type": "GRADUATED",
+			"icon": {
+				"opacity": 0.75,
+				"size": 1,
+				"symbol": "propCircle",
+				"classificationType": "St Dev",
+				"selectedAttribute": "pop 2005",
+				"categories": 5,
+				"color": "0x74479a" 
+			}
+		}
+	}],
+	"extent": "-163.370225180872,13.3953456046146,-52.1006976720957,61.8070605914375",
+	"basemap": "OpenStreetMap (Road)" 
+}
+</pre>
+<h3>addLayerCategoryFilter()</h3>
+<p>Sets layer categorical icons based on the string value of an attribute. This is useful for setting the icons of a the features in a dataset based on categories such as land use or business type.</p>
+<p><em><strong>Method</strong></em><br />
+addLayerCategoryFilter(layerID, categoryDefinition)</p>
+<p><em><strong>Scope</strong></em><br />
+ F1.Maker.Map</p>
+<p><em><strong>Arguments</strong></em></p>
+<ul>
+	<li><strong>layerID</strong> (<em>required_) Layer index (_integer</em>)</li>
+	<li><strong>categoryDefinition</strong> (<em>required</em>) a hash of definiing the attribute and categories
+	<ul>
+		<li><strong>attribute</strong> (<em>required</em>) the string name of the attribute to them based on category</li>
+		<li><strong>categories</strong> (<em>required_) a hash of Category (<em>string_) with Icon <span class="caps">URL</span> (</em>string</em>)</li>
+	</ul></li>
+</ul>
+<p><em><strong>Example</strong></em></p>
+<pre><code class="javascript">mymap.addLayerCategoryFilter(0,{attribute:"Operation Sector",categories:{"Health":"image1.jpg","Water and Infrastructure:"image2.jpg"}})</code></pre>
+<h3>addLayerInfoWindowFilter()</h3>
+<p>Defines InfoWindow content. Sets content filters based on layer attributes.</p>
+<p><em><strong>Method</strong></em><br />
+addLayerInfoWindowFilter(layerID, filterDefinition)</p>
+<p><em><strong>Scope</strong></em><br />
+ F1.Maker.Map</p>
+<p><em><strong>Arguments</strong></em></p>
+<ul>
+	<li><strong>layerID</strong> (<em>required_) Layer index (_integer</em>)</li>
+	<li><strong>filterDefinition</strong> (<em>required</em>) a hash of defining info window parameters
+	<ul>
+		<li><strong>title</strong> (<em>optional</em>) a string defining info window title. Use $[attribute] to pass attribute value</li>
+		<li><strong>subtitle</strong> (<em>optional</em>) a string defining info window sub itle. Use $[attribute] to pass attribute value</li>
+		<li><strong>tabs</strong> (<em>optional</em>) a hash defining tabs &#8211; title, content.
+		<ul>
+			<li><strong>title</strong> (<em>required</em>) string, tab title. Use $[attribute] to pass attribute value.</li>
+			<li><strong>value</strong> (<em>required</em>) string, tab content. Use $[attribute] to pass attribute value. When populating a table simple pass attribute names $[attribute1]$[attribute2]$[attribute3] etc.</li>
+			<li><strong>type</strong> (<em>required</em>) string, tab type. Available types &#8211; text, table.</li>
+		</ul></li>
+	</ul></li>
+</ul>
+<p><em><strong>Example</strong></em></p>
+<pre><code class="javascript">mymap.addLayerInfoWindowFilter('0',{title:"Title is $[attribute]", subtitle:"Subtitle string", tabs:[{title:"Text tab", type:"text", value:"Hello world $[attribute]"},{title:"Table tab", value:"$[attribute]", type:"table"}]})</code></pre>
+        <h2>Feature Search and Paging</h2>
+<p>Get a list of Features for a dataset</p>
+<p><em><strong><span class="caps">API</span> <span class="caps">URL</span></strong></em><br />
+ /datasets/:id/features.:format</p>
+<p><em><strong><span class="caps">HTTP</span> Method</strong></em><br />
+  <span class="caps">GET</span></p>
+<p><em><strong>Formats</strong></em><br />
+  json</p>
+<p><em><strong>Parameters</strong></em></p>
+<ul>
+	<li>limit &#8211; (optional) number of features to return (default 30)</li>
+	<li>order &#8211; (optional) &#8216;ascending&#8217; or &#8216;descending&#8217; of the sort attribute (default ascending)</li>
+	<li>sort &#8211; (optional) attribute name to sort by (default primary key of dataset from creation )</li>
+	<li>start &#8211; (optional) index to start with. 1 would be the first.</li>
+	<li><em>json</em> callback &#8211; (optional) callback method to wrap the response in</li>
+	<li>bbox &#8211; (optional) <span class="caps">WSEN</span> bounding box to get the features contained within the box</li>
+	<li>lon, lat, radius &#8211; (optional) &#8211; lat, lon of a point and radius distance in kilometers from that point to get the features contained within it.</li>
+	<li>points, radius &#8211; (optional) several lon,lat i.e. points=-82.833,35.538,-82.253,35.502,-77.014,34.829 that will be buffered to the given radius (in kms) and fe</li>
+	<li>polygon &#8211; (optional) like bbox, gets features within a custom bounding box, in lon lat pairs</li>
+	<li>line, radius &#8211; (optional) gets features within the buffer defined by the radius in kms, and the line in lon lat pairs
+	<ul>
+		<li><span class="caps">NOTE</span> for radius parameters, units are in kilometers, but units change according to latitude. We use 111km = 1 degree. If no radius is given, it defaults to 10</li>
+	</ul></li>
+	<li>with_columns &#8211; (optional) used in the overlay review views upon first uploading an overlay</li>
+	<li>aggregate &#8211; (optional)</li>
+</ul>
+<p><em><strong>Respone</strong></em><br />
+  200 OK<br />
+  <span class="caps">JSON</span> hash { features: [ &#8230; array of features &#8230; ], page: PageNumber, total: AvailableFeatures, start: StartIndex}</p>
+<p><em><strong>Error</strong></em> <br />
+  Server Error, 500·</p>
+<h2>Dataset Filters</h2>
+<p>Datasets can be filtered when requested from the server. This is done by calling the <code>dataset/:id/features/</code> with the optional <code>filter=</code> paramter. The filter parameter can include a filter for any attribute name, and an array of filter conditions. Filter names must be <span class="caps">URI</span> encoded.</p>
+<p><em><strong>Example</strong></em></p>
+<p>To find all features with &#8220;financing amt&#8221; between 100 and 120:</p>
+/dataset/21/features?filter[financing_amt][][min]=100&amp;filter[financing_amt][][max]=120&amp;
+<p>Possible operators include:</p>
+<ul>
+	<li>min</li>
+	<li>max</li>
+	<li>equals</li>
+</ul>
+<h2>Visualization Filters</h2>
+<h2>Basics</h2>
+<p>Filtering a dataset uses an mathematic syntax, using operators and operators.</p>
+<p>Syntax:<br />
+<pre><br />
+{ filters: [ { expression: &#8220;$[attribute] operator value&#8221; } ] }<br />
+</pre></p>
+<p>The operators you may use to evaluate expressions are:<br />
+&lt;, &gt;, ==, &lt;=, &gt;=</p>
+<p>Logical operators:<br />
+<span class="caps">AND</span>, OR</p>
+<p>Grouping operators:<br />
+(, )</p>
+<p>For example:<br />
+I want all the starbucks that sell (inclusively) between 10,000 and 50,000 cups yearly, where the median income is below $50,000, is franchised:<br />
+<pre><br />
+{ filters: [ { expression: &#8220;$[sales] &gt;= 10000 <span class="caps">AND</span> $[sales] &lt;= 50000 <span class="caps">AND</span> $[income] &lt; 50000 <span class="caps">AND</span> $[franchised] == true&#8221; } ] }<br />
+</pre></p>
+<p>Example with parentheses and OR operators:<br />
+<pre><br />
+{ filters: [ { expression: &#8220;($[sales] &lt;= 10000 OR $[sales] &gt; 50000) <span class="caps">AND</span> ($[income] &lt; 50000 <span class="caps">AND</span> $[franchised] == &#8216;true&#8217;) <span class="caps">AND</span> $[business] == &#8216;starbucks&#8217;&#8221; } ] }<br />
+</pre></p>
+<p>Multiple filters will all be run independently, so inherently executed with an <span class="caps">AND</span> logical operator.</p>
+<h2>Javascript <span class="caps">API</span></h2>
+<p>You may use the following methods to add, remove, list, and clear filters.<br />
+In the following examples, overlayId can be either the GeoIQ overlay ID, or the 0-based layer index on the map. (For example, the first layer in a map would be id 0)</p>
+<p><strong>addFilter(overlayId, filter)</strong> &#8211; Adds a filter to the filters list on an overlay<br />
+<pre>F1.Maker.current_map.addFilter(0, { expression: &#8220;$[sales] &gt; 1000&#8221; });</pre></p>
+<p><strong>removeFilter(overlayId, filter)</strong> &#8211; Removes a filter from the filters list on an overlay<br />
+<pre>F1.Maker.current_map.removeFilter(0, { expression: &#8220;$[sales] &gt; 1000&#8221; });</pre></p>
+<p><strong>getFilters(overlayId)</strong> &#8211; List all filters for an overlay<br />
+<pre>F1.Maker.current_map.getFilters(0);</pre></p>
+<p><strong>clearFilters(overlayId)</strong> &#8211; Remove all custom filters from an overlay<br />
+<pre>F1.Maker.current_map.clearFilters(0);</pre></p>
+<h2>Creating a Filtered Map</h2>
+<p>To create a map with filters on an overlay, or add an overlay with filters to a map, follow the instructions on the [[Visualization_API]], but add the &#8216;filters&#8217; section for each overlay on which you would like a filter, like so:</p>
+<pre>
+{   
+	"title": "State Population",
+	"tags": ["demographics","US"],
+	"description": "A map showing the US state population in 2005.",
+	"layers": [{
+		"source": "finder:968",
+		"visible": true,
+		"opacity": 1.0,
+		"title": "Population by State",
+		"subtitle": "2005",
+		"filters": [ { expression: "$[population] &lt; 5000000 or $[population] &gt; 10000000" } ],
+		"styles": {
+			"type": "GRADUATED",
+			"icon": {
+				"opacity": 0.75,
+				"size": 1,
+				"symbol": "propCircle",
+				"classificationType": "St Dev",
+				"selectedAttribute": "pop 2005",
+				"categories": 5,
+				"color": "0x74479a" 
+			}
+		}
+	}],
+	"extent": "-163.370225180872,13.3953456046146,-52.1006976720957,61.8070605914375",
+	"basemap": "OpenStreetMap (Road)" 
+}
+</pre>
+<h3>addLayerCategoryFilter()</h3>
+<p>Sets layer categorical icons based on the string value of an attribute. This is useful for setting the icons of a the features in a dataset based on categories such as land use or business type.</p>
+<p><em><strong>Method</strong></em><br />
+addLayerCategoryFilter(layerID, categoryDefinition)</p>
+<p><em><strong>Scope</strong></em><br />
+ F1.Maker.Map</p>
+<p><em><strong>Arguments</strong></em></p>
+<ul>
+	<li><strong>layerID</strong> (<em>required_) Layer index (_integer</em>)</li>
+	<li><strong>categoryDefinition</strong> (<em>required</em>) a hash of definiing the attribute and categories
+	<ul>
+		<li><strong>attribute</strong> (<em>required</em>) the string name of the attribute to them based on category</li>
+		<li><strong>categories</strong> (<em>required_) a hash of Category (<em>string_) with Icon <span class="caps">URL</span> (</em>string</em>)</li>
+	</ul></li>
+</ul>
+<p><em><strong>Example</strong></em></p>
+<pre><code class="javascript">mymap.addLayerCategoryFilter(0,{attribute:"Operation Sector",categories:{"Health":"image1.jpg","Water and Infrastructure:"image2.jpg"}})</code></pre>
+<h3>addLayerInfoWindowFilter()</h3>
+<p>Defines InfoWindow content. Sets content filters based on layer attributes.</p>
+<p><em><strong>Method</strong></em><br />
+addLayerInfoWindowFilter(layerID, filterDefinition)</p>
+<p><em><strong>Scope</strong></em><br />
+ F1.Maker.Map</p>
+<p><em><strong>Arguments</strong></em></p>
+<ul>
+	<li><strong>layerID</strong> (<em>required_) Layer index (_integer</em>)</li>
+	<li><strong>filterDefinition</strong> (<em>required</em>) a hash of defining info window parameters
+	<ul>
+		<li><strong>title</strong> (<em>optional</em>) a string defining info window title. Use $[attribute] to pass attribute value</li>
+		<li><strong>subtitle</strong> (<em>optional</em>) a string defining info window sub itle. Use $[attribute] to pass attribute value</li>
+		<li><strong>tabs</strong> (<em>optional</em>) a hash defining tabs &#8211; title, content.
+		<ul>
+			<li><strong>title</strong> (<em>required</em>) string, tab title. Use $[attribute] to pass attribute value.</li>
+			<li><strong>value</strong> (<em>required</em>) string, tab content. Use $[attribute] to pass attribute value. When populating a table simple pass attribute names $[attribute1]$[attribute2]$[attribute3] etc.</li>
+			<li><strong>type</strong> (<em>required</em>) string, tab type. Available types &#8211; text, table.</li>
+		</ul></li>
+	</ul></li>
+</ul>
+<p><em><strong>Example</strong></em></p>
+<pre><code class="javascript">mymap.addLayerInfoWindowFilter('0',{title:"Title is $[attribute]", subtitle:"Subtitle string", tabs:[{title:"Text tab", type:"text", value:"Hello world $[attribute]"},{title:"Table tab", value:"$[attribute]", type:"table"}]})</code></pre>
+      </div>
+      <div id='footer'>Copyright &copy; 2008-2011 GeoIQ</div>
+    </div>
+  </body>
+</html>

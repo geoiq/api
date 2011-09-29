@@ -1,0 +1,26 @@
+---
+layout: default
+title: Features API
+---
+
+Developers can get dataset features, add new features and delete existing features. In the future there will be support for accessing and editing individual features.
+
+*Endpoint:* http://geocommons.com/datasets/:id/features.{format}
+
+*Description:* The features API allows you to retrieve all or a portion of features in a given dataset, create new features, or delete existing features.
+
+*HTTP Methods Available:* GET, POST, DELETE
+
+*URL Summary:* 
+
+|_. Task |_. URL |_. Formats |_. HTTP METHOD |
+|Retrieve Filtered Features|http://geocommons.com/datasets/{id}/features.{format}|json|GET|
+|Create Features|http://geocommons.com/datasets/{id}/features.{format}|json|POST|
+|Delete Features|http://geocommons.com/datasets/{id}/features.{format}?ids={feature_ids}|json|DELETE|
+
+*Authentication:* 
+
+Depends on permissions. "Download" required for reading filtered features, and "Edit" required for Creating or Deleting features.
+
+
+

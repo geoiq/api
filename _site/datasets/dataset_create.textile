@@ -1,0 +1,156 @@
+h2. *Create Dataset*
+
+Creates a new dataset. 
+
+h3. *End point*
+
+<pre>POST http://geocommons.com/datasets/:id.json</pre>
+
+
+h3. *Authentication:*
+
+Authentication is required
+
+h3. *Create Dataset by Upload*
+
+*Required Parameters Upload:* (none)
+
+|_. Parameter |_. Description|_. Example |
+|dataset[shp]|Name of your file(s) you are uploading|dataset[shp]=@elect_precincts.shp;|
+
+_shp files require shp/shx/dbf files_
+
+*Optional Parameters* (json only):
+
+|_. Parameter |_. Description|_. Example |
+|title|name of dataset|Unemployment in the USA 2010|
+|description|description of what the dataset is|This dataset shows the increase in unemployment in the USA between 2009-2010|
+|author|who created the dataset|Bureau of Labor Statistics|
+|tags|words that describe the dataset and relate it to others|unemployment,labor,workforce|
+|metadata_url|link to url containing metadata|http://www.example.com|
+|citation_url|link to the organization the data is from|http://www.exampleorg.com|
+|contact_name|person to contact about the data|John Doe|
+|contact_address|address of the organization the data is from|123 Main Street, Somewhere VA|
+|contact_phone|phone number of organization creating the data|555-555-5555|
+|process_notes|additional notes about how you created the dataset|Ran data through Google Refine to remove duplicates before uploading|
+|column_types|data type to use for columns|{ name: 'string', zip: 'postal_code' }|
+|geocode_country|Country hint if geocoding|Argentina|
+
+*Specifying Column Types*
+The column_types parameter can be used to specify the data type for the attributes. It can also specify how to generate geometries for a given feature. It consists of a hash of column names and data types, where the data type value can be one of:
+
+* simple data types - 'integer', 'string', 'decimal', 'datetime'
+* geocoding field - 'street', 'city', 'state', 'postal code', 'region', 'country', 'address'
+* geometry  'latitude', 'longitude', 'ewkt', 'geometry' (hex WKB)
+* Geojoin - a string of the form id/column_name, where id is the id of another dataset, and column_name is a name of a column in that dataset
+
+For example, to geocode based on a column named "zip2", you could specify 
+<pre>column_types: { "zip2": "postal_code" }</pre>
+
+Or, to use the district geometries in a previously uploaded districts dataset that has an "id" column that uniquely identified those districts: 
+<pre>column_types:  { "district": "1234/id" }</pre>
+
+*Returns:*
+
+|_. Type |_. Description |_. Example |
+|Location|returns the URI of the file requested|http://geocommons.com/overlays/7294.json|
+
+Note that it possible that for a large dataset, the upload operation may actually be executed asynchronously. Before you can do anything with your data, you need to ensure that it has completed uploading successfully. You can do a GET to download a JSON copy of your dataset, then check the "state" attribute, which will have one of the following values:
+
+* processing - the system is still processing your dataset
+* errored - an error occurred
+* complete - the dataset is ready to use
+* parsed, geocoded, verified, etc - the dataset requires additional information to complete processing
+
+*Curl Examples:*
+
+_Upload a shapefile using multi-part form content:_
+<pre><code>curl -i -X POST -u "username:password" -F "dataset[dbf]=@sample_file.dbf;" -F "dataset[shp]=@sample_file.shp" -F "dataset[shx]=@sample_file.shx;" http://geocommons.com/datasets.json</code></pre>
+
+_Upload a CSV file using csv content type:_
+<pre><code>curl -i -X POST -u "username:password" --data-binary @sample.csv -H "Content-Type: text/csv" http://geocommons.com/datasets.json</code></pre>
+
+_Upload a CSV file using multi-part form content, geojoining to existing US states dataset (160361):_
+<pre><code>curl -i -X POST -u "username:password" -F "dataset[csv]=@sample.csv" -d "column_types[state]=160361/State Abbreviation" http://geocommons.com/datasets.json</code></pre>
+
+h3. *Create Dataset from URL*
+
+You can create a new dataset from a CSV, KML, or RSS/Atom resource. You can additionally register WMS services and Google/OpenStreetMap Tile services.
+
+*Required Parameters Upload:*
+
+|_. Parameter |_. Description|_. Example |
+|url|url linking to the data feed|http://api.flickr.com/services/feeds/geo/?tags=glitter&lang=en-us&format=kml_nl|
+
+h4. URL formats for WMS and Tiles
+
+The format for WMS servers should ideally be as a GetCapabilities URL. This is not required, however.
+<pre>http://example.com/wms?version=1.1.0&request=getCapabilities&service=wms</pre>
+
+The format for a Google/OpenStreetMap style spherical mercator tile service should be like the following. (remember to include the curly brackets)
+<pre> http://example.com/prettymap/{Z}/{X}/{Y}.png</pre>
+<pre> http://example.com/tiles?x={X}&y={Y}&z={Z}</pre>
+
+For reverse Y axis Tiles (TMS) tiles, replace the {Y} with {-Y} like so:
+<pre> http://example.com/prettymap/{Z}/{X}/{-Y}.png</pre>
+
+
+*Optional Parameters*:
+
+|_. Parameter |_. Description|_. Example |
+|type|type of file being uploaded|csv,kml,rss,wms,tile|
+|title|name of dataset|Unemployment in the USA 2010|
+|description|description of what the dataset is|This dataset shows the increase in unemployment in the USA between 2009-2010|
+|author|who created the dataset|Bureau of Labor Statistics|
+|tags|words that describe the dataset and relate it to others|unemployment,labor,workforce|
+|metadata_url|link to url containing metadata|http://www.example.com|
+|citation_url|link to the organization the data is from|http://www.exampleorg.com|
+|contact_name|person to contact about the data|John Doe|
+|contact_address|address of the organization the data is from|123 Main Street, Somewhere VA|
+|contact_phone|phone number of organization creating the data|555-555-5555|
+|process_notes|additional notes about how you created the dataset|Ran data through Google Refine to remove duplicates before uploading|
+
+
+*Returns:*
+
+|_. Type |_. Description |_. Example |
+|Location|returns the URI of the file requested|http://geocommons.com/overlays/7294.json|
+
+*Curl Examples:*
+
+_Register a kml feed:_
+<pre><code>curl -i -X POST -u "user:password" -d "url=http://api.flickr.com/services/feedsgeo/?tags=glitter&lang=en-us&format=kml_nl" http://geocommons.com/datasets.xml
+</code></pre>
+
+_Register a WMS service:_
+<pre><code>curl -i -X POST -u "user:password" -d "url=http://mapwarper.net/maps/wms/1" -d "url_type=wms" http://geocommons.com/datasets.json
+</code></pre>
+
+h3. Create an empty dataset with JSON
+
+*Curl Examples:*
+
+You can either pass in the json directly, or load it in from a file
+
+@create.json
+<pre>{
+  "title": "Plotting our houses",
+  "description": "no description here",
+  "attributes": [
+    { "name": "Address", "type": "street" },
+    { "name": "House Price", "description": "The value of the house", "type": "decimal" }
+  ]
+}</pre>
+
+<pre><code>
+curl -i -g -H "Content-Type: application/json" -u "user:password"
+--data-binary '{ "title": "Plotting our houses","description": "no description here", "attributes": [ { "name": "Address", "type": "street" }, { "name": "House Price", "description": "The value of the house", "type": "decimal" }  ] }'
+-X POST "http://geocommons.com/datasets.json"
+
+curl -i -g -H "Content-Type: application/json" -u "user:password" --data-binary @create.json -X POST "http://geocommons.com/datasets.json"
+</code></pre>
+
+
+h3. Errors
+
+HTTP Error 401 Unauthorized - If the user does not have permission to create new

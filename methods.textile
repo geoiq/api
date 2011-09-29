@@ -1,0 +1,71 @@
+---
+layout: default
+title: REST Methods
+---
+
+
+h1. Dataset API
+
+Datasets are how data is stored and accessible. They can be uploaded, registered, edited, modified and queried.
+
+|. Method |. Description |
+| POST /datasets |  |
+| GET /datasets/:id |  |
+| PUT /datasets/:id |  |
+| DELETE /datasets/:id |  |
+| GET /datasets/:id/fetch |  |
+| GET /datasets/:id/features |  |
+| POST /datasets/:id/features |  |
+| DELETE /datasets/:id/features |  |
+
+h1. Map API
+
+Maps are the primary visualization and include layers of datasets with styling. 
+
+|. Method |. Description |
+| POST /maps |  |
+| GET /maps/:id |  |
+| PUT /maps/:id |  |
+| DELETE /maps/:id |  |
+| POST /maps/:id/layers |  |
+
+h1. Analysis API 
+
+h1. Configuration API 
+
+|. Method |. Description |
+| GET /configurations.json | The current GeoIQ server version and information |
+
+h1. Search API
+
+Find relevant datasets, maps or analyses.
+
+|. Method |. Description |
+| GET /search |  |
+
+h1. User API
+
+Manage users.
+
+|. Method |. Description |
+| POST /users |  |
+| GET /users/:id |  |
+| PUT /users/:id |  |
+| DELETE /users/:id |  |
+| GET /users/:id/maps |  |
+| GET /users/:id/datasets |  |
+| GET /users/:id/groups |  |
+
+h1. Groups API
+
+Users can belong to one or many groups. Groups are useful for sharing data and maps privately or providing edit capabilities for collaboration. 
+
+|. Method |. Description |
+| POST /groups |  |
+| GET /groups/:id |  |
+| PUT /groups/:id |  |
+| DELETE /groups/:id |  |
+| POST /groups/:id/users |  |
+| GET /groups/:id/users |  |
+| GET /groups/:id/maps |  |
+| GET /groups/:id/datasets |  |
