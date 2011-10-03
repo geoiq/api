@@ -1,0 +1,26 @@
+---
+layout: default
+title: Create Group
+---
+
+*Endpoint:*
+
+<pre>POST /groups.json</pre>
+
+*Authentication:*
+
+Basic authentication is required for both GeoCommons and GeoIQ appliances.  The account being used must also be an administrator.
+
+*Required Parameters:*
+
+|_. Parameter |_. Description|_. Example |
+|group[name]|the name of the group|group[name]=thegroup|
+
+*Optional Parameters:* (none)
+
+|_. Type |_. Description |_. Example |
+|Location|returns the URI of the file requested|http://geocommons.com/groups/23360.json|
+
+*Curl Examples:*
+
+<pre><code>curl -u "user:password" -X POST -i -d "group[name]=example_group" http://geocommons.com/groups.json</code></pre>

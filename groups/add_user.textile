@@ -1,0 +1,23 @@
+---
+layout: default
+title: Add User to a Group
+---
+
+*Endpoint:*
+
+<pre>POST /groups/:id/users.json</pre>
+
+*Authentication:*
+
+Basic authentication is required for both GeoCommons and GeoIQ appliances.  The account being used must also be an administrator.
+
+*Required Parameters:*
+
+|_. Parameter |_. Description|_. Example |
+|"username"|user to be added to the group|kate|
+
+*Optional Parameters:* (none)
+
+*Curl Examples:*
+
+<pre><code>curl -i -u "user:password" -d "kate" -X  POST http://geocommons.com/groups/23150/users.json</code></pre>

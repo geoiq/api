@@ -1,0 +1,20 @@
+---
+layout: default
+title: Get Group Users
+---
+
+*Endpoint:*
+
+<pre>GET /groups/:id/users.json</pre>
+
+*Authentication:*
+
+Basic authentication is required for both GeoCommons and GeoIQ appliances.  The account being used must also be an administrator.
+
+*Required Parameters:* (none)
+
+*Optional Parameters:* (none)
+
+*Curl Examples:*
+
+<pre><code>curl -u "user:password" http://geocommons.com/groups/23150/users.json</code></pre>

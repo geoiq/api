@@ -21,10 +21,14 @@ body {
   font-family: "Helvetica Neue", "DejaVu Sans", "Verdana";
   text-align: center;
   line-height: 150%;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  border-top: 10px solid #006576;
 }
 
 a:link, a:visited{
-  color: #0044b3;
+  color: #225E9B;
   text-decoration: none;
 }
 
@@ -50,7 +54,6 @@ pre {
 pre br { display: none; }
 
 h1, h2, h3 {
-  font-family: "Gill Sans";
   padding: 0;
   margin: 1.6em 0 0.6em -0.9em;
   line-height: 1.25em;
@@ -72,6 +75,7 @@ h2 {
 
 h3 {
   font-size: 1.1em;
+  border-bottom: 1px solid #DDD;  
 }
 
 blockquote {
@@ -106,7 +110,7 @@ th, td {
 
 th, thead td {
   border-bottom: none;
-  background-color: #669966;
+  background-color: #777;
   color: #ffffff;
   text-align: left;
 }
@@ -120,7 +124,7 @@ th, thead td {
 
 
 #header {
-  margin: 0 0 3em 18em;
+  margin: 0 0 3em 0em;
   position: relative;
 }
 
@@ -136,13 +140,12 @@ th, thead td {
 
 #pages { /* Parent Wrapper for inside boxes */
 /*  display: inline; */ /* IE Hack */
+  line-height: 1em;
   width: 12em;
   float: left;
   text-align: left;
   margin-right: 2em;
-  font-family: "Gill Sans";
   font-size: 11pt;
-  text-align: right;
   border-right: 1px solid #ccc;
   padding-right: 2em;
 }
@@ -152,16 +155,16 @@ th, thead td {
   margin: 0;
 }
 #pages ol li {
-  padding: 0.3em 0 0.6em 0em;
-  color: #669966;
+  padding: 0.3em 0 0.1em 0em;
+  color: #777;
   font-weight: bold; 
 }
 #pages ol li ol {
   margin-top: 0.3em;
-  padding: 0.3em 0 0.9em 0.9em;
+  padding: 0.3em 0 0.3em 0.9em;
 }
 #pages ol li ol li {
-  padding: 0.3em 0 0.3em 0em;
+  padding: 0.3em 0 0.1em 0em;
 }
 #pages ol li a  {
   font-weight: normal;
@@ -180,7 +183,7 @@ th, thead td {
 #content { /* Parent Wrapper for inside boxes */
 /*  display: inline; *//* IE Hack */
   float: right;
-  width: 44em;
+  width: 48em;
   margin-left: 0.3em;
   margin-bottom: 5em;
 }

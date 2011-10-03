@@ -1,9 +1,7 @@
 ---
 layout: default
-title: Chart API
+title: Charts API
 ---
-
-{{>toc}}
 
 This is *INTERNAL* documentation on our unofficial Chart API. This works with the current, 1.7.0 version of charts. There are potential inconsistencies between calling for Features from Finder vs. from the Flash, so for now be careful. We can smooth it out to be consistent soon.
 

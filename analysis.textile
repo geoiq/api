@@ -28,7 +28,7 @@ h2. Buffer
 *Optional Parameters:*
 
 |Parameter|Description|Example|
-|units|Distance units. Any of (km,miles,m,ft,degrees)|units=km|
+|unit|Distance units. Any of (km,miles,m,ft,degrees)|unit=km|
 
 *Returns*
 
@@ -81,7 +81,7 @@ You can aggregate an existing dataset to a set of boundaries to create a new dat
 
 |Parameter|Description|Example|
 |aggregates|array of aggregate columns to add to the result|aggregates[][name]=population&aggregates[][calc]=sum|
-|keep_empty|carry over polygons that do not intersect with the dataset being aggregated (default: false)|keep_empty=0|
+|keep&#95;empty|carry over polygons that do not intersect with the dataset being aggregated (default: false)|keep&#95;empty=0|
 
 A _count of <dataset>_ column is automatically added that has the number of features that were within that boundary.
 
@@ -100,9 +100,9 @@ You can cross correlate two datasets to a boundary dataset to create a new datas
 |Parameter|Description|Example|
 |calculation|the algorithm for the analysis|calculation=correlation|
 |ds1|ID of dependent dataset to correlate|ds1=160474|
-|atr_1|Attribute name in dependent dataset|atr_1=public|
+|atr&#95;1|Attribute name in dependent dataset|atr&#95;1=public|
 |ds2|ID of independent dataset to correlate to|ds2=160476|
-|atr_2|Attribute name in dependent dataset|atr_2=PERCENT|
+|atr&#95;2|Attribute name in dependent dataset|atr&#95;2=PERCENT|
 |ds3|Boundary dataset to aggregate to|ds3=160361|
 
 *Optional Parameters:*
@@ -126,8 +126,8 @@ You can create a new dataset with two attributes added.
 |Parameter|Description|Example|
 |calculation|the algorithm for the analysis|calculation=sum|
 |ds1|ID of dataset|ds1=160502|
-|atr_1|First attribute to add|atr1=Under5|
-|atr_2|Second attribute to add|atr2=Y5to13|
+|atr&#95;1|First attribute to add|atr&#95;1=Under5|
+|atr&#95;2|Second attribute to add|atr&#95;2=Y5to13|
 
 *Optional Parameters:*
 
@@ -149,8 +149,8 @@ You can create a new dataset with the difference between two attributes.
 |Parameter|Description|Example|
 |calculation|the algorithm for the analysis|calculation=difference|
 |ds1|ID of dataset|ds1=160506|
-|atr_1|Attribute to subtract from|atr1=Total|
-|atr_2|Attribute to subtract|atr2=sum of Under5 and Y5to13|
+|atr&#95;1|Attribute to subtract from|atr&#95;1=Total|
+|atr&#95;2|Attribute to subtract|atr&#95;2=sum of Under5 and Y5to13|
 
 *Optional Parameters:*
 
@@ -169,9 +169,9 @@ Combine features of a dataset based on a common value. Each resulting feature wi
 *Required Parameters:*
 
 |Parameter|Description|Example|
-|calculation|the algorithm for the analysis|calculation=group_by|
+|calculation|the algorithm for the analysis|calculation=group&#95;by|
 |ds1|ID of dataset|ds1=160474|
-|atr_1|Attribute to group on|atr_1=state|
+|atr&#95;1|Attribute to group on|atr&#95;1=state|
 
 *Optional Parameters:*
 
@@ -235,7 +235,7 @@ _none_
 "$[Total]-($[Under5]+$[Y5to13])"
 
 _Get a dataset with number of people in each state who are 13 or older by subtracting the number under 5 and 5-13 from the total population in ("160502":http://geocommons.com/overlays/160502):_
-<pre>curl -u "username:password" -X POST -d "calculation=expression" -d "ds1=160502" -d "expression=$[Total]-$[Under5]-$[Y5to13]"  http://geocommons.com/analysis.json
+<pre>curl &#45;u "username:password" &#45;X POST &#45;d "calculation=expression" &#45;d "ds1=160502" &#45;d "expression=$[Total]&#45;$[Under5]-$[Y5to13]"  http://geocommons.com/analysis.json
 </pre>
 
 h2. Clip
@@ -268,7 +268,7 @@ Merge polygons together that have a common attribute
 |Parameter|Description|Example|
 |calculation|the algorithm for the analysis|calculation=dissolve|
 |ds1|ID of the dataset to aggregate|ds1=160474|
-|atr_1|Attribute to dissolve on|atr_1=Subregion|
+|atr&#95;1|Attribute to dissolve on|atr&#95;1=Subregion|
 
 *Optional Parameters:*
 
@@ -281,6 +281,96 @@ A _count of <dataset>_ column is automatically added that has the number of feat
 
 _Create a dataset of US regions by dissolving on the Subregion attribute of states dataset ("160361":http://geocommons.com/overlays/160361):_
 
-<pre>curl -i -X POST -u "username:password" -d "calculation=dissolve" -d "ds2=160361" http://geocommons.com/analysis.json</pre>
+<pre>curl -i -X POST -u "username:password" -d "calculation=dissolve" -d "ds2=160361" -d "atr_1=SubRegion" http://geocommons.com/analysis.json</pre>
 
+h2. Donut Buffer
 
+Create a ring buffer around your points or lines.
+
+*Required Parameters:*
+
+|Parameter|Description|Example|
+|calculation|the algorithm for the analysis|calculation=donut&#95;buffer|
+|ds1|ID of dataset to compute buffer for|ds1=160474|
+|distance|Radius of outer ring of buffer|distance=25|
+|min&#95;distance|Distance to inner ring of buffer|min&#95;distance=5| 
+
+*Optional Parameters:*
+
+|Parameter|Description|Example|
+|unit|Distance units. Any of (km,miles,m,ft,degrees)|unit=km|
+
+*Returns*
+
+|Type|Description|Example|
+|Dataset|returns the full resulting dataset|https://gist.github.com/860926|
+
+*Curl Examples:*
+
+_Create a dataset of areas within 25 miles but at least 5 miles of an electric vehicle charging station ("160474":http://geocommons.com/overlays/160474):_
+<pre>curl -i -X POST -u "username:password" -d "distance=25" -d "min_distance=5" -d "unit=miles" -d "ds1=160474" -d "calculation=donut_buffer" http://geocommons.com/analysis.json</pre>
+
+h2. Buffer Intersection
+
+Find all of the features in one dataset that are within a perimeter from another dataset's features (Buffer + Intersection)
+
+*Required Parameters:*
+
+|Parameter|Description|Example|
+|calculation|the algorithm for the analysis|calculation=buffer&#95;intersect|
+|ds1|ID of dataset to filter|ds1=160474|
+|ds2|ID of dataset to filter by|ds2=160375|
+|distance|Radius of buffer|distance=25|
+
+*Optional Parameters:*
+
+|Parameter|Description|Example|
+|unit|Distance units. Any of (km,miles,m,ft,degrees)|unit=km|
+|min&#95;distance|Distance to inner ring of buffer|min&#95;distance=5| 
+|include&#95;distance|Include distance to second dataset as attribute; 0=false, 1=true; defaults to 1|include&#95;distance=1|
+
+*Returns*
+
+|Type|Description|Example|
+|Dataset|returns the full resulting dataset|https://gist.github.com/860926|
+
+*Curl Examples:*
+
+_Create a dataset of only those electric vehicle charging stations ("160474":http://geocommons.com/overlays/160474) that are within 50 miles of a theme park ("160375":http://geocommons.com/overlays/160375):_
+<pre>curl -i -X POST -u "username:password" -d "distance=50" -d "unit=miles" -d "ds1=160474" -d "ds2=160375" -d "include_distance=1" -d "calculation=buffer_intersect" http://geocommons.com/analysis.json</pre>
+
+h2. Union
+
+Join the data and geometries from two datasets into one. THe resulting dataset will have one of and unique geometries from either dataset. Attributes from two features with identical geometries are combined.
+
+Note: since the matching of geometries is exact, if you are using union to merge attributes, ensure that the geometries are identical. This is typically done by using datasets that were geojoined or aggregated to the some boundary geometries.
+
+*Required Parameters:*
+
+|Parameter|Description|Example|
+|calculation|the algorithm for the analysis|calculation=union|
+|ds1|ID of dataset to merge|ds1=160474|
+|ds2|ID of second dataset to merge|ds2=160375|
+|distance|Radius of buffer|distance=25|
+
+*Optional Parameters:*
+
+*Optional Parameters:*
+
+|Parameter|Description|Example|
+|merge|how to merge attributes: combine, prefer&#95;1 or prefer&#95;2; defaults to prefer&#95;1|merge=combine|
+
+*Returns*
+
+|Type|Description|Example|
+|Dataset|returns the full resulting dataset|https://gist.github.com/860926|
+
+*Curl Examples:*
+
+_Merge North Carolina ("160818":http://geocommons.com/overlays/160818) and Virginia ("160819":http://geocommons.com/overlays/160819) neighborhood boundaries into a single dataset. Since there are no boundaries in common, there should be no need to merge attributes:_
+
+<pre>curl -i -X POST -u "username:password" -d "ds1=160818" -d "ds2=160819" -d "calculation=union" http://geocommons.com/analysis.json</pre>
+ 
+_Combine attributes from Electric vehicle charching stations by state ("160822":http://geocommons.com/overlays/160822) and Photovoltaic instalations by state ("160824":http://geocommons.com/overlays/160824). Because these datasets both have the same geometry (US states), the attributes will be merged, so we specify a merge option of prefer&#95;1 - we don't really need two "State Code" attributes in our result dataset:_
+
+<pre>curl -i -X POST -u "username:password" -d "ds1=160822" -d "ds2=160824" -d "merge=prefer_1" -d "calculation=union" http://geocommons.com/analysis.json</pre>

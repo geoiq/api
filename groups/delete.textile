@@ -1,0 +1,21 @@
+---
+layout: default
+title: Delete Group
+---
+
+*Endpoint:*
+
+<pre>DELETE /groups/:id.json</pre>
+
+*Authentication:*
+
+Basic authentication is required for both GeoCommons and GeoIQ appliances.  The account being used must also be an administrator.
+
+*Required Parameters:* (none)
+
+*Optional Parameters:* (none)
+
+*Curl Examples:*
+
+<pre><code>curl -u "user:password" -X DELETE http://geocommons.com/groups/23150.json</code></pre>
+
