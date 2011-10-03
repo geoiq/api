@@ -293,7 +293,7 @@ Create a ring buffer around your points or lines.
 |calculation|the algorithm for the analysis|calculation=donut&#95;buffer|
 |ds1|ID of dataset to compute buffer for|ds1=160474|
 |distance|Radius of outer ring of buffer|distance=25|
-|min&#95;distance|Distance to inner ring of buffer|min&#95;distance=5| 
+| min&#95;distance | Distance to inner ring of buffer|min&#95;distance=5| 
 
 *Optional Parameters:*
 
@@ -326,8 +326,8 @@ Find all of the features in one dataset that are within a perimeter from another
 
 |Parameter|Description|Example|
 |unit|Distance units. Any of (km,miles,m,ft,degrees)|unit=km|
-|min&#95;distance|Distance to inner ring of buffer|min&#95;distance=5| 
-|include&#95;distance|Include distance to second dataset as attribute; 0=false, 1=true; defaults to 1|include&#95;distance=1|
+| min&#95;distance | Distance to inner ring of buffer| min&#95;distance=5 | 
+| include&#95;distance | Include distance to second dataset as attribute; 0=false, 1=true; defaults to 1| include&#95;distance=1 |
 
 *Returns*
 
