@@ -5,7 +5,7 @@ title: Analysis API
 
 GeoIQ provides a full suite of spatial and statistical analysis tools to process data. Analysis operations are performed as asynchronous jobs, so when a request is made for analysis the return will point to the placeholder for where there resulting dataset will be stored. Your applications should use the REST API to check overlay state for when it's done.
 
-*Endpoint:* http://geocommons.com/analysis.:format
+*Endpoint:* /analysis.:format
 
 *Description:* GeoCommons is making a variety of analysis modules available including aggregation.  Through the analysis API you can run operations on a dataset to create a new resulting dataset.
 
@@ -13,26 +13,26 @@ GeoIQ provides a full suite of spatial and statistical analysis tools to process
 
 *URL Summary:*
 
-|*Task*|*URL*|*Formats*|*HTTP METHOD*|
+|_. Task |_. URL |_. Formats |_. HTTP METHOD |
 |Analyze|http://geocommons.com/analysis.:format|json|POST|
 
 h2. Buffer
 
 *Required Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |calculation|the algorithm for the analysis|calculation=buffer|
 |ds1|ID of dataset to compute buffer for|ds1=160474|
 |distance|Numeric value of distance to buffer|distance=25|
 
 *Optional Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |unit|Distance units. Any of (km,miles,m,ft,degrees)|unit=km|
 
 *Returns*
 
-|Type|Description|Example|
+|_. Type |_. Description |_. Example |
 |Dataset|returns the full resulting dataset|https://gist.github.com/860926|
 
 *Curl Examples:*
@@ -46,19 +46,19 @@ Determine all the locations where one data set overlaps another data set on the 
 
 *Required Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |calculation|the algorithm for the analysis|calculation=intersect|
 |ds1|First datasets to intersect with|ds1=160475|
 |ds2|Second datasets to intersect with|ds2=160379|
 
 *Optional Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |merge|how to merge attributes: combine, prefer_1 or prefer_2; defaults to prefer_1|merge=prefer_1|
 
 *Returns*
 
-|Type|Description|Example|
+|_. Type |_. Description |_. Example |
 |Dataset|returns the full resulting dataset|https://gist.github.com/860926|
 
 *Curl Examples:*
@@ -72,14 +72,14 @@ You can aggregate an existing dataset to a set of boundaries to create a new dat
 
 *Required Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |calculation|the algorithm for the analysis|calculation=aggregation|
 |ds1|ID of the dataset to aggregate|ds1=160474|
 |ds2|ID of the boundary dataset|ds2=160361|
 
 *Optional Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |aggregates|array of aggregate columns to add to the result|aggregates[][name]=population&aggregates[][calc]=sum|
 |keep&#95;empty|carry over polygons that do not intersect with the dataset being aggregated (default: false)|keep&#95;empty=0|
 
@@ -97,7 +97,7 @@ You can cross correlate two datasets to a boundary dataset to create a new datas
 
 *Required Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |calculation|the algorithm for the analysis|calculation=correlation|
 |ds1|ID of dependent dataset to correlate|ds1=160474|
 |atr&#95;1|Attribute name in dependent dataset|atr&#95;1=public|
@@ -107,7 +107,7 @@ You can cross correlate two datasets to a boundary dataset to create a new datas
 
 *Optional Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |calculation_1|aggregate calculation for dependent dataset: one of "sum", "average", "max", or "min"; defaults to count|sum|
 |calculation_2|aggregate calculation for independent dataset: one of "sum", "average", "max", or "min"; defaults to count|sum|
 
@@ -123,7 +123,7 @@ You can create a new dataset with two attributes added.
 
 *Required Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |calculation|the algorithm for the analysis|calculation=sum|
 |ds1|ID of dataset|ds1=160502|
 |atr&#95;1|First attribute to add|atr&#95;1=Under5|
@@ -146,7 +146,7 @@ You can create a new dataset with the difference between two attributes.
 
 *Required Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |calculation|the algorithm for the analysis|calculation=difference|
 |ds1|ID of dataset|ds1=160506|
 |atr&#95;1|Attribute to subtract from|atr&#95;1=Total|
@@ -168,14 +168,14 @@ Combine features of a dataset based on a common value. Each resulting feature wi
 
 *Required Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |calculation|the algorithm for the analysis|calculation=group&#95;by|
 |ds1|ID of dataset|ds1=160474|
 |atr&#95;1|Attribute to group on|atr&#95;1=state|
 
 *Optional Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |aggregates|list of aggregate calculations|aggregates[][name]=public&aggregates[][calc]=sum|
 
 _none_
@@ -194,20 +194,20 @@ Simplify a dataset to make the features less complex
 
 *Required Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |calculation|the algorithm for the analysis|calculation=simplify|
 |ds1|ID of dataset to compute buffer for|ds1=160474|
 |tolerance|Numeric value of distance to simplify to|tolerance=25|
 
 *Optional Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |unit|Tolerance units. Any of (km,miles,m,ft,degrees); defaults to km|units=km|
 |method|method to use: Either "douglas peucker" or "preserve topology"; defaults to "douglas peucker"|method=preserve topology|
 
 *Returns*
 
-|Type|Description|Example|
+|_. Type |_. Description |_. Example |
 |Dataset|returns the full resulting dataset|https://gist.github.com/860926|
 
 *Curl Examples:*
@@ -221,7 +221,7 @@ Use your own equation to calculate a result for the attributes in a dataset
 
 *Required Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |calculation|the algorithm for the analysis|calculation=expression|
 |ds1|ID of dataset|ds1=160502|
 |expression|Expression to compute|expression=$[Total]-$[Under5]-$[Y5to13]|
@@ -244,7 +244,7 @@ Clip an input dataset based on a clipping dataset
 
 *Required Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |calculation|the algorithm for the analysis|calculation=clip|
 |ds1|ID of the dataset to clip|ds1=160474|
 |ds2|ID of the clipping dataset|ds2=160379|
@@ -265,14 +265,14 @@ Merge polygons together that have a common attribute
 
 *Required Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |calculation|the algorithm for the analysis|calculation=dissolve|
 |ds1|ID of the dataset to aggregate|ds1=160474|
 |atr&#95;1|Attribute to dissolve on|atr&#95;1=Subregion|
 
 *Optional Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |aggregates|array of aggregate columns to add to the result|aggregates[][name]=population&aggregates[][calc]=sum|
 
 A _count of <dataset>_ column is automatically added that has the number of features that were within each boundary.
@@ -289,7 +289,7 @@ Create a ring buffer around your points or lines.
 
 *Required Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |calculation|the algorithm for the analysis|calculation=donut&#95;buffer|
 |ds1|ID of dataset to compute buffer for|ds1=160474|
 |distance|Radius of outer ring of buffer|distance=25|
@@ -297,12 +297,12 @@ Create a ring buffer around your points or lines.
 
 *Optional Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |unit|Distance units. Any of (km,miles,m,ft,degrees)|unit=km|
 
 *Returns*
 
-|Type|Description|Example|
+|_. Type |_. Description |_. Example |
 |Dataset|returns the full resulting dataset|https://gist.github.com/860926|
 
 *Curl Examples:*
@@ -316,7 +316,7 @@ Find all of the features in one dataset that are within a perimeter from another
 
 *Required Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |calculation|the algorithm for the analysis|calculation=buffer&#95;intersect|
 |ds1|ID of dataset to filter|ds1=160474|
 |ds2|ID of dataset to filter by|ds2=160375|
@@ -324,14 +324,14 @@ Find all of the features in one dataset that are within a perimeter from another
 
 *Optional Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |unit|Distance units. Any of (km,miles,m,ft,degrees)|unit=km|
 | min&#95;distance | Distance to inner ring of buffer| min&#95;distance=5 |
 | include&#95;distance | Include distance to second dataset as attribute; 0=false, 1=true; defaults to 1 | include&#95;distance=1 |
 
 *Returns*
 
-|Type|Description|Example|
+|_. Type |_. Description |_. Example |
 |Dataset|returns the full resulting dataset|https://gist.github.com/860926|
 
 *Curl Examples:*
@@ -347,7 +347,7 @@ Note: since the matching of geometries is exact, if you are using union to merge
 
 *Required Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |calculation|the algorithm for the analysis|calculation=union|
 |ds1|ID of dataset to merge|ds1=160474|
 |ds2|ID of second dataset to merge|ds2=160375|
@@ -357,12 +357,12 @@ Note: since the matching of geometries is exact, if you are using union to merge
 
 *Optional Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |merge|how to merge attributes: combine, prefer&#95;1 or prefer&#95;2; defaults to prefer&#95;1|merge=combine|
 
 *Returns*
 
-|Type|Description|Example|
+|_. Type |_. Description |_. Example |
 |Dataset|returns the full resulting dataset|https://gist.github.com/860926|
 
 *Curl Examples:*

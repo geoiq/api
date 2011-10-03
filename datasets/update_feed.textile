@@ -7,7 +7,7 @@ It is possible to ping GeoIQ when new updates are available.
 
 h3. *End point*
 
-<pre>POST http://geocommons.com/datasets/:id/fetch.json</pre>
+<pre>POST /datasets/:id/fetch.json</pre>
 
 *Authentication:*
 

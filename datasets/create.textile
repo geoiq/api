@@ -7,10 +7,10 @@ Creates a new dataset.
 
 h3. *End point*
 
-<pre>POST http://geocommons.com/datasets/:id.json</pre>
+<pre>POST /datasets/:id.json</pre>
 
 
-h3. *Authentication:*
+h3. *Authentication*
 
 Authentication is required
 

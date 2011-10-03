@@ -1,4 +1,7 @@
-h1. Search API
+---
+layout: default
+title: Search API
+---
 
 *Endpoint:* http://geocommons.com/search
 
@@ -19,12 +22,12 @@ Not required for GeoCommons datasets, GeoIQ appliance datasets depends on the pe
 
 *Required Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |query|information to search on|query=unemployment|
 
 *Optional Parameters:*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |bbox|a box encompassing the area being searched the order is West/South/East/North|bbox=-79.5,20,-78,50|
 |page|which page of results to return|page=3|
 |limit|number of results to return|limit=15|
@@ -37,7 +40,7 @@ Not required for GeoCommons datasets, GeoIQ appliance datasets depends on the pe
 
 *Sort Parameters*
 
-|Parameter|Description|Example|
+|_. Parameter |_. Description |_. Example |
 |created|Date created|sort=created|
 |updated|Date last updated|sort=updated|
 |sname|Map or dataset sortable name.  Ignores capitalization|sort=sname|
@@ -48,7 +51,7 @@ _A user can search specifically within the fields by prefixing "title:", "descri
 
 *Returns:*
 
-|Type|Description|Example|
+|_. Type |_. Description |_. Example |
 |file|returns a file of the type requested|curl http://geocommons.com/search.json?query=chickens&limit=2&page=3|
 
 *Curl Examples:*

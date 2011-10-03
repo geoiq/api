@@ -7,7 +7,7 @@ Retrieves a dataset in JSON format.
 
 h3. *End point*
 
-<pre>GET http://geocommons.com/datasets/:id.json</pre>
+<pre>GET /datasets/:id.json</pre>
 
 Where :id is the id of the dataset.
 

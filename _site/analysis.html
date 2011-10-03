@@ -36,23 +36,23 @@
               <ol class="toc">
                 <li><a href="/api/datasets/create.html">Create</a></li>
                 <li><a href="/api/datasets/retrieve.html">Retrieve</a></li>
-                <li><a href="/api/datasets/delete.html">Delete</a></li>
                 <li><a href="/api/datasets/update.html">Update</a></li>
-                <li><a href="/api/datasets/update.html">Update Feed</a></li>
+                <li><a href="/api/datasets/delete.html">Delete</a></li>
+                <li><a href="/api/datasets/update_feed.html">Update Feed</a></li>
               </ol>
             </li>
-            <li><h3>Features</h3>
+            <li><h3>Dataset Features</h3>
               <ol class="toc">
-              <li><a href="/api/features/retrieve.html">Retrieve</a></li>
               <li><a href="/api/features/create.html">Create</a></li>
+              <li><a href="/api/features/retrieve.html">Retrieve</a></li>
               <li><a href="/api/features/delete.html">Delete</a></li>
               <li><a href="/api/features/aggregate.html">Aggregate</a></li>
               </ol>
             </li>
             <li><h3>Maps</h3>
               <ol class="toc">
-              <li><a href="/api/maps/download.html">Download</a></li>
               <li><a href="/api/maps/create.html">Create</a></li>
+              <li><a href="/api/maps/download.html">Download</a></li>
               <li><a href="/api/maps/update.html">Update</a></li>
               <li><a href="/api/maps/delete.html">Delete</a></li>
               <li><a href="/api/maps/addLayer.html">Add Layer</a></li>
@@ -67,9 +67,9 @@
             <li><h3>Groups</h3>
               <ol class="toc">
               <li><a href="/api/groups/create.html">Create</a></li>
-              <li><a href="/api/groups/delete.html">Delete</a></li>
               <li><a href="/api/groups/get_users.html">Add User</a></li>
               <li><a href="/api/groups/add_user.html">Get Users</a></li>
+              <li><a href="/api/groups/delete.html">Delete</a></li>
               <li><a href="/api/permissions.html">Permissions</a></li>
               </ol>
             </li>
@@ -94,16 +94,16 @@
       <div id='content'>
         <h1 id='analysis api'>Analysis API</h1>
         <p>GeoIQ provides a full suite of spatial and statistical analysis tools to process data. Analysis operations are performed as asynchronous jobs, so when a request is made for analysis the return will point to the placeholder for where there resulting dataset will be stored. Your applications should use the <span class="caps">REST</span> <span class="caps">API</span> to check overlay state for when it&#8217;s done.</p>
-<p><strong>Endpoint:</strong> http://geocommons.com/analysis.:format</p>
+<p><strong>Endpoint:</strong> /analysis.:format</p>
 <p><strong>Description:</strong> GeoCommons is making a variety of analysis modules available including aggregation.  Through the analysis <span class="caps">API</span> you can run operations on a dataset to create a new resulting dataset.</p>
 <p><strong><span class="caps">HTTP</span> Methods Available:</strong> <span class="caps">POST</span></p>
 <p><strong><span class="caps">URL</span> Summary:</strong></p>
 <table>
 	<tr>
-		<td><strong>Task</strong></td>
-		<td><strong><span class="caps">URL</span></strong></td>
-		<td><strong>Formats</strong></td>
-		<td><strong><span class="caps">HTTP</span> <span class="caps">METHOD</span></strong></td>
+		<th>Task </th>
+		<th><span class="caps">URL</span> </th>
+		<th>Formats </th>
+		<th><span class="caps">HTTP</span> <span class="caps">METHOD</span> </th>
 	</tr>
 	<tr>
 		<td>Analyze</td>
@@ -116,9 +116,9 @@
 <p><strong>Required Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>calculation</td>
@@ -139,9 +139,9 @@
 <p><strong>Optional Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>unit</td>
@@ -152,9 +152,9 @@
 <p><strong>Returns</strong></p>
 <table>
 	<tr>
-		<td>Type</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Type </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>Dataset</td>
@@ -170,9 +170,9 @@
 <p><strong>Required Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>calculation</td>
@@ -193,9 +193,9 @@
 <p><strong>Optional Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>merge</td>
@@ -206,9 +206,9 @@
 <p><strong>Returns</strong></p>
 <table>
 	<tr>
-		<td>Type</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Type </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>Dataset</td>
@@ -224,9 +224,9 @@
 <p><strong>Required Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>calculation</td>
@@ -247,9 +247,9 @@
 <p><strong>Optional Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>aggregates</td>
@@ -271,9 +271,9 @@
 <p><strong>Required Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>calculation</td>
@@ -309,9 +309,9 @@
 <p><strong>Optional Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>calculation_1</td>
@@ -333,9 +333,9 @@
 <p><strong>Required Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>calculation</td>
@@ -369,9 +369,9 @@
 <p><strong>Required Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>calculation</td>
@@ -405,9 +405,9 @@
 <p><strong>Required Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>calculation</td>
@@ -428,9 +428,9 @@
 <p><strong>Optional Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>aggregates</td>
@@ -449,9 +449,9 @@
 <p><strong>Required Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>calculation</td>
@@ -472,9 +472,9 @@
 <p><strong>Optional Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>unit</td>
@@ -490,9 +490,9 @@
 <p><strong>Returns</strong></p>
 <table>
 	<tr>
-		<td>Type</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Type </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>Dataset</td>
@@ -508,9 +508,9 @@
 <p><strong>Required Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>calculation</td>
@@ -540,9 +540,9 @@
 <p><strong>Required Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>calculation</td>
@@ -570,9 +570,9 @@
 <p><strong>Required Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>calculation</td>
@@ -593,9 +593,9 @@
 <p><strong>Optional Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>aggregates</td>
@@ -612,9 +612,9 @@
 <p><strong>Required Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>calculation</td>
@@ -639,9 +639,9 @@
 <p><strong>Optional Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>unit</td>
@@ -652,9 +652,9 @@
 <p><strong>Returns</strong></p>
 <table>
 	<tr>
-		<td>Type</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Type </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>Dataset</td>
@@ -670,9 +670,9 @@
 <p><strong>Required Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>calculation</td>
@@ -698,9 +698,9 @@
 <p><strong>Optional Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>unit</td>
@@ -721,9 +721,9 @@
 <p><strong>Returns</strong></p>
 <table>
 	<tr>
-		<td>Type</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Type </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>Dataset</td>
@@ -740,9 +740,9 @@
 <p><strong>Required Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>calculation</td>
@@ -769,9 +769,9 @@
 <p><strong>Optional Parameters:</strong></p>
 <table>
 	<tr>
-		<td>Parameter</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Parameter </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>merge</td>
@@ -782,9 +782,9 @@
 <p><strong>Returns</strong></p>
 <table>
 	<tr>
-		<td>Type</td>
-		<td>Description</td>
-		<td>Example</td>
+		<th>Type </th>
+		<th>Description </th>
+		<th>Example </th>
 	</tr>
 	<tr>
 		<td>Dataset</td>

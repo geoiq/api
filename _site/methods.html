@@ -36,23 +36,23 @@
               <ol class="toc">
                 <li><a href="/api/datasets/create.html">Create</a></li>
                 <li><a href="/api/datasets/retrieve.html">Retrieve</a></li>
-                <li><a href="/api/datasets/delete.html">Delete</a></li>
                 <li><a href="/api/datasets/update.html">Update</a></li>
-                <li><a href="/api/datasets/update.html">Update Feed</a></li>
+                <li><a href="/api/datasets/delete.html">Delete</a></li>
+                <li><a href="/api/datasets/update_feed.html">Update Feed</a></li>
               </ol>
             </li>
-            <li><h3>Features</h3>
+            <li><h3>Dataset Features</h3>
               <ol class="toc">
-              <li><a href="/api/features/retrieve.html">Retrieve</a></li>
               <li><a href="/api/features/create.html">Create</a></li>
+              <li><a href="/api/features/retrieve.html">Retrieve</a></li>
               <li><a href="/api/features/delete.html">Delete</a></li>
               <li><a href="/api/features/aggregate.html">Aggregate</a></li>
               </ol>
             </li>
             <li><h3>Maps</h3>
               <ol class="toc">
-              <li><a href="/api/maps/download.html">Download</a></li>
               <li><a href="/api/maps/create.html">Create</a></li>
+              <li><a href="/api/maps/download.html">Download</a></li>
               <li><a href="/api/maps/update.html">Update</a></li>
               <li><a href="/api/maps/delete.html">Delete</a></li>
               <li><a href="/api/maps/addLayer.html">Add Layer</a></li>
@@ -67,9 +67,9 @@
             <li><h3>Groups</h3>
               <ol class="toc">
               <li><a href="/api/groups/create.html">Create</a></li>
-              <li><a href="/api/groups/delete.html">Delete</a></li>
               <li><a href="/api/groups/get_users.html">Add User</a></li>
               <li><a href="/api/groups/add_user.html">Get Users</a></li>
+              <li><a href="/api/groups/delete.html">Delete</a></li>
               <li><a href="/api/permissions.html">Permissions</a></li>
               </ol>
             </li>
@@ -93,172 +93,183 @@
       </div>
       <div id='content'>
         <h1 id='rest methods'>REST Methods</h1>
-        <h1>Dataset <span class="caps">API</span></h1>
+        <h2>Dataset <span class="caps">API</span></h2>
 <p>Datasets are how data is stored and accessible. They can be uploaded, registered, edited, modified and queried.</p>
 <table>
 	<tr>
-		<td>Method </td>
-		<td>Description </td>
+		<th>Method </th>
+		<th>Description </th>
 	</tr>
 	<tr>
 		<td> <span class="caps">POST</span> /datasets </td>
-		<td>  </td>
+		<td> Create a new dataset </td>
 	</tr>
 	<tr>
 		<td> <span class="caps">GET</span> /datasets/:id </td>
-		<td>  </td>
+		<td> Get a dataset&#8217;s metadata </td>
 	</tr>
 	<tr>
 		<td> <span class="caps">PUT</span> /datasets/:id </td>
-		<td>  </td>
+		<td> Update a dataset&#8217;s metadata </td>
 	</tr>
 	<tr>
 		<td> <span class="caps">DELETE</span> /datasets/:id </td>
-		<td>  </td>
+		<td> Remove a dataset </td>
 	</tr>
 	<tr>
 		<td> <span class="caps">GET</span> /datasets/:id/fetch </td>
-		<td>  </td>
+		<td> Get new features from a dataset Feed </td>
 	</tr>
 	<tr>
 		<td> <span class="caps">GET</span> /datasets/:id/features </td>
-		<td>  </td>
+		<td> Get the datasets invididual features (rows)  </td>
 	</tr>
 	<tr>
 		<td> <span class="caps">POST</span> /datasets/:id/features </td>
-		<td>  </td>
+		<td> Add new features to a dataset  </td>
 	</tr>
 	<tr>
 		<td> <span class="caps">DELETE</span> /datasets/:id/features </td>
-		<td>  </td>
+		<td> Remove features from a dataset </td>
 	</tr>
 </table>
-<h1>Map <span class="caps">API</span></h1>
+<h2>Map <span class="caps">API</span></h2>
 <p>Maps are the primary visualization and include layers of datasets with styling.</p>
 <table>
 	<tr>
-		<td>Method </td>
-		<td>Description </td>
+		<th>Method </th>
+		<th>Description </th>
 	</tr>
 	<tr>
 		<td> <span class="caps">POST</span> /maps </td>
-		<td>  </td>
+		<td> Create a new map </td>
 	</tr>
 	<tr>
 		<td> <span class="caps">GET</span> /maps/:id </td>
-		<td>  </td>
+		<td> Get a map styling and layers </td>
 	</tr>
 	<tr>
 		<td> <span class="caps">PUT</span> /maps/:id </td>
-		<td>  </td>
+		<td> Update a map styling or layers </td>
 	</tr>
 	<tr>
 		<td> <span class="caps">DELETE</span> /maps/:id </td>
-		<td>  </td>
+		<td> Remove a map </td>
 	</tr>
 	<tr>
 		<td> <span class="caps">POST</span> /maps/:id/layers </td>
-		<td>  </td>
+		<td> Add a dataset layer to a map </td>
 	</tr>
 </table>
-<h1>Analysis <span class="caps">API</span></h1>
-<h1>Configuration <span class="caps">API</span></h1>
+<h2>Analysis <span class="caps">API</span></h2>
 <table>
 	<tr>
-		<td>Method </td>
-		<td>Description </td>
+		<th>Method </th>
+		<th>Description </th>
+	</tr>
+	<tr>
+		<td> <span class="caps">POST</span> /analysis.json </td>
+		<td> Run an analysis method with one or several datasets </td>
+	</tr>
+</table>
+<h2>Search <span class="caps">API</span></h2>
+<p>Find relevant datasets, maps or analyses.</p>
+<table>
+	<tr>
+		<th>Method </th>
+		<th>Description </th>
+	</tr>
+	<tr>
+		<td> <span class="caps">GET</span> /search </td>
+		<td> Search for maps and datasets </td>
+	</tr>
+</table>
+<h2>User <span class="caps">API</span></h2>
+<p>Manage users.</p>
+<table>
+	<tr>
+		<th>Method </th>
+		<th>Description </th>
+	</tr>
+	<tr>
+		<td> <span class="caps">POST</span> /users </td>
+		<td> Create a user </td>
+	</tr>
+	<tr>
+		<td> <span class="caps">GET</span> /users/:id </td>
+		<td> Get user information </td>
+	</tr>
+	<tr>
+		<td> <span class="caps">PUT</span> /users/:id </td>
+		<td> Update a user&#8217;s information  </td>
+	</tr>
+	<tr>
+		<td> <span class="caps">DELETE</span> /users/:id </td>
+		<td> Remove a user </td>
+	</tr>
+	<tr>
+		<td> <span class="caps">GET</span> /users/:id/maps </td>
+		<td> Get a user&#8217;s maps </td>
+	</tr>
+	<tr>
+		<td> <span class="caps">GET</span> /users/:id/datasets </td>
+		<td> Get a user&#8217;s datasets  </td>
+	</tr>
+	<tr>
+		<td> <span class="caps">GET</span> /users/:id/groups </td>
+		<td> Get a user&#8217;s Groups </td>
+	</tr>
+</table>
+<h2>Groups <span class="caps">API</span></h2>
+<p>Users can belong to one or many groups. Groups are useful for sharing data and maps privately or providing edit capabilities for collaboration.</p>
+<table>
+	<tr>
+		<th>Method </th>
+		<th>Description </th>
+	</tr>
+	<tr>
+		<td> <span class="caps">POST</span> /groups </td>
+		<td> Create a new group </td>
+	</tr>
+	<tr>
+		<td> <span class="caps">GET</span> /groups/:id </td>
+		<td> Get a group&#8217;s information </td>
+	</tr>
+	<tr>
+		<td> <span class="caps">PUT</span> /groups/:id </td>
+		<td> Update a group&#8217;s information </td>
+	</tr>
+	<tr>
+		<td> <span class="caps">DELETE</span> /groups/:id </td>
+		<td> Remove a group  </td>
+	</tr>
+	<tr>
+		<td> <span class="caps">POST</span> /groups/:id/users </td>
+		<td> Add users to a group </td>
+	</tr>
+	<tr>
+		<td> <span class="caps">GET</span> /groups/:id/users </td>
+		<td> Get the group&#8217;s users </td>
+	</tr>
+	<tr>
+		<td> <span class="caps">GET</span> /groups/:id/maps </td>
+		<td> Get the maps that are shared with the group  </td>
+	</tr>
+	<tr>
+		<td> <span class="caps">GET</span> /groups/:id/datasets </td>
+		<td> Get the datasets that are shared with the group</td>
+	</tr>
+</table>
+<h2>Configuration <span class="caps">API</span></h2>
+<p>For administrators of a GeoIQ appliance, the configuration <span class="caps">API</span> provides information on the GeoIQ version and configuration settings.</p>
+<table>
+	<tr>
+		<th>Method </th>
+		<th>Description </th>
 	</tr>
 	<tr>
 		<td> <span class="caps">GET</span> /configurations.json </td>
 		<td> The current GeoIQ server version and information </td>
-	</tr>
-</table>
-<h1>Search <span class="caps">API</span></h1>
-<p>Find relevant datasets, maps or analyses.</p>
-<table>
-	<tr>
-		<td>Method </td>
-		<td>Description </td>
-	</tr>
-	<tr>
-		<td> <span class="caps">GET</span> /search </td>
-		<td>  </td>
-	</tr>
-</table>
-<h1>User <span class="caps">API</span></h1>
-<p>Manage users.</p>
-<table>
-	<tr>
-		<td>Method </td>
-		<td>Description </td>
-	</tr>
-	<tr>
-		<td> <span class="caps">POST</span> /users </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td> <span class="caps">GET</span> /users/:id </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td> <span class="caps">PUT</span> /users/:id </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td> <span class="caps">DELETE</span> /users/:id </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td> <span class="caps">GET</span> /users/:id/maps </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td> <span class="caps">GET</span> /users/:id/datasets </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td> <span class="caps">GET</span> /users/:id/groups </td>
-		<td>  </td>
-	</tr>
-</table>
-<h1>Groups <span class="caps">API</span></h1>
-<p>Users can belong to one or many groups. Groups are useful for sharing data and maps privately or providing edit capabilities for collaboration.</p>
-<table>
-	<tr>
-		<td>Method </td>
-		<td>Description </td>
-	</tr>
-	<tr>
-		<td> <span class="caps">POST</span> /groups </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td> <span class="caps">GET</span> /groups/:id </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td> <span class="caps">PUT</span> /groups/:id </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td> <span class="caps">DELETE</span> /groups/:id </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td> <span class="caps">POST</span> /groups/:id/users </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td> <span class="caps">GET</span> /groups/:id/users </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td> <span class="caps">GET</span> /groups/:id/maps </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td> <span class="caps">GET</span> /groups/:id/datasets </td>
-		<td>  </td>
 	</tr>
 </table>
       </div>

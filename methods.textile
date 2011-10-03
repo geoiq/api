@@ -4,68 +4,74 @@ title: REST Methods
 ---
 
 
-h1. Dataset API
+h2. Dataset API
 
 Datasets are how data is stored and accessible. They can be uploaded, registered, edited, modified and queried.
 
-|. Method |. Description |
-| POST /datasets |  |
-| GET /datasets/:id |  |
-| PUT /datasets/:id |  |
-| DELETE /datasets/:id |  |
-| GET /datasets/:id/fetch |  |
-| GET /datasets/:id/features |  |
-| POST /datasets/:id/features |  |
-| DELETE /datasets/:id/features |  |
+|_. Method |_. Description |
+| POST /datasets | Create a new dataset |
+| GET /datasets/:id | Get a dataset's metadata |
+| PUT /datasets/:id | Update a dataset's metadata |
+| DELETE /datasets/:id | Remove a dataset |
+| GET /datasets/:id/fetch | Get new features from a dataset Feed |
+| GET /datasets/:id/features | Get the datasets invididual features (rows)  |
+| POST /datasets/:id/features | Add new features to a dataset  |
+| DELETE /datasets/:id/features | Remove features from a dataset |
 
-h1. Map API
+h2. Map API
 
 Maps are the primary visualization and include layers of datasets with styling. 
 
-|. Method |. Description |
-| POST /maps |  |
-| GET /maps/:id |  |
-| PUT /maps/:id |  |
-| DELETE /maps/:id |  |
-| POST /maps/:id/layers |  |
+|_. Method |_. Description |
+| POST /maps | Create a new map |
+| GET /maps/:id | Get a map styling and layers |
+| PUT /maps/:id | Update a map styling or layers |
+| DELETE /maps/:id | Remove a map |
+| POST /maps/:id/layers | Add a dataset layer to a map |
 
-h1. Analysis API 
+h2. Analysis API 
 
-h1. Configuration API 
+|_. Method |_. Description |
+| POST /analysis.json | Run an analysis method with one or several datasets |
 
-|. Method |. Description |
-| GET /configurations.json | The current GeoIQ server version and information |
-
-h1. Search API
+h2. Search API
 
 Find relevant datasets, maps or analyses.
 
-|. Method |. Description |
-| GET /search |  |
+|_. Method |_. Description |
+| GET /search | Search for maps and datasets |
 
-h1. User API
+h2. User API
 
 Manage users.
 
-|. Method |. Description |
-| POST /users |  |
-| GET /users/:id |  |
-| PUT /users/:id |  |
-| DELETE /users/:id |  |
-| GET /users/:id/maps |  |
-| GET /users/:id/datasets |  |
-| GET /users/:id/groups |  |
+|_. Method |_. Description |
+| POST /users | Create a user |
+| GET /users/:id | Get user information |
+| PUT /users/:id | Update a user's information  |
+| DELETE /users/:id | Remove a user |
+| GET /users/:id/maps | Get a user's maps |
+| GET /users/:id/datasets | Get a user's datasets  |
+| GET /users/:id/groups | Get a user's Groups |
 
-h1. Groups API
+h2. Groups API
 
 Users can belong to one or many groups. Groups are useful for sharing data and maps privately or providing edit capabilities for collaboration. 
 
-|. Method |. Description |
-| POST /groups |  |
-| GET /groups/:id |  |
-| PUT /groups/:id |  |
-| DELETE /groups/:id |  |
-| POST /groups/:id/users |  |
-| GET /groups/:id/users |  |
-| GET /groups/:id/maps |  |
-| GET /groups/:id/datasets |  |
+|_. Method |_. Description |
+| POST /groups | Create a new group |
+| GET /groups/:id | Get a group's information |
+| PUT /groups/:id | Update a group's information |
+| DELETE /groups/:id | Remove a group  |
+| POST /groups/:id/users | Add users to a group |
+| GET /groups/:id/users | Get the group's users |
+| GET /groups/:id/maps | Get the maps that are shared with the group  |
+| GET /groups/:id/datasets | Get the datasets that are shared with the group|
+
+
+h2. Configuration API 
+
+For administrators of a GeoIQ appliance, the configuration API provides information on the GeoIQ version and configuration settings. 
+
+|_. Method |_. Description |
+| GET /configurations.json | The current GeoIQ server version and information |

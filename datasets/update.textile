@@ -8,7 +8,7 @@ Allows you to update the contents of the metadata for a dataset and define attri
 
 h3. *End point*
 
-<pre>PUT http://geocommons.com/datasets/:id.json</pre>
+<pre>PUT /datasets/:id.json</pre>
 
 
 h3. *Metadata Dataset Update*
