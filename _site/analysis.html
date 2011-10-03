@@ -23,7 +23,6 @@
           <li><h3>Start Here</h3>
             <ol class="toc">
               <li><a href='/api/index.html'>Welcome</a></li>
-              <li><a href='/api/tutorial.html'>Quick Start</a></li>
               <li><a href='http://getsatisfaction.com/geocommons'>Get Help</a></li>
               <li><a href='http://developer.geoiq.com/blog/'>Blog</a></li>
             </ol>
@@ -65,19 +64,12 @@
               <li><a href="/api/search.html">search</a></li>
               </ol>
             </li>
-            <li><h3>Users</h3>
-              <ol class="toc">
-              <li><a href="/api/users.html">Create</a></li>
-              <li><a href="/api/users.html">Update</a></li>
-              <li><a href="/api/users.html">Delete</a></li>
-              </ol>
-            </li>
             <li><h3>Groups</h3>
               <ol class="toc">
-              <li><a href="/api/groups.html">Create</a></li>
-              <li><a href="/api/groups.html">Add</a></li>
-              <li><a href="/api/groups.html">Delete</a></li>
-              <li><a href="/api/groups.html">Get Users</a></li>
+              <li><a href="/api/groups/create.html">Create</a></li>
+              <li><a href="/api/groups/delete.html">Delete</a></li>
+              <li><a href="/api/groups/get_users.html">Add User</a></li>
+              <li><a href="/api/groups/add_user.html">Get Users</a></li>
               <li><a href="/api/permissions.html">Permissions</a></li>
               </ol>
             </li>
@@ -89,22 +81,12 @@
           <li><h3><a href="/api/javascript.html">JavaScript API</a></h3>
             <ol class="toc">
               <li><a href="/api/javascript/methods.html">Javascript Methods</a></li>
-              <li><a href="/api/javascript/methods.html">Charts</a></li>
+              <li><a href="/api/javascript/charts.html">Charts</a></li>
             </ol>
-          </li>          
-          <li><h3>SDK &amp; Tools</h3>
-            <ol class="toc">
-              <li><a href="/api/javascript.html">Javascript</a></li>
-              <li><a href="/api/javascript/methods.html">Javascript Methods</a></li>
-            </ol>
-          </li>          
+          </li>                
           <li><h3>Examples</h3>
             <ol class="toc">
-              <li><a href='/api/examples/dashboard.html'>Dashboard Example</a></li>
-              <li><a href='/api/examples/map.html'>Map Example</a></li>
-              <li><a href='/api/examples/map_drawing.html'>Map Drawing Example</a></li>
-              <li><a href='/api/examples/editing_features.html'>Editing Features Example</a></li>
-              <li><a href='/api/examples/map_search'>Map Search Example</a></li>
+              <li>Coming soon...</li>
             </ol>
           </li>
         </ol>
@@ -650,8 +632,8 @@
 		<td>distance=25</td>
 	</tr>
 	<tr>
-		<td>min&#95;distance</td>
-		<td>Distance to inner ring of buffer</td>
+		<td> min&#95;distance </td>
+		<td> Distance to inner ring of buffer</td>
 		<td>min&#95;distance=5</td>
 </table>
 <p><strong>Optional Parameters:</strong></p>
@@ -726,13 +708,14 @@
 		<td>unit=km</td>
 	</tr>
 	<tr>
-		<td>min&#95;distance</td>
-		<td>Distance to inner ring of buffer</td>
-		<td>min&#95;distance=5</td>
-		<td> <br />
-|include&#95;distance</td>
-		<td>Include distance to second dataset as attribute; 0=false, 1=true; defaults to 1</td>
-		<td>include&#95;distance=1</td>
+		<td> min&#95;distance </td>
+		<td> Distance to inner ring of buffer</td>
+		<td> min&#95;distance=5 </td>
+	</tr>
+	<tr>
+		<td> include&#95;distance </td>
+		<td> Include distance to second dataset as attribute; 0=false, 1=true; defaults to 1 </td>
+		<td> include&#95;distance=1 </td>
 	</tr>
 </table>
 <p><strong>Returns</strong></p>
