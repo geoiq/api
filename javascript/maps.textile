@@ -1,0 +1,444 @@
+---
+layout: default
+title: JavaScript Maps API
+---
+
+A map requires simple creating using @F1.Maker.Map@ and a number of options. These options specify loading a saved map, where to put the map into the HTML page, and other options such as user interface controls, basemap and function callbacks.
+
+<pre><code class="javascript">var mymap = new F1.Maker.Map(options)
+</code></pre>
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|map_id|integer ID number of the map to load on the embed|map_id: "42698"|
+|dom_id|string name of the DOM element to place the map. Must have it's height set in pixels|dom_id: "sample_map"|
+
+
+*Optional Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|uiZoom|show the Zoom controls (default: true)|uiZoom: false|
+|uiLayers|show the Layer controls (default: true)|uiLayers: false|
+|uiStyles|show the Styles controls (default: true)|uiStyles: false|
+|uiLegend|show the Legends controls (default: true)|uiLegend: false|
+|uiHeader|show the Header title and controls - only visible in "Edit" mode (default: true)|uiHeader: false|
+|mapProvider|String - name of the basemap provider (e.g. "Yahoo Road", "OpenStreetMap (Road)", "Google Hybrid")|mapProvider: "Yahoo Road"|
+|zoomLevel|Integer - zoom level to view the map (default: loaded map or 1)| zoomLevel: 5|
+|f1_session_id|String - optional session key for authenticated requests|see *authentication*|
+|f1_auth|String - optional authentication key for authenticated requests|see *authentication*|
+| _callbacks_ |a javascript callback method. See *Callback options* below for more information||
+
+*Example:*
+
+<pre><code class="javascript">var mymap = new F1.Maker.Map({
+  map_id: map_id, 
+  dom_id: "my_test_map", 
+  uiZoom: false,
+  uiLayers: false,
+  uiStyles: false,
+  uiLegend: false,
+  extent: "-80, 35, -75, 40",
+  zoomLevel: 5,
+  mapProvider: "Yahoo Road"
+});
+</code></pre>
+
+
+
+h1. Map Methods
+
+h3. getExtent()
+
+_*Method*_
+ getExtent()
+
+_*Scope*_
+ F1.Maker.Map
+
+*Required Arguments:* (none)
+
+*Optional Arguments:* (none)
+
+*Returns:*
+
+<pre><code class="javascript">{ west: float,
+  south: float,
+  east: float,
+  north: float,
+  northWest: {lat: float, lon: float},
+  southEast: {lat: float, lon: float}
+}</code></pre>
+
+*Example*
+
+<pre>
+  <div style="width: 100%; height: 300px"><div id="geocommons_map"></div></div>
+  <code class="javascript">var sample_map = new F1.Maker.Map({
+  	  map_id: 81930, 
+  	  dom_id: "geocommons_map", 
+  	  uiZoom: true,
+  	  uiLayers: false,
+  	  uiLegend: false,
+      onmaploaded: function () { updateExtent() },
+      onmappanned: function() { updateExtent() }
+  	});
+function updateExtent() { var extent = sample_map.getExtent(); 
+  document.getElementById('results').innerHTML = "[" + extent.west + ", " + extent.south + ", " + extent.east + ", " + extent.north +"]" 
+};</code></pre>
+
+_Returns_
+<pre><code class="javascript" id="extent_results" class="results">[Object northWest=[Object lat=39.52367858860299 lon=-77.90582198404641] southEast=[Object lat=39.37627930774779 lon=-77.49417801595357] east=-77.49417801595357 west=-77.90582198404641 north=39.52367858860299 south=39.37627930774779]</code></pre>
+
+
+h3. setExtent()
+
+_*Method*_
+ setExtent(west, south, east, north)
+
+_*Scope*_
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|west|longitude furthest west of extent|-77.3783|
+|south|latitude furthest south of extent|12.1002|
+|east|longitude furthest east of extent|139.3535|
+|north|latitude furthest north of extent|39.2422|
+
+_Set extent passes a bounding box in WSEN order as either a string,array or separate arguments_
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Examples:*
+
+<pre><code class="javascript">mymap.setExtent(-80, 35, -75, 40);
+mymap.setExtent("-80, 35, -75, 40");
+mymap.setExtent([-80, 35, -75, 40]);</code></pre>
+
+h3. getCenterZoom()
+
+*Method*
+ getCenterZoom()
+
+*Scope*
+ F1.Maker.Map
+
+*Example*
+
+<pre><code class="javascript">var zoom = mymap.getCenterZoom();</code></pre>
+
+*Returns:*
+
+Returns: {lat, lon, zoom}
+<pre><code class="javascript">[Object lon=-77.08585 lat=38.891142999999985, 15]</code></pre>
+
+h3. setCenter()
+
+*Method*
+ setCenter(latitude, longitude)
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|latitude|the latitude of the center point of the map|39.999|
+|longitude|the longitude of the center point of the map|-73.333|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example*
+
+<pre><code class="javascript">mymap.setCenter(38.891143, -77.08585);</code></pre>
+
+h3. setCenterZoom()
+
+*Method*
+ setCenterZoom(latitude, longitude, zoom)
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|latitude|the latitude of the center point of the map|39.999|
+|longitude|the longitude of the center point of the map|-73.333|
+|zoom|the zoom level of the map furthest zoom out is 1, most maps go to zoom level 18|15|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+<pre><code class="javascript">mymap.setCenterZoom(38.891143, -77.08585, 15);</code></pre>
+
+h3. getZoom()
+
+*Method*
+ getZoom()
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:* (none)
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+<pre><code class="javascript">var zoomLevel = mymap.getZoom(); // 10</code></pre>
+
+*Example*
+<pre><code class="javascript">mymap.getZoom();</code></pre>
+
+h3. setZoom()
+
+*Method*
+ setZoom(zoomLevel)
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|zoomLevel|the zoom level of the map, maps are zoom level 1 when they are zoomed all the way out|12|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example*
+
+<pre><code class="javascript">mymap.setZoom(10);</code></pre>
+
+h3. zoomToLayer
+
+Zooms the entire map to the extents of the specified layer.
+
+*Method*
+ zoomToLayer(layerID)
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|the 0-based index or unique guid of the layer for which you would like to zoom to|1|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example*
+
+<pre><code class="javascript">mymap.zoomToLayer(0);</code></pre>
+
+
+h3. getMapProviderList()
+
+Gets an array list of tile providers available to use for the map.
+
+*Method*
+ getMapProviderList()
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:* (none)
+
+*Optional Arguments:* (none)
+
+*Returns:* 
+
+Array of tile providers available on GeoCommons or your GeoIQ Appliance.  Varies by appliance.
+
+<pre><code class="javascript">Array ["Google Aerial", "Google Hybrid", "Google Road", "Google Terrain", "Historic Map", "Microsoft Aerial", "Microsoft Hybrid", "Microsoft Road", "NASA Blue Marble", "OpenStreetMap (Road)", "Yahoo Aerial", "Yahoo Hybrid", "Yahoo Road"]</code></pre>
+
+*Example*
+
+<pre><code class="javascript">mymap.getMapProviderList();</code></pre>
+
+
+h3. getMapProvider()
+
+Returns the current map provider.
+
+*Method*
+ getMapProvider()
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:* (none)
+
+*Optional Arguments:* (none)
+
+*Returns:* 
+
+Returns the map provider object, which includes the tileSchema in addition to the displayName of the tile provider and the tileHeight and tileWidth
+
+<pre><code class="javascript">[Object displayName=OpenStreetMap (Road) tileSchema=http://tile.openstreetmap.org/{Z}/{X}/{Y}.png tileHeight=256 tileWidth=256]</code></pre>
+
+*Example*
+
+<pre><code class="javascript">var currentProvider = mymap.getMapProvider();</code></pre>
+
+
+h3. setMapProvider()
+
+*Method*
+ setMapProvider(providerString)
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|providerString|name of the tile provider all providers can be returned by selecting getMapProviderList|"Acetate Terrain"|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example*
+
+<pre><code class="javascript">mymap.setMapProvider("Yahoo Aerial");</code></pre>
+
+
+h3. getFeature - deprecated
+
+*Method*
+getFeature(finderOverlayIndex, featureIndex);
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|finderOverlayIndex|which overlay to return features from is a 0 array index starting from the bottom layer|2|
+|featureIndex|index number of the feature to get, also a 0 array index|2|
+
+*Optional Arguments:* (none)
+
+*Returns:*
+ Array of feature as JSON hash
+
+<pre><code class="javascript">[Object { attributes={...}, id=1}]</code></pre>
+
+*Example*
+
+<pre><code class="javascript">mymap.getFeature(finderOverlayIndex, featureIndex);</code></pre>
+
+h3. addFeatures
+
+The GeoIQ Javascript API includes a method called addFeatures that allows developers to add a list of structured features to any layer on a map. The addFeatures method uses the "GeoJSON specification":http://geojson.org/ for geography, which supports points, lines and polygons. Styling of features is currently inherited from the layer styling based on general or thematic options as specified. 
+
+*Method*
+ addFeatures(layerID, featuresArray, replaceFeatures)
+ 
+*Scope*
+ F1.Maker.Map
+ 
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|which overlay to return features from is a 0 array index starting from the bottom layer|2|
+|featuresArray|array of feature objects, including attributes and a _geometry_ attribute using "GeoJSON":http://geojson.org/| [{title: "Post 1", date: "01/05/2008", geometry: {type: Point, coordinates: [-122.9,45.902]}}]|
+|replaceFeatures|boolean option if these new features should remove the old features before adding the new features.|true|
+
+The _featuresArray_ objects should match the schema of the layer they are being added to. So for example, if the original dataset for the layer had attributes: title, date, description, author - then the feature could have none, some, or all of these attributes.
+
+The geometry object should match the "GeoJSON specification":http://geojson.org/ which includes two attributes: type, coordinates. _type_ can be any of Point, LineString, or Polygon. The coordinates are longitude, latitude pairs in WGS84 decimal degrees (or the projection of the map if different).
+
+*Returns:* (None)
+
+*Example:*
+
+<pre><code class="javascript">mymap.addFeatures(52, [{title: "Post 1", date: "01/05/2008", geometry: {type: Point, coordinates: [-122.9,45.902]}}], true);</code></pre>
+
+h3. getFeatures()
+
+*Method*
+ getFeatures(layerID, count, start);
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|which overlay to return features from is a 0 array index starting from the bottom layer|2|
+|start|index number of the feature to get, also a 0 array index|2|
+|count|number of features to return. Use -1 for all features. (default:10)|5|
+
+*Optional Arguments:* (none)
+
+*Returns:* 
+
+Array of features as JSON hash
+
+<pre><code class="javascript">[Object { attributes={...}, id=0}, Object { attributes={...}, id=1}, Object { attributes={...}, id=2}, Object { attributes={...}, id=3}, Object { attributes={...}, id=4}, Object { attributes={...}, id=5}, Object { attributes={...}, id=6}, Object { attributes={...}, id=7}, Object { attributes={...}, id=8}, Object { attributes={...}, id=9}]</code></pre>
+
+*Example:*
+
+<pre><code class="javascript">mymap.getFeatures(finderOverlayIndex, count, start);</code></pre>
+
+h3. updateAttributes() - deprecated
+
+Updates map metadata (title, description and tags).
+
+*Method*
+ updateAttributes()
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:* (none)
+
+*Optional Arguments:* 
+
+|_. Argument |_. Description|_. Example |
+|title|title of the map|"Map of Unemployment"|
+|description|description of the map|"This map describes unemployment in California"|
+|tags|tags of the map separated by a space|"unemployment California"|
+
+
+*Returns:* (none) 
+
+*Example*
+
+<pre><code class="javascript">mymap.updateAttributes( { title: "new title", description: "new description", tags: "tag1 tag2" } );</code></pre>
+
+h3. saveMap() - deprecated
+
+Saves any updates to the map or styling back to GeoIQ. It requires an already created map that will be updated with this call. This will require authentication from the user.  If not authenticated a basic authentication login box will appear to the user.
+
+*Method*
+ saveMap()
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:* (none)
+
+*Optional Arguments:* (none)
+
+*Returns:*
+
+Returns: the id of the Map if successful. 
+
+*Example*
+
+<pre><code class="javascript">mymap.saveMap();</code></pre>

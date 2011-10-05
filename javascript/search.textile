@@ -1,0 +1,45 @@
+---
+layout: default
+title: JavaScript Search API
+---
+
+The search method is a helper for querying any GeoIQ server to find datasets, maps, and analysis. The results can then be used to create or load a map or additional calls to download or operate on datasets and analysis methods.
+
+_*Method*_
+ search(query, callback)
+
+_*Scope*_
+ F1.Maker
+
+_*Scope*_
+ F1.Maker
+
+_*Arguments*_ 
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|query|The string query to send to search. | "economy AND type:Map" |
+|callback|javascript callback method to call with the results object||
+
+_*Returns*_
+
+In the callback there is a results object that includes the following elements:
+
+* entries - array of objects that describe the Map, Dataset, or Analysis matching results
+* itemsPerPage - number of items in the entries
+* totalResults - total number of items that matched the query
+
+_*Example*_
+
+<pre><code class="javascript">MapClass = {
+  searchCallback: function(results) {
+    MapClass.results = results;
+    var map_id = results.entries[0].id.replace(/Map:/,'')
+    mymap = new F1.Maker.Map({map_id: map_id, dom_id: "geoiq_map"})
+  }
+}
+
+function init() {
+  F1.Maker.search('type:map', MapClass.searchCallback)
+}</code></pre>

@@ -1,0 +1,172 @@
+---
+layout: default
+title: JavaScript Filters
+---
+
+h3. addFilter()
+
+Adds a filter to the filters list on an overlay
+
+*Method:*
+addFilter(layerID,expression)
+
+*Scope:*
+F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|the index of the layer being filtered lowest being 0|3|
+|expression|actual filter expression being applied to a layer|"$[sales] > 1000"|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+<pre><code class="javascript">mymap.addFilter(0, { expression: "$[sales] > 1000" });
+</code></pre>
+
+h3. removeFilter()
+
+Adds a filter to the filters list on an overlay
+
+*Method:*
+removeFilter(layerID,expression)
+
+*Scope:*
+F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|the index of the layer being filtered lowest being 0|3|
+|expression|actual filter expression being remove from a layer|"$[sales] > 1000"|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+
+<pre>mymap.removeFilter(0, { expression: "$[sales] > 1000" });</pre>
+
+h3. getFilters()
+
+List all filters for an overlay
+
+*Method:*
+getFilters(layerID)
+
+*Scope:*
+F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|the index of the layer being filtered lowest being 0|3|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+
+<pre>mymap.getFilters(0);</pre>
+
+h3. clearFilters()
+
+List all filters for an overlay
+
+*Method:*
+clearFilters(layerID)
+
+*Scope:*
+F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|the index of the layer being cleared of filters lowest being 0|3|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+
+<pre>mymap.clearFilters(0);</pre>
+
+h3. addHighlight()
+
+Highlights features using a given expression
+
+*Method*
+ addHighlight(layerID, expression)
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|the 0-based index of the layer for which you would like to change the filter|1|
+|expression|the filter-style expression to evaluate for  highlighting|"$[population] > 100000"|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+
+<pre><code class="javascript">mymap.addHighlight(0, "$[population] > 100000");
+</code></pre>
+
+h3. removeHighlight()
+
+Removes a previously added highlight
+
+*Method:*
+ removeHighlight(layerID, expression)
+
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|the 0-based index of the layer for which you would like to change the filter|1|
+|expression|the filter-style expression to remove  highlighting|"$[population] > 100000"|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+
+<pre><code class="javascript">mymap.removeHighlight(0, "$[population] > 100000");
+</code></pre>
+
+h3. clearHighlights()
+
+Removes all highlights on a given layer
+
+*Method:*
+ clearHighlights(layerID)
+
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|the 0-based index of the layer for which you would like to remove all the filters|1|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+
+<pre><code class="javascript">mymap.clearHighlights(0);
+</code></pre>

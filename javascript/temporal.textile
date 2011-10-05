@@ -1,0 +1,205 @@
+---
+layout: default
+title: JavaScript Temporal API
+---
+
+
+h3. setLayerTemporalAttribute
+
+*Method:*
+ setLayerTemporalAttribute(layer id, attribute:String)
+ 
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+
+*Optional Arguments:* 
+
+|_. Argument |_. Description|_. Example |
+
+*Returns:* (none)
+
+*Example:*
+
+h3. setTemporalResolution
+
+*Method:*
+ setTemporalResolution(resolution:String)
+ 
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+
+*Optional Arguments:* 
+
+|_. Argument |_. Description|_. Example |
+
+*Returns:* (none)
+
+*Example:*
+
+h3. getTemporalResolution
+
+*Method:*
+ getTemporalResolution()
+ 
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+ None
+
+*Optional Arguments:* 
+
+ None
+
+*Returns:* String
+
+*Example:*
+
+h3. getTimeSlots
+
+*Method:*
+ getTimeSlots()
+ 
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+ None
+
+*Optional Arguments:* 
+
+ None
+
+*Returns:* Array of time slots
+
+*Example:*
+
+h3. setTimeSpan
+
+*Method:*
+ setTimeSpan(min:Date, max:Date)
+
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+
+*Optional Arguments:* 
+
+|_. Argument |_. Description|_. Example |
+
+*Returns:* (none)
+
+*Example:*
+
+h3. getTimeSpan
+
+*Method:*
+ getTimeSpan()
+ 
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+
+*Optional Arguments:* 
+
+|_. Argument |_. Description|_. Example |
+
+*Returns:* TimeSpan //{min:Date, max:Date}
+
+*Example:*
+
+h3. getGlobalTimeSpan
+
+*Method:*
+ getGlobalTimeSpan()
+ 
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+
+*Optional Arguments:* 
+
+|_. Argument |_. Description|_. Example |
+
+*Returns:* TimeSpan //{min:Date, max:Date}
+
+*Example:*
+
+
+h3. setTimeFilter
+
+Sets the visible time range of data on the map
+
+*Method:*
+ setTimeFilter(timeSliderRange)
+
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|timeSliderRange|object describing the optional elements below|{begin:"2010-05-05T00:00:00Z", end: "2010-05-12T00:00:00Z"}|
+
+*Optional Arguments:* 
+
+|_. Argument |_. Description|_. Example |
+|begin|earliest time of data on the map. The format is ISO8601 or YYYY-MM-DDTHH:MM:SSZ. You can also use 'now' for the current time.|"2010-05-05T00:00:00Z" or @"now"@|
+|end|latest time of data on the map. The format is ISO8601 or YYYY-MM-DDTHH:MM:SSZ. You can also use 'now' for the current time.|"2010-05-12T00:00:00Z" or @"now"@|
+|period|time period in milliseconds after the begin, or before the end period if only one is specified. | "604800000" |
+ 
+*Returns:* (none)
+
+*Example:*
+
+<pre><code class="javascript">// From May 5th 2010 to May 12 2010
+
+mymap.setTimeFilter({begin:"2010-05-05T00:00:00Z", end: "2010-05-12T00:00:00Z"});
+
+// From now until 1 week in the Future
+
+mymap.setTimeFilter({begin:"now", period: "604800000"});
+</code></pre>
+
+h2. Callback
+
+h3. onTemporalReady
+
+Fired whenever temporal is re-calculated.
+
+*Method:*
+ onTemporalReady()
+
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+
+*Optional Arguments:* 
+
+|_. Argument |_. Description|_. Example |
+
+*Returns:* (none)
+
+*Example:*

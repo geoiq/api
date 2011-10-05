@@ -1,0 +1,70 @@
+---
+layout: default
+title: JavaScript Callbacks
+---
+
+When creating a map, you can set a number of Javascript callback functions that can be used to provide additional interactivity. For example, you can set a callback for when the map finished loading, or when a layer is added. 
+
+*Optional Arguments:*
+
+|_. Callback |_. Returns |_. Description |
+
+|onFeatureSelected | array of features |  Triggered when a feature is clicked on or selected|
+|onLayerAdded | layer |  Triggered when a layer is added|
+|onLayerRemoved | layer |  Triggered when a layer is removed|
+|onLayerError | | Triggered when there is an error loading error|
+|onLayerLoading | layer, progress |  Triggered during layer loading|
+|onLayerLoaded | layer |  Triggered once a layer is loaded|
+|onLayerParsing | layer |  Triggered while layer is parsing|
+|onLayerParsed | layer |  Triggered once a layer data is parsed|
+|onLayerRendering | layer |  Triggered during layer rendering (drawing)|
+|onLayerRendered | layer |  Triggered once a layer is fully rendered|
+|onLayerStyleChange | layer |  Triggered when layer style is changed|
+|onMapLoaded | | Triggered when a map and all of its layers are fully loaded|
+|onMapReady | | Triggered when a map initialized|
+|onMapInitialized | | Deprecated. Fired at the same time as onMapReady|
+|onMapClicked | | Triggered when a map is clicked|
+|onMapPan | | Triggered during map pan|
+|onMapPanStart | | Triggered at the beginning of map pan|
+|onMapPanStop | | Triggered when map pan is finished|
+|onMapZoomed | | Triggered when map is zoomed|
+|onBaseMapChanged | | Triggered when a basemap is changed|
+|onTemporalReady | | Triggered once temporal buckets have been calculated. (Dispatched only with temporal layers.)|
+
+*Example:*
+
+<pre style="clear: both"><code class="javascript">var map_id = 81930;
+var mymap = new F1.Maker.Map({
+  map_id: map_id, 
+  dom_id: "callback_map", 
+  onMapLoaded: function() { showEvent("onMapLoaded") };
+  onMapClicked: function() { showEvent("onMapClicked") };
+  onMapPanStart: function() { showEvent("onMapPanStart") },
+  onMapPanStop: function() { showEvent("onMapPanStop") };
+  onMapZoomed: function() { showEvent("onMapZoomed") };
+  }
+});
+function showEvent(event_name) { document.getElementById('callback_results').innerHTML += event_name + "<br/>" }
+</code></pre>
+
+h3. setCallback
+
+*Method*
+ setCallback(eventName, callbackFunction)
+ 
+*Scope*
+ F1.Maker.Map
+ 
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|eventName|String name of the event to register|'onMapClicked'|
+|callbackFunction|The function to get called when the event fired|function(value) { alert(value) }|
+
+Each event will only call a single callback. So it is not possible to have multiple callback events.
+
+*Returns:* (None)
+
+*Example:*
+
+<pre><code class="javascript">mymap.setCallback("onFeatureSelected", function(features) { alert("Clicking here returned " + features.length + " features!")});</code></pre>

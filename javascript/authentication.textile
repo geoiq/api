@@ -1,0 +1,19 @@
+---
+layout: default
+title: JavaScript Authentication
+---
+
+If a map or dataset is marked as private to a user or group, then you will have to authenticate requests to GeoIQ in order to load these. Currently GeoIQ Maps requires authentication to happen via session keys. Session keys are requested by making an authenticated request to the server and using the returned session cookie data:
+
+<pre><code>curl -I -u "username:password" http://geocommons.com
+
+HTTP/1.1 200 OK
+Set-Cookie: _f1gc_session_session08f8=BAh7BjoPc...rest of session key...2e8e7; domain=http://geocommons.com; path=/; HttpOnly
+Content-Length: 32129
+Status: 200
+Content-Type: text/html; charset=utf-8
+</code></pre>
+
+Then the session and authentication can be used in the map creation as shown here:
+
+<pre><code class="javascript">var sample_map = new F1.Maker.Map( ..., "f1_session_id": "_f1gc_session_08f8", "f1_auth" : "BAh7BjoPc...rest of session key...2e8e7")</code></pre>

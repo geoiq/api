@@ -1,0 +1,91 @@
+---
+layout: default
+title: JavaScript Interface Styling
+---
+
+The Javascript API provides interfaces for setting the look and feel of the map elements such as the zoom bar and legend.
+
+h3. setStyle()
+
+Sets the style of control elements in the map such as the zoom and legend. Options include the position, size, layout, color, transparency, and more.
+
+*Method:*
+ setStyle(style object);
+
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|style object|an object with optional settings for zoom or legend controls| { zoom: {bgColor: 0x92948C, autoHeight: false, height:100, cornerRadius: 5}} |
+
+*Optional Arguments:* 
+
+Within the @style object@ there are several optional elements: @legend@, @zoom@. Each of these has numerous optional attributes to set specific style parameters.
+
+h4. Legend
+
+* bgColor (_optional) uint - Legend background color.
+* bgAlpha (_optional) Number - Background alpha.
+* fontColor (_optional) uint - Legend font color. Default 0xFFFFFF
+* fontFace (optional) String - Legend font. Default _sans
+* fontSize (_optional) Number - Legend font size. Default 12.
+* btnPlacement (optional) String - Button placement "horizontal" or "vertical". Default "horizontal".
+* btnBgColor (optional) uint - Background color of the legend button.
+* btnBgAlpha (optional) Number - Legend button background alpha.
+* btnFontFace (optional) String - Legend button font.
+* btnFontColor (optional) uint - Legend button color. Default 0xFFFFFF
+* btnFontSize (optional) Number - Legend button font size.
+* btnLabel (optional) String - Legend button label. Default value "Legend".
+* btnWidth (optional) Number - Legend button width.
+* btnHeight (optional) Number - Legend button height.
+* offset (optional) object - defines the distance from the bottom right corner on x and y axis. For example, {x:20,y:0} will move the legend 20 pixels left from the right corner of the stage.
+** x (required) Number - offset of x axis
+** y (required) Number - offset of y axis
+* width (optional) Number - Legend (content) width.
+* visible (_optional) Boolean - Legend visibility.
+* expanded (optional) Boolean - When set to true the legend is expanded.
+  
+
+h4. Zoom
+
+* autoHeight (optional) : Boolean - When set to true zoom control height changes based on the number of available zoom levels. Use zoomStepHeight parameter to further adjust zoom control height.
+* bgAlpha (optional) : Number - Background color of zoom control elements. Range: 0-1.
+* bgColor (optional) : uint - Background opacity of zoom control elements. Use hex 0xFFFFFF format.
+* borderColor (optional) : uint - Control border. Use hex 0xFFFFFF format.
+* dropShadow (optional) : Boolean - Drop shadow.
+* enabled (optional) : Boolean - Disable / Enable zoom control.
+* expanded (optional) : Boolean - When set to true the control is expanded.
+* iconColor (optional) : uint - Zoom icon (+)(-) color. Use hex 0xFFFFFF format.
+* offset (optional) : Point - Offset of x and y axis from the top left corner. In JS use {x:3,y:5}.
+* padding (optional) : Number - Padding between zoom bar elements.
+* snapToZoomLevel (optional) : Boolean - When set to true slider snaps to a zoom level.
+* width (optional) : Number - Width of the scroll track. Width is used to determine size of +- icons.
+* height (optional) : Number - Scroll track height. Use this only when autoHeight is set to false.
+* alpha (optional) : Number - Overall opacity of the control. Range: 0-1.
+* offset (optional) object - defines the distance from the bottom right corner on x and y axis. For example, offset: {x:20,y:0} will move the legend 20 pixels left from the right corner of the stage.
+** x (optional) : Number - Position of the control on x axis.
+** y (optional) :Number - Position of the control on y axis.
+* zoom (optional) : int - Current zoom level.
+* zoomStepHeight (optional) : Number - Works only if autoHeight set to true.
+* horizontal (optional) : Boolean - Moves (-) button to the right of (+) button. Overrides expanded parameter and sets it to false.
+* cornerRadius (optional) : Number - Sets corner radius for zoom control.
+
+
+*Returns:* (none)
+
+*Examples:*
+
+<pre><code class="javascript">      mymap.setStyle( { zoom: {bgColor: 0x92948C, autoHeight: false, height:100, cornerRadius: 5}})
+      mymap.setStyle( { legend: { btnBgColor:0x92948C, btnPlacement:"horizontal", btnFontColor:0xFFFFFF, btnBgAlpha:0.7,offset:{x:0,y:95}}});      
+</code></pre>
+
+<pre><code class="javascript">// Zoom
+  sample_map.setStyle({zoom: {visible: true }});
+  sample_map.setStyle({zoom: {visible: false }});
+
+  // Legend
+  setStyle({legend:{visible:false})
+  setStyle({legend:{expanded:false, visible:true})
+  setStyle({legend:{expanded:true, visible:true});</code></pre>

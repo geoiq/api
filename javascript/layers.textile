@@ -1,0 +1,308 @@
+---
+layout: default
+title: JavaScript Map Layers API
+---
+
+These Javascript methods allow you to inspect, add, remove, and style layers on a map.
+
+h3. getLayers()
+
+Get an array of the layers hash.
+
+*Method*
+ getLayers()
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:* (none)
+
+*Optional Arguments:* (none)
+
+*Returns:*
+
+An array of Layer objects. 
+
+*Example:*
+
+<pre><code class="javascript">mymap.getLayers();</code></pre>
+
+
+<pre><code class="javascript">var layers = mymap.getLayers();
+
+// layers = [
+// {
+//  title: "My First Layer",
+//  source: "finder:45",
+//  styles: {...},
+//  opacity: 1,
+//  visibility: 1,
+//  order: 1
+// }]
+</code></pre>
+
+h3. removeLayer()
+
+Deletes a layer from the map.
+
+*Method*
+ F1.Maker.Map.removeLayer(layerID)
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|index of the layer to show or hide. 0 is the bottom layer and then layers increase up|1|
+
+*Optional Arguments:* (none)
+
+*Returns:*
+
+"1" if the layer is deleted and 0 if the delete was unsuccessful.
+
+*Example:*
+
+<pre><code class="javascript">mymap.removeLayer(0);</code></pre>
+
+h3. addLayer()
+
+*Method*
+addLayer(layerDefinition)
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerDefinition|a hash of options for defining the layer|{}|
+|source|the id of the layer|"finder:99084"|
+
+
+*Optional Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|title|the string name to use for the layer title (default is the dataset title|"Hospitals in Virginia"|
+|subtitle|string name for the subtitle (default: selectedAttribute name)|"Type of Hospital"|
+|order|integer value to put the layer in the layers index. 0 is bottom (default:topmost layer)|0|
+|visibility|if the layer is visible (default: true)|{visibility:false}|
+|opacity|decimal amount of opacity from 0-1 0 is transparent, 1 is fully opaque (default: .75)|{opacity: 1.0}|
+|styles|the JSON hash that defines the layer. See the REST Styling API for details|styles: { type: "CHOROPLETH", fill: { color: 0x0000FF, opacity: 0.5 } }|
+|zoomToExtent|zoom to the extent of the dataset after it is mapped (default: false)|{zoomToExtent:true}|
+
+*Returns:* (none)
+
+*Examples:*
+
+<pre><code class="JSON">mymap.addLayer( { source: "finder:55" } );
+
+// Set the title on loading, but make it hidden
+mymap.addLayer( { source: "finder:55", 
+    title: "A new layer",
+    subtitle: "Source: News Agency"
+    order: 1,
+    visibility: false,
+    opacity: 0.7,
+    styles: { type: "CHOROPLETH", fill: { color: 0x0000FF, opacity: 0.5 } } } );</code></pre>
+
+<pre><code class="JSON">// Automatically zoom to the layer extent on loading
+mymap.addLayer( { source: "finder:55", zoomToExtent: true, styles: { type: "CHOROPLETH", fill: { color: 0x0000FF, opacity: 0.5 } } });</code></pre>
+
+
+<pre><code class="JSON">// Adding a point dataset
+mymap.addLayer( { source: "finder:59", title: "new layer title", position: 0, styles: { type: "GRADUATED", icon: { color: 0x0000FF, selectedAttribute: "count", classificationType: "Equal Interval", opacity: 0.5 } } } );</code></pre>
+
+<pre><code class="JSON">// Adding a polygon dataset
+mymap.addLayer( { source: "finder:59", title: "new layer title", position: 0, styles: { type: "GRADUATED", icon: { colors: [14343142, 11580379, 7505585, 4481915, 2966850], selectedAttribute: "count", classificationType: "Manual", classificationBreaks: "[100, 130, 160, 200]", opacity: 0.5 } } } );</code></pre>
+
+
+h3. showLayer
+
+*Method*
+ showLayer(layerID, visibility)
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|index of the layer to show or hide. 0 is the bottom layer and increasing up|1|
+|visibility| true if visible, false to hide (default: true)|true|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+
+<pre><code class="javascript">mymap.showLayer(10, true);</code></pre>
+
+h3. getLayer()
+
+Returns the definition of a particular layer in the map as a hash.
+
+*Method*
+ getLayer(layerID)
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|index of the layer to show or hide. 0 is the bottom layer and increasing up|1|
+
+*Optional Arguments:* (none)
+
+*Returns:*
+
+A reference to the layer
+
+<pre><code>Object { source="finder:12784", styles={...}, more...}</code></pre>
+
+*Example:*
+
+<pre><code class="javascript">mymap.getLayer(2);</code></pre>
+
+h3. setLayerStyle()
+
+*Method*
+ setLayerStyle(layerDefinition)
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerDefinition|the JSON hash of the layer definition and styles. For this use, the "source" actually refers to the layer index in the array of layers. See the Styling API for details on the "styles" parameter.||
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+
+<pre><code class="JSON">//Point
+mymap.setLayerStyle( 0, { type: "POINT", icon: { size: 5, symbol: "flagIcon" } } );
+mymap.setLayerStyle( 0, { type: "PROPORTIONAL", icon: { size: 10, symbol: "circleIcon", color: 0x00FF66, opacity: 0.5 } } );
+mymap.setLayerStyle( 0, { type: "GRADUATED", icon: { classificationType: "EQUAL INTERVAL", categories: 5, symbol: "outlineSquare", colors: [0xFF776D, 0xFCC5BB, 0xF7F7F7, 0xC6DBEF, 0x4292C6], opacity: 0.75 } } );
+//Custom Point Icons
+mymap.setLayerStyle(0, {type: "POINT", icon:{symbol: "http://iconurlhere.com/icon.png"}});
+
+//Polygon
+mymap.setLayerStyle( 0, { type: "CHOROPLETH", fill: {  classificationType: "QUANTILE", categories: 5, colors: [0xEFF3FF, 0xBDD7E7, 0x6BAED6, 0x3182BD, 0x08519C], opacity: 0.75 } } );
+
+//Line
+mymap.setLayerStyle( 0, { type: "LINE", fill: {  lineStyle: "thick", color: 0x0000FF, opacity: 0.75 }, stroke: { weight: 4 } } );
+mymap.setLayerStyle( 0, { type: "LINE", icon: {  lineStyle: "dashedThick" }, stroke: { color: 0x0000FF, alpha: 1, weight: 3 } } );</code></pre>
+
+
+h3. setLayerTitle()
+
+*Method:*
+ setLayerTitle(layerID, title)
+
+*Scope:*
+ F1.Maker.Map
+
+|_. Argument |_. Description|_. Example |
+|layerID|the 0-based index of the layer for which you would like to change the title|1|
+|title|the new title of the layer (is a string)|"US States"|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+
+<pre><code class="JSON">
+mymap.setLayerTitle(0, "US States");
+</code></pre>
+
+h3. setLayerSubTitle()
+
+*Method*
+ setLayerSubTitle(layerID, subTitle)
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|the 0-based index of the layer for which you would like to change the title|1|
+|subTitle|the new sub-title of the layer (is a string)|"Population"|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+
+<pre><code class="javascript">mymap.setLayerSubTitle(0, "Population by state");
+</code></pre>
+
+
+h3. addLayerCategoryFilter()
+
+Sets layer categorical icons based on the string value of an attribute. This is useful for setting the icons of a the features in a dataset based on categories such as land use or business type.
+
+*Method:*
+addLayerCategoryFilter(layerID, categoryDefinition)
+
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|the index of the layer being cleared of filters lowest being 0|3|
+|categoryDefinition|a hash of defining the attribute and categories|categories:{"Health":"image1.jpg","Water and Infrastructure:"image2.jpg"}|
+|attribute|the string name of the attribute based on category|attribute:"name"|
+|categories|a hash of category (string) with icon URL (string)|"Health":"image1.jpg"|
+
+*Optional Arguments:* (none)
+
+*Returns:* (none)
+
+*Example:*
+
+<pre><code class="javascript">mymap.addLayerCategoryFilter(0,{attribute:"Operation Sector",categories:{"Health":"image1.jpg","Water and Infrastructure:"image2.jpg"}})</code></pre>
+
+You can also set the category when you add a layer to a map:
+
+<pre><code class="javascript">mymap.addLayer({source: "finder:133771",categoryFilter:{attribute:"mjsector 1",categories:{"Health and other social services":"http://maps.worldbank.org/images/icons/round/health-16.png","Transportation":"http://maps.worldbank.org/images/icons/round/transportation-16.png","Water, sanitation and flood protection":"http://maps.worldbank.org/images/icons/round/water-16.png"}}})</code></pre>
+
+
+h3. addLayerInfoWindowFilter()
+
+Defines InfoWindow content. Sets content filters based on layer attributes. 
+
+*Method:*
+addLayerInfoWindowFilter(layerID, filterDefinition)
+
+*Scope:*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|the index of the layer where the info window is being adjusted|0|
+|filterDefinition|a hash defining info window parameters||
+|value|string, tab content. Use $[attribute] to pass attribute value. When populating a table simple pass attribute names $[attribute1]$[attribute2]$[attribute3] etc.|$[name] + ' value:' + $[value]|
+|type|string, tab type, Available types: text, table|type:"text"|tabs:[{title:"Text tab", type:"text", value:"Hello world $[attribute]"}|
+
+*Optional Arguments:* 
+
+|_. Argument |_. Description|_. Example |
+|title|content of the title tab, us $[attribute] to pass an attribute value|$[name]|
+|subtitle|a string definint info window subtitle|"Hospitals in Virginia:"|
+|tabs|a hash defining tabs - title, content|
+
+*Returns:* (none)
+
+*Example:*
+
+<pre><code class="javascript">mymap.addLayerInfoWindowFilter('0',{title:"Title is $[attribute]", subtitle:"Subtitle string", tabs:[{title:"Text tab", type:"text", value:"Hello world $[attribute]"},{title:"Table tab", value:"$[attribute]", type:"table"}]})</code></pre>
+
