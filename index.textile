@@ -7,9 +7,7 @@ title: GeoIQ API Overview
 
 GeoIQ is the engine that powers the GeoCommons Community.  GeoIQ includes a full Application Programming Interface (API) that allows developers to build unique and powerful domain specific applications. The API provides capability for uploading and download data, searching for data and maps, building, embedding, and theming maps or charts, as well as general user, group, and permissions management.
 
-!GeoIQ_Platform.png!
-
-The GeoIQ API consists of a REST API and a JavaScript API.  REST means that it uses simple URL's and HTTP methods to perform all of the actions. For example, a dataset is a specific endpoint that a user can create, read, update or delete (CRUD).
+The GeoIQ API consists of a "REST API":./methods.html and a "JavaScript API":./javascript.html.  REST means that it uses simple URL's and HTTP methods to perform all of the actions. For example, a dataset is a specific endpoint that a user can create, read, update or delete (CRUD).
 
 There are many sections to the API included in this documentation. Each section contains specific methods, examples, and illustrations. 
 
