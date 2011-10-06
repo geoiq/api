@@ -306,3 +306,84 @@ addLayerInfoWindowFilter(layerID, filterDefinition)
 
 <pre><code class="javascript">mymap.addLayerInfoWindowFilter('0',{title:"Title is $[attribute]", subtitle:"Subtitle string", tabs:[{title:"Text tab", type:"text", value:"Hello world $[attribute]"},{title:"Table tab", value:"$[attribute]", type:"table"}]})</code></pre>
 
+
+h3. getFeature - deprecated
+
+*Method*
+getFeature(finderOverlayIndex, featureIndex);
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|finderOverlayIndex|which overlay to return features from is a 0 array index starting from the bottom layer|2|
+|featureIndex|index number of the feature to get, also a 0 array index|2|
+
+*Optional Arguments:* (none)
+
+*Returns:*
+ Array of feature as JSON hash
+
+<pre><code class="javascript">[Object { attributes={...}, id=1}]</code></pre>
+
+*Example*
+
+<pre><code class="javascript">mymap.getFeature(finderOverlayIndex, featureIndex);</code></pre>
+
+h3. addFeatures
+
+The GeoIQ Javascript API includes a method called addFeatures that allows developers to add a list of structured features to any layer on a map. The addFeatures method uses the "GeoJSON specification":http://geojson.org/ for geography, which supports points, lines and polygons. Styling of features is currently inherited from the layer styling based on general or thematic options as specified. 
+
+*Method*
+ addFeatures(layerID, featuresArray, replaceFeatures)
+ 
+*Scope*
+ F1.Maker.Map
+ 
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|which overlay to return features from is a 0 array index starting from the bottom layer|2|
+|featuresArray|array of feature objects, including attributes and a _geometry_ attribute using "GeoJSON":http://geojson.org/| [{title: "Post 1", date: "01/05/2008", geometry: {type: Point, coordinates: [-122.9,45.902]}}]|
+|replaceFeatures|boolean option if these new features should remove the old features before adding the new features.|true|
+
+The _featuresArray_ objects should match the schema of the layer they are being added to. So for example, if the original dataset for the layer had attributes: title, date, description, author - then the feature could have none, some, or all of these attributes.
+
+The geometry object should match the "GeoJSON specification":http://geojson.org/ which includes two attributes: type, coordinates. _type_ can be any of Point, LineString, or Polygon. The coordinates are longitude, latitude pairs in WGS84 decimal degrees (or the projection of the map if different).
+
+*Returns:* (None)
+
+*Example:*
+
+<pre><code class="javascript">mymap.addFeatures(52, [{title: "Post 1", date: "01/05/2008", geometry: {type: Point, coordinates: [-122.9,45.902]}}], true);</code></pre>
+
+h3. getFeatures()
+
+*Method*
+ getFeatures(layerID, start, count);
+
+*Scope*
+ F1.Maker.Map
+
+*Required Arguments:*
+
+|_. Argument |_. Description|_. Example |
+|layerID|which overlay to return features from is a 0 array index starting from the bottom layer|2|
+|start|index number of the feature to get, also a 0 array index|2|
+|count|number of features to return. Use -1 for all features. (default:10)|5|
+
+*Optional Arguments:* (none)
+
+*Returns:* 
+
+Array of features as JSON hash
+
+<pre><code class="javascript">JSON.stringify(F1.Maker.current_map.getFeatures(2,0,2))
+
+"[{'klout_score': 46, 'friends': 1166, 'id': '121644842269937664', 'picture': 'http://a1.twimg.com/profile_images/1574053787/icon070706124540_normal.gif', 'matching_keywords': ['occupy'], 'type': 'geoip', 'overlay_id': null, 'guid': 'ph43785js', 'geometry': '010100000067B62BF441CF5CC0CB64389ECF1D4240', 'posted_time': {'granularity': 'sec', 'end_time': '2011/10/05 17:56:06 +0000', 'time': '2011/10/05 17:56:05 +0000', 'original': '2011-10-05T17:56:05.000Z'}, 'followers': 250, 'latitude': 36.2328985, 'username': 'EdNDeb4858', 'stream_id': '4e8c9a00dec058b15a000020', 'content': 'Twitter is a tweaking.  Trying to keep up #occupy.  But to all @occupyDc  @OccupyNL @ OccupyLasVegas  @OccupySD  @OccupyBn  We R the 99%!', 'longitude': -115.2384005, 'loc': [-115.2384005, 36.2328985], 'sentiment': 0}, {'klout_score': 52, 'friends': 49, 'id': '121645532782407681', 'picture': 'http://a0.twimg.com/profile_images/1165757177/110910-BRADG-007-webicon_normal.jpg', 'matching_keywords': ['occupy'], 'type': 'mobile', 'overlay_id': null, 'guid': 'eb43785kf', 'geometry': '01010000006A83B8177D1753C0956C6DC8DCC24340', 'posted_time': {'granularity': 'sec', 'end_time': '2011/10/05 17:58:50 +0000', 'time': '2011/10/05 17:58:49 +0000', 'original': '2011-10-05T17:58:49.000Z'}, 'followers': 841, 'latitude': 39.52236276, 'username': 'BelAirPatch', 'stream_id': '4e8c9a00dec058b15a000020', 'content': '@BethBrew Is there an Occupy Bel Air event?', 'longitude': -76.36701005, 'loc': [-76.36701005, 39.52236276], 'sentiment': 0}]"</code></pre>
+
+*Example:*
+
+<pre><code class="javascript">mymap.getFeatures(finderOverlayIndex, count, start);</code></pre>
