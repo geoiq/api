@@ -1,0 +1,41 @@
+---
+layout: default
+title: Update Map
+---
+
+*Endpoint:*
+
+<pre>PUT /maps/:id.json</pre>
+
+*Authentication:* 
+
+Basic authentication is required for both GeoCommons and GeoIQ appliances.
+
+*Required Parameters:* (none)
+
+*Optional Parameters:*
+
+|_. Parameter |_. Description|_. Example |
+|title|the title of the map|title=World%20Population|
+|basemap|the basemap provider|basemap="Acetate"|
+|description|text description of a map|description=This%20map%20shows|
+|tags|tags categorizing you map|tags=economy| 
+|extent|array of the area covered by the map order is west,south,east,north|extent=[-180,-90,180,90]|
+|projection|the projection of the map default is EPSG:3785 also supported is EPSG:4326|"projection=EPSG:4326"|
+|permissions|must be admin on GeoCommons to change permissions, on GeoIQ must be data owner or have edit permissions|{"permissions": [{"group_id": "everyone", "permissions" : {"view":true,"download":false,"edit":false}]}|
+
+*Returns*
+
+|*Type|Description|Example*|
+|map|returns a representation of the updated map|{"updated_at": "2011/03/10 15:33:00 +0000", "basemap": "Google Terrain", "title": "changing the title like", "permissions": [], "tags": [], "layers": [], "extent": [-180.0, -85.0, 180.0, 85.0], "id": 56821, "description": null, "show_state": {"basemap": {"name": "Google Terrain", "providerType": null, "tint": {"redMultiplier": 1, "blueMultipler": 1, "greenMultipler": 1, "alphaMultiplier": 1, "greenOffset": 1, "blueOffset": 0, "alphaOffset": 0, "color": 0, "redOffset": 0}, "mapDisplayName": "Google Terrain", "vanillaColor": null, "tileType": null}}, "classification": null, "created_at": "2011/03/10 15:15:40 +0000"}|
+
+*Curl Examples*
+
+_Change title of Charging Station map ("104286":http://geocommons.com/maps/104286):_
+<pre>curl -i -u "username:password" -d "title=Electric Vehicle Charging Stations" -X PUT http://geocommons.com/maps/104286.json</pre>
+
+_Update extents of the map:_
+<pre>curl -i -u "username:password" -d "extent[]=-178.0,19.0,-67.0,71.0" -X PUT http://geocommons.com/maps/104286.json</pre>
+
+_Update permissions on the map to allow editing by group 6. Note that when you update permissions, it replaces ALL permissions with the permissions you set, so this will also remove public view/download access to the map:_
+<pre>curl -i -u "username:password" -d "permissions[][group_id]=6" -d "permissions[][permissions][edit]=true" -d "permissions[][permissions][view]=true" -X PUT http://geocommons.com/maps/104286.json</pre>

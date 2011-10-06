@@ -1,0 +1,291 @@
+---
+layout: default
+title: Styling API
+---
+
+The GeoIQ API allows extremely granular control of the look and feel of each individual map layer beyond what is available in the GUI.  All of the parameters fit into the styles parameter to specifically style a layer.
+
+
+*Primary Options Styling:*
+
+|_. Option |_. Description |_. Example |
+|icon|the type of icon|icon:{symbol:"circle",size:3}|
+|stroke|controls the color, transparency and thickness of the outline of a feature|"stroke": {"alpha": 1, "weight": 1, "color": 16777215}|
+|fill|controls the inside color and opacity of a feature|"fill": {"opacity": 0.75, "color": 11637367}|
+|temporal|controls if there is a time feature associated with a layer and which attribute is used|"temporal": {"attributes": ["timestamp"]}|
+|type|the type of map layer options are: POINT, PRIMITIVE, GRADUATED, PROPORTIONAL, CHOROPLETH, PROPORTIONAL|"type": "GRADUATED"|
+|click|controls the event when a layer feature is clicked on can either be a url or a javascript function|styles: { click: "javascript:showInfo('$[state]')" }|
+|hover|controls the event when a feature is hovered over can be a javascript event or specific data for the info window|1 styles: { hover: "State: $[state]. Population: $[population]. Average Income: $[avg_inc_2000]" }|
+
+*Specific Styling Options:*
+
+h4. Icon
+
+Specific Options for Styling the Icon
+
+|_. Option |_. Description |_. Example |
+|selectedAttribute|required for CHOROPLETH OR Graduated the attribute name of the dataset for theming|selectedAttribute: "rate of change"|
+|color|hex or decimal number for icon fills| color: 0xFF0000|
+|symbol|symbol name from palette of icons or URL to an image default are circle, propCircle, outlineCircle, hollowCircle, square, propSquare, outlineSquare, hollowSquare, balloonIcon, pushpinIcon, circleIcon, featherIcon, flagIcon, pushpinIcon, ringIcon, squareIcon, xPointIcon|{symbol: "outlineSquare"}, {symbol:"http://farm5.static.flickr.com/4125/5219379732_e7251b5a47_o_d.png"}|
+|opacity|0 is tranparent 1 is opaque|opacity=.75|
+|dropshadow|1 for a drop shadow underneath the icon, 0 for no drop shadow|dropshadow=1|
+|lineStyle|the style of the line from the following styles: dashedThin,dashedThick,cased,thick,regular|{lineStyle: "dashedThin"}|
+|size|scale size by area 0.1 is 10% of original size, 2 is twice the size (default:1)|{size: .2}|
+|classificationType|type of classification algorithm to use Manual, Equal Interval, Quantile, Standard Deviation, Max Breaks, Critical Value (default: Equal Interval if type of CHOROPLETH)|{classificationType: "Standard Deviation"}|
+|classificationBreaks|the specifically defined breaks required for {classificationType: "Manual"} array of values for the actual breakpoints for the bins|"classificationBreaks": [13, 13, 20, 30, 40, 50]|
+|categories|number of categories or bins to use for classifying the data.  Not necessary if the _classificationType_ is 'Manual' and the _classificationBreaks_ (default is 5 if type is CHOROPLETH)|{"categories": 7}|
+|range|the range of the data to bin, not required though useful if you only want to bin/display a specific portion of the data|"range": [13, 25]|
+
+h4. Stroke
+
+Styling for the line that is the perimeter around a polygon or an icon.
+
+|_. Option |_. Description |_. Example |
+|color|the color either in hex or integer |color: 0xFF0000|
+|alpha|the transparency 0 is transparent 1 is opaque (default: 0.75)|alpha: .5|
+|weight|the thickness of the line|weight: 3|
+
+h4. Fill
+
+|_. Option |_. Description |_. Example |
+|selectedAttribute|required for CHOROPLETH OR Graduated the attribute name of the dataset for theming|selectedAttribute: "rate of change"|
+|color|hex or decimal number for icon fills| color: 0xFF0000|
+|colors|array of colors there should be a color value for each category. So if categories are 5 there should be 5 colors|"colors": [16573399, 15124426, 13938370, 12619966, 10450099, 7620507, 5313667]|
+|opacity|0 is transparent 1 is opaque (default is .75|opacity: .5|
+|classificationType|type of classification algorithm to use Manual, Equal Interval, Quantile, Standard Deviation, Max Breaks, Critical Value (default: Equal Interval if type of CHOROPLETH)|{classificationType: "Standard Deviation"}|
+|classificationBreaks|the specifically defined breaks required for {classificationType: "Manual"} array of values for the actual breakpoints for the bins|"classificationBreaks": [13, 13, 20, 30, 40, 50]|
+|categories|number of categories or bins to use for classifying the data.  Not necessary if the _classificationType_ is 'Manual' and the _classificationBreaks_ (default is 5 if type is CHOROPLETH)|{"categories": 7}|
+
+h4. Temporal
+
+If a layer has an attribute column with a time component temporal information can be defined in the layer.
+
+|_. Option |_. Description |_. Example |
+|attributes|the column to animate temporally by|attributes: ["timestamp"]|
+
+
+
+h4. Time Slider
+
+You can specify a specific @begin@, @end@, and @period@ of both the time window and the time slider on the map. Time elements can be any of: 
+
+* ISO8601 - YYYYMMDDTHH:MM:SSZ (e.g. 20100801T12:31:22Z, or 20100801T07:31:22-0500)
+* String for "now"
+* Milliseconds since (or before for negative) Epoch - Midnight, January 1, 1970
+
+For *period* - it is the span of the timeslider or timeline in milliseconds.
+
+|_. Option |_. Description |_. Example |
+|slider|the period of time the slider (window of data being shown) covers in milliseconds or "now" for current time|"slider": {"period":86400,"end":"now"}|
+|timeline|the range of time the slider covers|"timeline":{"begin":"20100505T00:00:00Z", "end": "now"}|
+
+!Time_Controls.png!
+
+_Only use 2 of the begin/end/period variables or specify _null_. For example, setting end: "now" and period:86400 would show the last day of data._
+
+
+
+h4. Color Samples
+
+GeoIQ supports any hexadecimal color values for setting the icon, fill, stroke, or color ramps. However, in designing GeoIQ we spent considerable time and research considering how semi-transparent colors appeared on top of basemaps while retaining high-contrast and impact. We recommend using these, or similar color schemes, when designing your maps using the GeoIQ API. 
+
+*Diverging*
+
+
+* ramp:[0x909FC2, 0xFE9929]
+* ramp:[0x909FC2, 0xF7F7F7, 0xFE9929]
+* ramp:[0x909FC2, 0xD0D1E6, 0xFEE281, 0xFE9929]
+* ramp:[0x909FC2, 0xD0D1E6, 0xF7F7F7, 0xFEE281, 0xFE9929]
+* ramp:[0x44637B, 0x909FC2, 0xD0D1E6, 0xFEE281, 0xFE9929, 0xB84C02]
+* ramp:[0x44637B, 0x909FC2, 0xD0D1E6, 0xF7F7F7, 0xFEE281, 0xFE9929, 0xB84C02]
+		
+*Diverging_Reverse*
+
+
+* ramp:[0xFE9929, 0x909FC2]
+* ramp:[0xFE9929, 0xF7F7F7, 0x909FC2]
+* ramp:[0xFE9929, 0xFEE281, 0xD0D1E6, 0x909FC2]
+* ramp:[0xFE9929, 0xFEE281, 0xF7F7F7, 0xD0D1E6, 0x909FC2]
+* ramp:[0xB84C02, 0xFE9929, 0xFEE281, 0xD0D1E6, 0x909FC2, 0x44637B]
+* ramp:[0xB84C02, 0xFE9929, 0xFEE281, 0xF7F7F7, 0xD0D1E6, 0x909FC2, 0x44637B]
+		
+*White-Brown*
+
+* ramp:[0xD7C5AE, 0x866C5D]
+* ramp:[0xD7C5AE, 0xB89A81, 0x866C5D]
+* ramp:[0xD7C5AE, 0xB89A81, 0x866C5D, 0x5E4840]
+* ramp:[0xEBD9C2, 0xD1B79F, 0xA4866D, 0x7C6253, 0x4A342C]
+* ramp:[0xEBD9C2, 0xD1B79F, 0xA4866D, 0x7C6253, 0x543E36, 0x361E18]
+* ramp:[0xEBD9C2, 0xD1B79F, 0xB19277, 0x917763, 0x72594B, 0x543E36, 0x361E18]
+		
+*Brown-White*
+
+* ramp:[0x866C5D, 0xD7C5AE]
+* ramp:[0x866C5D, 0xB89A81, 0xD7C5AE]
+* ramp:[0x5E4840, 0x866C5D, 0xB89A81, 0xD7C5AE]
+* ramp:[0x4A342C, 0x7C6253, 0xA4866D, 0xD1B79F, 0xEBD9C2]
+* ramp:[0x361E18, 0x543E36, 0x7C6253, 0xA4866D, 0xD1B79F, 0xEBD9C2]
+* ramp:[0x361E18, 0x543E36, 0x72594B, 0x917763, 0xB19277, 0xD1B79F, 0xEBD9C2]
+		
+*White-Gray*
+
+* ramp:[0xF0F0F0, 0x636363]
+* ramp:[0xF0F0F0, 0xBDBDBD, 0x636363]
+* ramp:[0xF7F7F7, 0xCCCCCC, 0x969696, 0x525252]
+* ramp:[0xF7F7F7, 0xCCCCCC, 0x969696, 0x636363, 0x252525]
+* ramp:[0xF7F7F7, 0xD9D9D9, 0xBDBDBD, 0x969696, 0x636363, 0x252525]
+* ramp:[0xF7F7F7, 0xD9D9D9, 0xBDBDBD, 0x969696, 0x737373, 0x525252, 0x252525]
+		
+*Gray-White*
+
+* ramp:[0x636363, 0xF0F0F0]
+* ramp:[0x636363, 0xBDBDBD, 0xF0F0F0]
+* ramp:[0x525252, 0x969696, 0xCCCCCC, 0xF7F7F7]
+* ramp:[0x252525, 0x636363, 0x969696, 0xCCCCCC, 0xF7F7F7]
+* ramp:[0x252525, 0x636363, 0x969696, 0xBDBDBD, 0xD9D9D9, 0xF7F7F7]
+* ramp:[0x252525, 0x525252, 0x737373, 0x969696, 0xBDBDBD, 0xD9D9D9, 0xF7F7F7]
+		
+
+*White-Dark Green*
+
+* ramp:[0xD0D1E6, 0x44637B]
+* ramp:[0xD0D1E6, 0x909FC2, 0x44637B]
+* ramp:[0xD0D1E6, 0x909FC2, 0x44637B, 0x2D4542]
+* ramp:[0xDADBE6, 0xB0B3DB, 0x7286B1, 0x44637B, 0x2D4542]
+* ramp:[0xDADBE6, 0xB0B3DB, 0x7286B1, 0x4E6D8A, 0x2D4A4C, 0x192E24]
+* ramp:[0xDADBE6, 0xB0B3DB, 0x7C86B6, 0x547298, 0x375976, 0x2D4A4C, 0x192E24]
+		
+*Dark Green-White*
+
+* ramp:[0x44637B, 0xD0D1E6]
+* ramp:[0x44637B, 0x909FC2, 0xD0D1E6]
+* ramp:[0x2D4542, 0x44637B, 0x909FC2, 0xD0D1E6]
+* ramp:[0x2D4542, 0x44637B, 0x7286B1, 0xB0B3DB, 0xDADBE6]
+* ramp:[0x192E24, 0x2D4A4C, 0x4E6D8A, 0x7286B1, 0xB0B3DB, 0xDADBE6]
+* ramp:[0x192E24, 0x2D4A4C, 0x375976, 0x547298, 0x7C86B6, 0xB0B3DB, 0xDADBE6]
+		
+*White-Orange*
+
+* ramp:[0xFEE281, 0xB84C02]
+* ramp:[0xFEE281, 0xFE9929, 0xB84C02]
+* ramp:[0xFEE281, 0xFE9929, 0xB84C02, 0x822D04]
+* ramp:[0xFEF7A5, 0xFECE6D, 0xEC8414, 0xAE4C02, 0x662506]
+* ramp:[0xFEF7A5, 0xFECE6D, 0xEC8414, 0xAE4C02, 0x793404, 0x512506]
+* ramp:[0xFEF7A5, 0xFECE6D, 0xFEA329, 0xD96814, 0xAE4C02, 0x793404, 0x512506]
+		
+*Orange-White*
+
+* ramp:[0xB84C02, 0xFEE281]
+* ramp:[0xB84C02, 0xFE9929, 0xFEE281]
+* ramp:[0x822D04, 0xB84C02, 0xFE9929, 0xFEE281]
+* ramp:[0x662506, 0xAE4C02, 0xEC8414, 0xFECE6D, 0xFEF7A5]
+* ramp:[0x512506, 0x793404, 0xAE4C02, 0xEC8414, 0xFECE6D, 0xFEF7A5]
+* ramp:[0x512506, 0x793404, 0xAE4C02, 0xD96814, 0xFEA329, 0xFECE6D, 0xFEF7A5]
+		
+*White-Red*
+
+* ramp:[0xFEE0D2, 0xDE2D26]
+* ramp:[0xFEE0D2, 0xFC9272, 0xDE2D26]
+* ramp:[0xFEE5D9, 0xFCAE91, 0xFB6A4A, 0xCB181D]
+* ramp:[0xFEE5D9, 0xFCAE91, 0xFB6A4A, 0xDE2D26, 0xA50F15]
+* ramp:[0xFEE5D9, 0xFCBBA1, 0xFC9272, 0xFB6A4A, 0xDE2D26, 0xA50F15]
+* ramp:[0xFEE5D9, 0xFCBBA1, 0xFC9272, 0xFB6A4A, 0xEF3B2C, 0xCB181D, 0x99000D]
+		
+*Red-White*
+
+* ramp:[0xDE2D26, 0xFEE0D2]
+* ramp:[0xDE2D26, 0xFC9272, 0xFEE0D2]
+* ramp:[0xCB181D, 0xFB6A4A, 0xFCAE91, 0xFEE5D9]
+* ramp:[0xA50F15, 0xDE2D26, 0xFB6A4A, 0xFCAE91, 0xFEE5D9]
+* ramp:[0xA50F15, 0xDE2D26, 0xFB6A4A, 0xFC9272, 0xFCBBA1, 0xFEE5D9]
+* ramp:[0x99000D, 0xCB181D, 0xEF3B2C, 0xFB6A4A, 0xFC9272, 0xFCBBA1, 0xFEE5D9]
+		
+*White-Green*
+
+* ramp:[0xF7FCB9, 0x31A354]
+* ramp:[0xF7FCB9, 0xADDD8E, 0x31A354]
+* ramp:[0xFFFFCC, 0xC2E699, 0x78C679, 0x238443]
+* ramp:[0xFFFFCC, 0xC2E699, 0x78C679, 0x31A354, 0x006837]
+* ramp:[0xFFFFCC, 0xD9F0A3, 0xADDD8E, 0x78C679, 0x31A354, 0x006837]
+* ramp:[0xFFFFCC, 0xD9F0A3, 0xADDD8E, 0x78C679, 0x41AB5D, 0x238443, 0x005A32]
+		
+*Green-White*
+
+* ramp:[0x31A354, 0xF7FCB9]
+* ramp:[0x31A354, 0xADDD8E, 0xF7FCB9]
+* ramp:[0x238443, 0x78C679, 0xC2E699, 0xFFFFCC]
+* ramp:[0x006837, 0x31A354, 0x78C679, 0xC2E699, 0xFFFFCC]
+* ramp:[0x006837, 0x31A354, 0x78C679, 0xADDD8E, 0xD9F0A3, 0xFFFFCC]
+* ramp:[0x005A32, 0x238443, 0x41AB5D, 0x78C679, 0xADDD8E, 0xD9F0A3, 0xFFFFCC]
+		
+*White-Blue*
+
+* ramp:[0xDEEBF7, 0x3182BD]
+* ramp:[0xDEEBF7, 0x9ECAE1, 0x3182BD]
+* ramp:[0xEFF3FF, 0xBDD7E7, 0x6BAED6, 0x2171B5]
+* ramp:[0xEFF3FF, 0xBDD7E7, 0x6BAED6, 0x3182BD, 0x08519C]
+* ramp:[0xEFF3FF, 0xC6DBEF, 0x9ECAE1, 0x6BAED6, 0x3182BD, 0x08519C]
+* ramp:[0xEFF3FF, 0xC6DBEF, 0x9ECAE1, 0x6BAED6, 0x4292C6, 0x2171B5, 0x084594]
+		
+*Blue-White*
+
+* ramp:[0x3182BD, 0xDEEBF7]
+* ramp:[0x3182BD, 0x9ECAE1, 0xDEEBF7]
+* ramp:[0x2171B5, 0x6BAED6, 0xBDD7E7, 0xEFF3FF]
+* ramp:[0x08519C, 0x3182BD, 0x6BAED6, 0xBDD7E7, 0xEFF3FF]
+* ramp:[0x08519C, 0x3182BD, 0x6BAED6, 0x9ECAE1, 0xC6DBEF, 0xEFF3FF]
+* ramp:[0x084594, 0x2171B5, 0x4292C6, 0x6BAED6, 0x9ECAE1, 0xC6DBEF, 0xEFF3FF]
+		
+*White-Purple*
+
+* ramp:[0xF5D9D7, 0x7268A4]
+* ramp:[0xF5D9D7, 0xD4AEC2, 0x7268A4]
+* ramp:[0xFCE3D7, 0xE3BBC2, 0xC090BD, 0x74479A]
+* ramp:[0xFCE3D7, 0xE3BBC2, 0xC090BD, 0x835BA4, 0x511483]
+* ramp:[0xFCE3D7, 0xE6C7CA, 0xD4AEC2, 0xC090BD, 0x835BA4, 0x511483]
+* ramp:[0xFCE3D7, 0xE6C7CA, 0xD4AEC2, 0xC090BD, 0x9F74B3, 0x74479A, 0x511483]
+		
+*Purple-White*
+
+* ramp:[0x7268A4, 0xF5D9D7]
+* ramp:[0x7268A4, 0xD4AEC2, 0xF5D9D7]
+* ramp:[0x74479A, 0xC090BD, 0xE3BBC2, 0xFCE3D7]
+* ramp:[0x511483, 0x835BA4, 0xC090BD, 0xE3BBC2, 0xFCE3D7]
+* ramp:[0x511483, 0x835BA4, 0xC090BD, 0xD4AEC2, 0xE6C7CA, 0xFCE3D7]
+* ramp:[0x511483, 0x74479A, 0x9F74B3, 0xC090BD, 0xD4AEC2, 0xE6C7CA, 0xFCE3D7]
+		
+*Green-Purple*
+
+* ramp:[0x78C679, 0xC090BD]
+* ramp:[0x78C679, 0xF7F7F7, 0xC090BD]
+* ramp:[0x78C679, 0xD9F0A3, 0xE6C7CA, 0xC090BD]
+* ramp:[0x78C679, 0xD9F0A3, 0xF7F7F7, 0xE6C7CA, 0xC090BD]
+* ramp:[0x238443, 0x78C679, 0xD9F0A3, 0xE6C7CA, 0xC090BD, 0x74479A]
+* ramp:[0x238443, 0x78C679, 0xD9F0A3, 0xF7F7F7, 0xE6C7CA, 0xC090BD, 0x74479A]
+		
+*Purple-Green*
+
+* ramp:[0xC090BD, 0x78C679]
+* ramp:[0xC090BD, 0xF7F7F7, 0x78C679]
+* ramp:[0xC090BD, 0xE6C7CA, 0xD9F0A3, 0x78C679]
+* ramp:[0xC090BD, 0xE6C7CA, 0xF7F7F7, 0xD9F0A3, 0x78C679]
+* ramp:[0x74479A, 0xC090BD, 0xE6C7CA, 0xD9F0A3, 0x78C679, 0x238443]
+* ramp:[0x74479A, 0xC090BD, 0xE6C7CA, 0xF7F7F7, 0xD9F0A3, 0x78C679, 0x238443]
+		
+*Blue-Red*
+
+* ramp:[0x4292C6, 0xFF776D]
+* ramp:[0x4292C6, 0xF7F7F7, 0xFF776D]
+* ramp:[0x4292C6, 0xC6DBEF, 0xFCC5BB, 0xFF776D]
+* ramp:[0x4292C6, 0xC6DBEF, 0xF7F7F7, 0xFCC5BB, 0xFF776D]
+* ramp:[0x2171B5, 0x4292C6, 0xC6DBEF, 0xFCC5BB, 0xFF776D, 0xCB181D]
+* ramp:[0x2171B5, 0x4292C6, 0xC6DBEF, 0xF7F7F7, 0xFCC5BB, 0xFF776D, 0xCB181D]
+		
+*Red-Blue*
+
+* ramp:[0xFF776D, 0x4292C6]
+* ramp:[0xFF776D, 0xF7F7F7, 0x4292C6]
+* ramp:[0xFF776D, 0xFCC5BB, 0xC6DBEF, 0x4292C6]
+* ramp:[0xFF776D, 0xFCC5BB, 0xF7F7F7, 0xC6DBEF, 0x4292C6]
+* ramp:[0xCB181D, 0xFF776D, 0xFCC5BB, 0xC6DBEF, 0x4292C6, 0x2171B5]
+* ramp:[0xCB181D, 0xFF776D, 0xFCC5BB, 0xF7F7F7, 0xC6DBEF, 0x4292C6, 0x2171B5]

@@ -1,0 +1,25 @@
+---
+layout: default
+title: Download Map
+---
+
+*Endpoint:*
+
+<pre>GET /maps.{format}</pre>
+
+*Authentication:* 
+
+Basic authentication is required for maps that are not publicly shared.
+
+*Required Parameters:*(none)
+
+*Optional Parameters:*(none)
+
+*Returns*
+
+|_. Type|Description|Example |
+|file|returns a file of the type requested|http://geocommons.com/maps/51541.json|
+
+*Curl Examples:*
+
+<pre><code>curl http://geocommons.com/maps/51541.json</code></pre>

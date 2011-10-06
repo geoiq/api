@@ -1,0 +1,49 @@
+---
+layout: default
+title: Create Map
+---
+
+h3. *End point*
+
+<pre>POST /maps.json</pre>
+
+h3. *Authentication* 
+
+Basic authentication is required for both GeoCommons and GeoIQ appliances.
+
+h3. *Required Parameters*
+
+|_. Parameter |_. Description |_. Example |
+|title|the title of the map|title=World%20Population|
+|basemap|the basemap provider|basemap="Acetate"|
+ 
+h3. *Optional Parameters*
+
+|_. Parameter |_. Description |_. Example |
+|description|text description of a map|description=This%20map%20shows|
+|tags|tags categorizing you map|tags=economy|
+|extent|array of the area covered by the map order is west,south,east,north|extent=-180,-90,180,90|
+|layers|array of layers to add to the map|layers[][source]=finder:98696|
+|permissions|must be admin on GeoCommons to change permissions, on GeoIQ must be data owner or have edit permissions|{"permissions": [{"group_id": "everyone", "permissions" : {"view":true,"download":false,"edit":false}]}|
+
+h3. *Returns*
+
+|*Type|Description|Example*|
+|file|returns a file of the type requested|http://geocommons.com/maps/51541.json|
+
+h3. *Curl Examples*
+
+_Create a new map with Google Road tiles ("118254":http://geocommons.com/overlays/118254) as the basemap and no other layers:_
+<pre>curl -i -u "user:password" -d "basemap=118254" -d "title=mappy" -X POST http://geocommons.com/maps.json</pre>
+
+
+_Create a new map with Google Road as the basemap and dataset of electric vehicle charging stations ("160474":http://geocommons.com/overlays/160474) as a layer with a custom icon:_
+<pre>curl -i -u "user:password" -d "basemap=118254" -d "title=Sample Custom Icon Map" -d "layers[][source]=finder:160474" -d "layers[][styles][icon][symbol]=http://farm5.static.flickr.com/4125/5219379732_e7251b5a47_o_d.png" -X POST http://geocommons.com/maps.json</pre>
+
+_Create a new map with Acetate tiles ("118252":http://geocommons.com/overlays/118252) as the basemap and dataset of demographics ("161012":http://geocommons.com/overlays/161012) as a choropleth layer themed on the "percent over 65" attribute:_
+<pre>curl -i -u "username:password" -d "layers[][source]=finder:161012" -d "title=Percent of Elderly by State" -d "[layers][][styles][fill][classificationType]=Standard Deviation" -d "layers[][styles][fill][categories]=5" -d "layers[][styles][fill][colors][]=15725567" -d "layers[][styles][fill][colors][]=12441575" -d "layers[][styles][fill][colors][]=7057110" -d "layers[][styles][fill][colors][]=3244733" -d "layers[][styles][fill][colors][]=545180" -d "basemap=118252" -d "title=Percent of Elderly by State" -d "layers[][styles][fill][selectedAttribute]=percent over 65" -d "layers[][styles][type]=CHOROPLETH"  -d "extent=-178,19,-67,71" -X POST http://geocommons.com/maps.json</pre>
+
+_Create a new map with Acetate tiles as the basemap and a simple dataset layer giving everyone access:_
+<pre>curl -i -u "user:password" -d "basemap=118252" -d "title=Charging Stations" -d "layers[][source]=finder:161012" -d "permissions[][group_id]=everyone" -d "permissions[][permissions][download]=true" -d "permissions[][permissions][view]=true" -X POST http://geocommons.com/maps.json</pre>
+
+

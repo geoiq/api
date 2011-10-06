@@ -1,0 +1,28 @@
+---
+layout: default
+title: Delete Map
+---
+
+You can currently Delete maps by sending a DELETE HTTP request to the dataset endpoint. 
+
+*Endpoint:*
+
+<pre>DELETE /maps/:id.json</pre>
+
+*Authentication:* 
+
+Basic authentication is required for all delete requests.
+
+*Required Parameters:* (none)
+
+*Optional Parameters*:  (none)
+
+*Returns:*
+
+|_. Type |_. Description |_. Example |
+|HTTP Response|returns a HTTP response 204 no Content|HTTP/1.1 204 No Content|
+
+*Curl Examples:*
+
+<pre><code>curl -i -X DELETE -u "username:password" http://geocommons.com/maps/56290.json</code></pre>
+
