@@ -16,4 +16,4 @@ Content-Type: text/html; charset=utf-8
 
 Then the session and authentication can be used in the map creation as shown here:
 
-<pre><code class="javascript">var sample_map = new F1.Maker.Map( ..., "f1_session_id": "_f1gc_session_08f8", "f1_auth" : "BAh7BjoPc...rest of session key...2e8e7")</code></pre>
+<pre><code class="javascript">var sample_map = new F1.Maker.Map({ ..., "f1_session_id": "_f1gc_session_08f8", "f1_auth" : "BAh7BjoPc...rest of session key...2e8e7"})</code></pre>
